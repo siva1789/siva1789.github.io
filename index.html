@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Ajiogram — It's Holiday Season Sale</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── SHARED TOKENS ── */
+:root {
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-pill: 100px;
+
+  /* Women */
+  --w-hero-bg: #1C0B16;
+  --w-hero-mid: #3A1628;
+  --w-accent: #E8527A;
+  --w-gold: #C9974A;
+  --w-cream: #FDF6EE;
+  --w-card: #FFFFFF;
+  --w-border: #EDE0E8;
+  --w-muted: #8A6070;
+  --w-text: #1C0B16;
+
+  /* Men */
+  --m-hero-bg: #080B10;
+  --m-hero-mid: #131926;
+  --m-accent: #00D4E8;
+  --m-amber: #F5A623;
+  --m-bg: #F0F2F5;
+  --m-card: #FFFFFF;
+  --m-border: #E0E5EC;
+  --m-muted: #6B7A8D;
+  --m-text: #080B10;
+
+  /* Active (changes with toggle) */
+  --accent: #E8527A;
+  --hero-bg: #1C0B16;
+  --hero-mid: #3A1628;
+  --page-bg: #FDF6EE;
+  --card-bg: #FFFFFF;
+  --card-border: #EDE0E8;
+  --text-primary: #1C0B16;
+  --text-muted: #8A6070;
+  --text-on-hero: rgba(255,255,255,0.55);
+}
+
+html { background: var(--page-bg); transition: background 0.4s; }
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  max-width: 430px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  transition: color 0.4s;
+}
+
+/* ── STICKY TOP BAR ── */
+.top-bar {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--hero-bg);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  transition: background 0.4s;
+}
+.logo-svg {
+  display: block;
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+/* Gender Toggle */
+.gender-toggle {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius-pill);
+  padding: 3px; gap: 2px;
+}
+.toggle-btn {
+  font-family: var(--font-body);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: var(--radius-pill);
+  border: none; background: transparent;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer; transition: all 0.25s;
+}
+.toggle-btn.active {
+  background: var(--accent);
+  color: #fff;
+  transition: background 0.4s, color 0.2s;
+}
+
+.top-icons { display: flex; gap: 16px; align-items: center; }
+.top-icon { font-size: 18px; cursor: pointer; position: relative; }
+.cart-badge {
+  position: absolute; top: -4px; right: -5px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 8px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.4s;
+}
+
+/* ── ANNOUNCE STRIP ── */
+.announce {
+  background: var(--accent);
+  padding: 8px 20px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.4s;
+  overflow: hidden; position: relative;
+}
+.announce-track {
+  display: flex; gap: 48px; white-space: nowrap;
+  animation: marquee 18s linear infinite;
+}
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.announce-text {
+  font-size: 11px; font-weight: 500; color: #fff;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.announce-dot { color: rgba(255,255,255,0.5); font-size: 8px; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  background: var(--hero-bg);
+  padding: 28px 20px 24px;
+  overflow: hidden;
+  transition: background 0.4s;
+  min-height: 520px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.hero-glow {
+  position: absolute; pointer-events: none;
+  border-radius: 50%; filter: blur(80px); opacity: 0;
+  transition: opacity 0.6s, background 0.4s;
+}
+.hero-glow-1 { width: 260px; height: 260px; top: -80px; right: -60px; }
+.hero-glow-2 { width: 180px; height: 180px; bottom: 40px; left: -40px; }
+.glow-visible { opacity: 1; }
+
+/* Sparkles (women) */
+.sparkle {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  animation: twinkle 3s ease-in-out infinite;
+  transition: opacity 0.4s;
+}
+@keyframes twinkle { 0%,100%{opacity:0.15; transform:scale(1);} 50%{opacity:0.9; transform:scale(1.8);} }
+
+/* Grid lines (men) */
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background-image:
+    linear-gradient(rgba(0,212,232,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,232,0.05) 1px, transparent 1px);
+  background-size: 38px 38px;
+  transition: opacity 0.5s;
+}
+
+.hero-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.hero-live-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius-pill); padding: 7px 14px;
+}
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); transition: background 0.4s;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{transform:scale(1); opacity:1;} 50%{transform:scale(1.5); opacity:0.6;} }
+.live-text {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent); transition: color 0.4s;
+}
+.hero-days-left {
+  font-size: 11px; color: rgba(255,255,255,0.4);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 5px 12px; border-radius: var(--radius-pill);
+  letter-spacing: 0.06em;
+}
+
+/* Headline */
+.hero-headline { margin-bottom: 20px; }
+.hero-h1 {
+  font-family: var(--font-display);
+  font-size: 56px; line-height: 0.88;
+  font-weight: 700; color: #fff;
+  letter-spacing: -0.01em;
+}
+.hero-h1 .accent-line {
+  font-style: italic;
+  color: var(--accent); display: block;
+  transition: color 0.4s;
+}
+.hero-sub {
+  margin-top: 16px; font-size: 13px; font-weight: 300;
+  color: var(--text-on-hero); line-height: 1.75;
+  max-width: 300px;
+}
+
+/* Stats row */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; margin-bottom: 24px;
+}
+.stat-box {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  padding: 12px 8px; text-align: center;
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 700; color: #fff; line-height: 1;
+  display: block;
+}
+.stat-num.highlight { color: var(--accent); transition: color 0.4s; }
+.stat-lbl { font-size: 9px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 3px; }
+
+/* Hero image frame */
+.hero-img-frame {
+  position: relative; border-radius: var(--radius-lg);
+  overflow: hidden; height: 200px; margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px;
+  background: rgba(255,255,255,0.04);
+}
+.hero-img-frame::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: scan 3s ease-in-out infinite; opacity: 0.5;
+  transition: background 0.4s;
+}
+@keyframes scan { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
+.hero-img-icon { font-size: 68px; opacity: 0.65; transition: all 0.4s; }
+.hero-img-label { font-size: 10px; letter-spacing: 0.14em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
+.hero-img-badge {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--accent); color: #fff;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+  padding: 4px 12px; border-radius: var(--radius-pill);
+  transition: background 0.4s;
+}
+.hero-img-newtag {
+  position: absolute; bottom: 12px; left: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.6); font-size: 10px; letter-spacing: 0.1em;
+  padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+}
+
+/* Hero CTAs */
+.hero-cta-stack { display: flex; flex-direction: column; gap: 10px; }
+.btn-hero-primary {
+  width: 100%;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius-md);
+  padding: 17px; font-family: var(--font-body);
+  font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: background 0.4s, transform 0.15s;
+}
+.btn-hero-primary::after {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 60px; height: 100%; background: rgba(255,255,255,0.2);
+  transform: skewX(-20deg);
+  animation: shimmer 3s infinite 1.2s;
+}
+@keyframes shimmer { 0%{left:-100%;} 40%{left:130%;} 100%{left:130%;} }
+.btn-hero-primary:active { transform: scale(0.98); }
+
+.hero-cta-row-2 { display: flex; gap: 10px; }
+.btn-hero-ghost {
+  flex: 1; background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.75); border-radius: var(--radius-md);
+  padding: 13px; font-family: var(--font-body);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: background 0.2s; text-align: center;
+}
+.btn-hero-ghost:active { background: rgba(255,255,255,0.07); }
+.btn-hero-gift {
+  flex: 1; background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.75); border-radius: var(--radius-md);
+  padding: 13px; font-family: var(--font-body);
+  font-size: 13px; font-weight: 500; cursor: pointer; text-align: center;
+  transition: background 0.2s;
+}
+
+/* ── URGENCY BAR ── */
+.urgency-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--accent);
+  transition: background 0.4s;
+}
+.urgency-left { display: flex; flex-direction: column; gap: 2px; }
+.urgency-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.8); font-weight: 500; }
+.urgency-sub { font-size: 12px; color: rgba(255,255,255,0.65); }
+.countdown { display: flex; align-items: flex-start; gap: 6px; }
+.cd-unit { text-align: center; }
+.cd-num {
+  font-family: var(--font-display);
+  font-size: 30px; font-weight: 700; color: #fff;
+  line-height: 1; display: block;
+}
+.cd-lbl { font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.65); }
+.cd-sep { font-size: 22px; color: rgba(255,255,255,0.4); padding-top: 2px; }
+
+/* ── TRUST BAR ── */
+.trust-bar {
+  display: flex; background: var(--card-bg);
+  border-bottom: 1px solid var(--card-border);
+  transition: background 0.4s, border-color 0.4s;
+}
+.trust-item {
+  flex: 1; padding: 14px 8px; text-align: center;
+  border-right: 1px solid var(--card-border);
+  transition: border-color 0.4s;
+}
+.trust-item:last-child { border-right: none; }
+.trust-icon { font-size: 18px; margin-bottom: 4px; }
+.trust-label { font-size: 9px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; transition: color 0.4s; }
+
+/* ── SECTION HEADER ── */
+.section { padding: 28px 20px 0; }
+.sec-eyebrow {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500; margin-bottom: 4px;
+  transition: color 0.4s;
+}
+.sec-title {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 600; line-height: 1.1;
+  color: var(--text-primary); transition: color 0.4s;
+}
+.sec-title em { font-style: italic; color: var(--accent); transition: color 0.4s; }
+
+/* ── CATEGORY CHIPS ── */
+.chip-row {
+  display: flex; gap: 8px; overflow-x: auto;
+  padding: 14px 20px 0; scrollbar-width: none;
+}
+.chip-row::-webkit-scrollbar { display: none; }
+.chip {
+  flex-shrink: 0; padding: 8px 16px; border-radius: var(--radius-pill);
+  font-size: 12px; font-weight: 500; white-space: nowrap;
+  border: 1px solid var(--card-border); color: var(--text-muted);
+  background: var(--card-bg); cursor: pointer;
+  transition: all 0.2s;
+}
+.chip.active {
+  background: var(--text-primary); color: #fff;
+  border-color: var(--text-primary);
+  transition: background 0.4s, color 0.2s, border-color 0.4s;
+}
+
+/* ── PRODUCT GRID ── */
+.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 20px 0; }
+.pcard {
+  background: var(--card-bg); border-radius: var(--radius-md);
+  border: 1px solid var(--card-border); overflow: hidden;
+  transition: background 0.4s, border-color 0.4s;
+  cursor: pointer;
+}
+.pcard-img {
+  height: 152px; display: flex; align-items: center;
+  justify-content: center; font-size: 46px;
+  position: relative;
+}
+.pcard-badge {
+  position: absolute; top: 10px; left: 10px;
+  background: var(--accent); color: #fff;
+  font-size: 9px; font-weight: 600;
+  padding: 3px 9px; border-radius: var(--radius-pill);
+  letter-spacing: 0.04em; transition: background 0.4s;
+}
+.pcard-wish {
+  position: absolute; top: 10px; right: 10px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; cursor: pointer;
+  transition: transform 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.pcard-wish:active { transform: scale(1.3); }
+.pcard-body { padding: 11px 12px 14px; }
+.pcard-name { font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; transition: color 0.4s; }
+.pcard-cat { font-size: 10px; color: var(--text-muted); margin-bottom: 8px; transition: color 0.4s; }
+.pcard-prices { display: flex; align-items: center; gap: 6px; }
+.pcard-price { font-size: 14px; font-weight: 700; color: var(--text-primary); transition: color 0.4s; }
+.pcard-old { font-size: 11px; color: var(--text-muted); text-decoration: line-through; opacity: 0.7; transition: color 0.4s; }
+.pcard-add {
+  width: 100%; margin-top: 10px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  padding: 9px; font-family: var(--font-body);
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  transition: background 0.4s, transform 0.15s;
+}
+.pcard-add:active { transform: scale(0.97); }
+
+/* Product image backgrounds — Women */
+.bg-w1 { background: linear-gradient(135deg, #FDEEF3, #F9D4E1); }
+.bg-w2 { background: linear-gradient(135deg, #FDF3E3, #F5E0B8); }
+.bg-w3 { background: linear-gradient(135deg, #EEF5EE, #D4E8D4); }
+.bg-w4 { background: linear-gradient(135deg, #F0EEFF, #DDDAFF); }
+/* Product image backgrounds — Men */
+.bg-m1 { background: linear-gradient(135deg, #0F1B2D, #1B2E4A); }
+.bg-m2 { background: linear-gradient(135deg, #1A1D0F, #2C3018); }
+.bg-m3 { background: linear-gradient(135deg, #141414, #252525); }
+.bg-m4 { background: linear-gradient(135deg, #001A20, #003340); }
+
+/* Show/hide per gender */
+.w-only, .m-only { display: none; }
+body.women .w-only { display: flex; }
+body.men .m-only { display: flex; }
+body.women .pcard-img.w-only { display: flex; }
+body.men .pcard-img.m-only { display: flex; }
+.w-product, .m-product { display: none; }
+body.women .w-product { display: block; }
+body.men .m-product { display: block; }
+
+/* ── MID CTA BANNER ── */
+.mid-banner {
+  margin: 24px 20px 0;
+  border-radius: var(--radius-lg);
+  padding: 26px 22px;
+  position: relative; overflow: hidden;
+  background: var(--hero-bg);
+  transition: background 0.4s;
+}
+.mid-banner::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transition: background 0.4s;
+}
+.mid-banner-glow {
+  position: absolute; width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+  top: -60px; right: -40px; pointer-events: none;
+  transition: background 0.4s;
+}
+.mid-banner-eyebrow {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 8px; font-weight: 500;
+  transition: color 0.4s;
+}
+.mid-banner-title {
+  font-family: var(--font-display);
+  font-size: 32px; font-weight: 700; color: #fff;
+  line-height: 1.05; margin-bottom: 8px;
+}
+.mid-banner-title em { font-style: italic; color: var(--accent); transition: color 0.4s; }
+.mid-banner-sub { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.65; margin-bottom: 18px; }
+.mid-banner-btn {
+  display: inline-block; background: var(--accent); color: #fff;
+  font-family: var(--font-body); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; padding: 11px 22px;
+  border-radius: var(--radius-pill); border: none; cursor: pointer;
+  transition: background 0.4s, transform 0.15s;
+}
+.mid-banner-btn:active { transform: scale(0.97); }
+.mid-banner-emoji {
+  position: absolute; right: 22px; bottom: 22px; font-size: 50px;
+  animation: floatY 3s ease-in-out infinite;
+}
+@keyframes floatY { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+
+/* ── EDITORIAL PICKS (horizontal scroll) ── */
+.hscroll { display: flex; gap: 12px; overflow-x: auto; padding: 14px 20px 0; scrollbar-width: none; }
+.hscroll::-webkit-scrollbar { display: none; }
+.pick-card {
+  flex-shrink: 0; width: 148px; border-radius: var(--radius-md);
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  overflow: hidden; cursor: pointer;
+  transition: background 0.4s, border-color 0.4s;
+}
+.pick-img {
+  height: 126px; display: flex; align-items: center;
+  justify-content: center; font-size: 40px;
+}
+.pick-body { padding: 9px 11px 12px; }
+.pick-name { font-size: 11px; font-weight: 500; color: var(--text-primary); transition: color 0.4s; }
+.pick-price { font-size: 13px; font-weight: 700; color: var(--accent); margin-top: 3px; transition: color 0.4s; }
+
+/* ── GIFT GRID ── */
+.gift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px 20px 0; }
+.gift-tile {
+  border-radius: var(--radius-md); padding: 16px;
+  min-height: 118px; position: relative; cursor: pointer;
+  transition: transform 0.15s;
+}
+.gift-tile:active { transform: scale(0.97); }
+.gift-tile-icon { font-size: 24px; margin-bottom: 7px; }
+.gift-tile-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+.gift-tile-sub { font-size: 11px; color: var(--text-muted); line-height: 1.45; transition: color 0.4s; }
+.gift-tile-arrow {
+  position: absolute; bottom: 12px; right: 12px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(0,0,0,0.07);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+}
+.gt-rose { background: linear-gradient(135deg, #FDEEF3, #F9D4E1); }
+.gt-gold { background: linear-gradient(135deg, #FDF3E3, #F5E0B8); }
+.gt-blue { background: linear-gradient(135deg, #E8F4FF, #C8E4FF); }
+.gt-slate { background: linear-gradient(135deg, #EEF1F5, #DCE2EC); }
+
+/* ── TRENDING ── */
+.trend-list { display: flex; flex-direction: column; gap: 10px; padding: 14px 20px 0; }
+.trend-row {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: var(--radius-md); padding: 12px;
+  cursor: pointer; transition: background 0.4s, border-color 0.4s;
+}
+.trend-rank {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 700;
+  color: var(--card-border); min-width: 28px; line-height: 1;
+  transition: color 0.4s;
+}
+.trend-thumb {
+  width: 50px; height: 50px; border-radius: 10px;
+  flex-shrink: 0; display: flex; align-items: center;
+  justify-content: center; font-size: 24px;
+}
+.trend-info { flex: 1; }
+.trend-name { font-size: 13px; font-weight: 500; color: var(--text-primary); transition: color 0.4s; }
+.trend-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; transition: color 0.4s; }
+.trend-hot { color: #F5A623; }
+.trend-price-col { text-align: right; }
+.trend-price { font-size: 14px; font-weight: 700; color: var(--text-primary); transition: color 0.4s; }
+.trend-add-mini {
+  font-size: 10px; font-weight: 600; color: var(--accent);
+  letter-spacing: 0.06em; margin-top: 4px; cursor: pointer;
+  transition: color 0.4s;
+}
+
+/* ── SOCIAL PROOF ── */
+.proof-bar {
+  margin: 24px 20px 0;
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: var(--radius-md); padding: 16px 18px;
+  display: flex; align-items: center; gap: 14px;
+  transition: background 0.4s, border-color 0.4s;
+}
+.proof-avatars { display: flex; }
+.proof-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid var(--card-bg);
+  background: var(--accent); display: flex; align-items: center;
+  justify-content: center; font-size: 12px; margin-left: -8px;
+  transition: background 0.4s, border-color 0.4s;
+}
+.proof-avatar:first-child { margin-left: 0; }
+.proof-avatar.alt { background: var(--text-muted); }
+.proof-text { flex: 1; font-size: 12px; color: var(--text-muted); line-height: 1.5; transition: color 0.4s; }
+.proof-text strong { color: var(--text-primary); font-weight: 600; transition: color 0.4s; }
+
+/* ── FINAL CTA ── */
+.final-cta {
+  margin: 24px 20px 28px;
+  background: var(--hero-bg); border-radius: var(--radius-lg);
+  padding: 28px 22px; text-align: center;
+  position: relative; overflow: hidden;
+  transition: background 0.4s;
+}
+.final-cta::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transition: background 0.4s;
+}
+.final-cta-icon { font-size: 34px; margin-bottom: 10px; }
+.final-cta-title {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700; color: #fff;
+  line-height: 1.1; margin-bottom: 8px;
+}
+.final-cta-title em { font-style: italic; color: var(--accent); transition: color 0.4s; }
+.final-cta-sub { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 20px; line-height: 1.6; }
+.btn-final {
+  width: 100%; background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius-md);
+  padding: 16px; font-family: var(--font-body);
+  font-size: 15px; font-weight: 600; letter-spacing: 0.03em;
+  cursor: pointer; transition: background 0.4s, transform 0.15s;
+}
+.btn-final:active { transform: scale(0.98); }
+.btn-final-ghost {
+  width: 100%; background: transparent;
+  border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.6);
+  border-radius: var(--radius-md); padding: 13px;
+  font-family: var(--font-body); font-size: 13px; font-weight: 500;
+  cursor: pointer; margin-top: 10px;
+  transition: background 0.2s;
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position: sticky; bottom: 0; z-index: 200;
+  background: var(--card-bg); border-top: 1px solid var(--card-border);
+  display: flex; padding: 8px 0 18px;
+  transition: background 0.4s, border-color 0.4s;
+}
+.bnav-item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 3px; cursor: pointer;
+  padding-top: 4px;
+}
+.bnav-icon { font-size: 20px; }
+.bnav-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); transition: color 0.4s; }
+.bnav-item.active .bnav-lbl { color: var(--accent); font-weight: 600; transition: color 0.4s; }
+.bnav-item.active .bnav-icon { filter: none; }
+
+/* ── TRANSITIONS ── */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── MEN OVERRIDES (applied via body.men) ── */
+body.men {
+  --accent: #00D4E8;
+  --hero-bg: #080B10;
+  --hero-mid: #131926;
+  --page-bg: #F0F2F5;
+  --card-bg: #FFFFFF;
+  --card-border: #E0E5EC;
+  --text-primary: #080B10;
+  --text-muted: #6B7A8D;
+}
+body.men .hero-h1 { font-family: var(--font-body); font-weight: 700; font-size: 52px; letter-spacing: -0.02em; text-transform: uppercase; }
+body.men .sec-title { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; }
+body.men .mid-banner-title { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; }
+body.men .final-cta-title { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; }
+body.men .stat-num { font-family: var(--font-body); }
+body.men .trend-rank { font-family: var(--font-body); }
+body.men .hero-grid { opacity: 1; }
+body.men .sparkle { opacity: 0 !important; }
+body.men .hero-glow-1 { background: rgba(0,212,232,0.15); }
+body.men .hero-glow-2 { background: rgba(245,166,35,0.08); }
+body.women .hero-glow-1 { background: rgba(232,82,122,0.2); }
+body.women .hero-glow-2 { background: rgba(201,151,74,0.12); }
+</style>
+</head>
+<body class="women">
+
+<!-- STICKY TOP BAR -->
+<header class="top-bar">
+  <svg class="logo-svg" height="32" viewBox="0 0 220 36" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="logoRose" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#E8527A"/>
+        <stop offset="50%" stop-color="#F484A0"/>
+        <stop offset="100%" stop-color="#E8527A"/>
+      </linearGradient>
+    </defs>
+    <text y="28" font-family="'Cormorant Garamond','Georgia',serif" font-size="32" font-weight="700" letter-spacing="-0.5">
+      <tspan fill="#FFFFFF" font-style="normal">Ajio</tspan><tspan fill="url(#logoRose)" font-style="italic">gram</tspan>
+    </text>
+  </svg>
+
+  <div class="gender-toggle">
+    <button class="toggle-btn active" id="btn-women" onclick="setGender('women')">Her</button>
+    <button class="toggle-btn" id="btn-men" onclick="setGender('men')">Him</button>
+  </div>
+
+  <div class="top-icons">
+    <span class="top-icon">🔍</span>
+    <span class="top-icon" style="position:relative;">🛍️<span class="cart-badge" id="cart-count">3</span></span>
+  </div>
+</header>
+
+<!-- ANNOUNCE STRIP -->
+<div class="announce">
+  <div class="announce-track">
+    <span class="announce-text">🎄 Holiday Season Sale — Up to 50% Off</span>
+    <span class="announce-dot">✦</span>
+    <span class="announce-text">Free Delivery above ₹499</span>
+    <span class="announce-dot">✦</span>
+    <span class="announce-text">Free Gift Wrapping on orders above ₹999</span>
+    <span class="announce-dot">✦</span>
+    <span class="announce-text">🎄 Holiday Season Sale — Up to 50% Off</span>
+    <span class="announce-dot">✦</span>
+    <span class="announce-text">Free Delivery above ₹499</span>
+    <span class="announce-dot">✦</span>
+    <span class="announce-text">Free Gift Wrapping on orders above ₹999</span>
+    <span class="announce-dot">✦</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow hero-glow-1 glow-visible"></div>
+  <div class="hero-glow hero-glow-2 glow-visible"></div>
+  <div class="hero-grid"></div>
+
+  <!-- Sparkles (women only) -->
+  <div class="sparkle" style="width:6px;height:6px;top:10%;left:7%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:0s;"></div>
+  <div class="sparkle" style="width:4px;height:4px;top:20%;left:78%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:0.5s;"></div>
+  <div class="sparkle" style="width:7px;height:7px;top:55%;left:88%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:1s;"></div>
+  <div class="sparkle" style="width:5px;height:5px;top:75%;left:6%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:1.5s;"></div>
+  <div class="sparkle" style="width:4px;height:4px;top:40%;left:42%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:2s;"></div>
+
+  <div class="hero-top">
+    <div class="hero-live-pill">
+      <div class="live-dot"></div>
+      <span class="live-text">Sale Live Now</span>
+    </div>
+    <div class="hero-days-left" id="hero-days">3 Days Left</div>
+  </div>
+
+  <div class="hero-headline">
+    <h1 class="hero-h1">It's the<br><span class="accent-line" id="hero-h1-line">Holiday Season.</span></h1>
+    <p class="hero-sub" id="hero-sub">Shop the most festive drops of the year. Curated styles for the woman who owns every room she walks into.</p>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-box">
+      <span class="stat-num highlight">50%</span>
+      <div class="stat-lbl">Max Off</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" id="stat-styles">200+</span>
+      <div class="stat-lbl" id="stat-lbl2">Styles</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">3</span>
+      <div class="stat-lbl">Days Left</div>
+    </div>
+  </div>
+
+  <div class="hero-img-frame">
+    <div class="hero-img-icon" id="hero-icon">👗</div>
+    <div class="hero-img-label" id="hero-img-label">Women's Collection</div>
+    <div class="hero-img-badge" id="hero-badge">New In</div>
+    <div class="hero-img-newtag" id="hero-newtag">✦ Holiday Edit</div>
+  </div>
+
+  <div class="hero-cta-stack">
+    <button class="btn-hero-primary" id="hero-cta-primary">Shop the Sale →</button>
+    <div class="hero-cta-row-2">
+      <button class="btn-hero-ghost">♡ Wishlist</button>
+      <button class="btn-hero-gift">🎁 Gift Sets</button>
+    </div>
+  </div>
+</section>
+
+<!-- URGENCY BAR (countdown) -->
+<div class="urgency-bar">
+  <div class="urgency-left">
+    <span class="urgency-label">⏳ Sale Ends In</span>
+    <span class="urgency-sub">Don't miss out — limited stock!</span>
+  </div>
+  <div class="countdown">
+    <div class="cd-unit"><span class="cd-num" id="cd-h">02</span><span class="cd-lbl">Hrs</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-m">47</span><span class="cd-lbl">Min</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-s">33</span><span class="cd-lbl">Sec</span></div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar reveal">
+  <div class="trust-item">
+    <div class="trust-icon">🚚</div>
+    <div class="trust-label">Free Delivery</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">↩️</div>
+    <div class="trust-label">Easy Returns</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">🔒</div>
+    <div class="trust-label">Safe Pay</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">⭐</div>
+    <div class="trust-label">4.8 Rated</div>
+  </div>
+</div>
+
+<!-- CATEGORY CHIPS -->
+<div class="section reveal">
+  <div class="sec-eyebrow">Browse by</div>
+  <div class="sec-title" id="sec-shop-title">Shop <em>Your Style</em></div>
+</div>
+<div class="chip-row reveal" id="chip-row-women">
+  <div class="chip active">All</div>
+  <div class="chip">Party Wear</div>
+  <div class="chip">Loungewear</div>
+  <div class="chip">Footwear</div>
+  <div class="chip">Accessories</div>
+  <div class="chip">Ethnic</div>
+</div>
+<div class="chip-row reveal" id="chip-row-men" style="display:none;">
+  <div class="chip active">All</div>
+  <div class="chip">Streetwear</div>
+  <div class="chip">Formals</div>
+  <div class="chip">Footwear</div>
+  <div class="chip">Accessories</div>
+  <div class="chip">Winter</div>
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="product-grid reveal" id="product-grid-women">
+  <div class="pcard w-product">
+    <div class="pcard-img bg-w1">👗<div class="pcard-badge">40% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-name">Velvet Slip Dress</div>
+      <div class="pcard-cat">Party Wear</div>
+      <div class="pcard-prices"><span class="pcard-price">₹1,199</span><span class="pcard-old">₹1,999</span></div>
+      <button class="pcard-add">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard w-product">
+    <div class="pcard-img bg-w2">👜<div class="pcard-badge">35% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-name">Mini Chain Bag</div>
+      <div class="pcard-cat">Accessories</div>
+      <div class="pcard-prices"><span class="pcard-price">₹899</span><span class="pcard-old">₹1,399</span></div>
+      <button class="pcard-add">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard w-product">
+    <div class="pcard-img bg-w3">🧣<div class="pcard-badge">50% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-name">Sage Knit Scarf</div>
+      <div class="pcard-cat">Winterwear</div>
+      <div class="pcard-prices"><span class="pcard-price">₹499</span><span class="pcard-old">₹999</span></div>
+      <button class="pcard-add">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard w-product">
+    <div class="pcard-img bg-w4">💎<div class="pcard-badge">30% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-name">Crystal Hoops</div>
+      <div class="pcard-cat">Jewellery</div>
+      <div class="pcard-prices"><span class="pcard-price">₹349</span><span class="pcard-old">₹499</span></div>
+      <button class="pcard-add">Add to Bag</button>
+    </div>
+  </div>
+</div>
+
+<div class="product-grid reveal" id="product-grid-men" style="display:none;">
+  <div class="pcard m-product">
+    <div class="pcard-img bg-m1">🧥<div class="pcard-badge">40% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-name">Oversized Bomber</div>
+      <div class="pcard-cat">Streetwear</div>
+      <div class="pcard-prices"><span class="pcard-price">₹1,499</span><span class="pcard-old">₹2,499</span></div>
+      <button class="pcard-add">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard m-product">
+    <div class="pcard-img bg-m2">👖<div class="pcard-badge">35% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-name">Camo Cargo Pants</div>
+      <div class="pcard-cat">Bottomwear</div>
+      <div class="pcard-prices"><span class="pcard-price">₹999</span><span class="pcard-old">₹1,549</span></div>
+      <button class="pcard-add">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard m-product">
+    <div class="pcard-img bg-m3">🧣<div class="pcard-badge">50% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-name">Chunky Muffler</div>
+      <div class="pcard-cat">Accessories</div>
+      <div class="pcard-prices"><span class="pcard-price">₹399</span><span class="pcard-old">₹799</span></div>
+      <button class="pcard-add">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard m-product">
+    <div class="pcard-img bg-m4">⌚<div class="pcard-badge">30% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-name">Minimal Watch</div>
+      <div class="pcard-cat">Accessories</div>
+      <div class="pcard-prices"><span class="pcard-price">₹1,799</span><span class="pcard-old">₹2,599</span></div>
+      <button class="pcard-add">Add to Bag</button>
+    </div>
+  </div>
+</div>
+
+<!-- MID CTA BANNER -->
+<div class="mid-banner reveal">
+  <div class="mid-banner-glow"></div>
+  <div class="mid-banner-eyebrow">✦ Limited Time</div>
+  <div class="mid-banner-title" id="mid-title">Gift Like<br><em>You Mean It.</em></div>
+  <div class="mid-banner-sub" id="mid-sub">Holiday gift sets, exclusive bundles, and free gift wrapping on all orders above ₹999.</div>
+  <button class="mid-banner-btn" id="mid-btn">Explore Gift Sets →</button>
+  <div class="mid-banner-emoji" id="mid-emoji">🎁</div>
+</div>
+
+<!-- EDITOR'S PICKS -->
+<div class="section reveal">
+  <div class="sec-eyebrow">Handpicked</div>
+  <div class="sec-title">Editor's <em>Picks</em></div>
+</div>
+<div class="hscroll reveal" id="picks-women">
+  <div class="pick-card"><div class="pick-img bg-w1">👠</div><div class="pick-body"><div class="pick-name">Block Heel Mule</div><div class="pick-price">₹1,499</div></div></div>
+  <div class="pick-card"><div class="pick-img bg-w2">🧥</div><div class="pick-body"><div class="pick-name">Trench Co-ord</div><div class="pick-price">₹2,199</div></div></div>
+  <div class="pick-card"><div class="pick-img bg-w3">🌿</div><div class="pick-body"><div class="pick-name">Satin Slip Set</div><div class="pick-price">₹1,299</div></div></div>
+  <div class="pick-card"><div class="pick-img bg-w4">💋</div><div class="pick-body"><div class="pick-name">Velvet Pouch</div><div class="pick-price">₹549</div></div></div>
+</div>
+<div class="hscroll reveal" id="picks-men" style="display:none;">
+  <div class="pick-card"><div class="pick-img bg-m1">👕</div><div class="pick-body"><div class="pick-name">Drop Shoulder Tee</div><div class="pick-price">₹799</div></div></div>
+  <div class="pick-card"><div class="pick-img bg-m2">🎩</div><div class="pick-body"><div class="pick-name">Dad Cap</div><div class="pick-price">₹449</div></div></div>
+  <div class="pick-card"><div class="pick-img bg-m3">🎒</div><div class="pick-body"><div class="pick-name">Minimal Backpack</div><div class="pick-price">₹1,299</div></div></div>
+  <div class="pick-card"><div class="pick-img bg-m4">🕶️</div><div class="pick-body"><div class="pick-name">Retro Shades</div><div class="pick-price">₹599</div></div></div>
+</div>
+
+<!-- GIFT ZONES -->
+<div class="section reveal">
+  <div class="sec-eyebrow">Holiday Edition</div>
+  <div class="sec-title">Gift <em>Zones</em></div>
+</div>
+<div class="gift-grid reveal" id="gift-grid-women">
+  <div class="gift-tile gt-rose"><div class="gift-tile-icon">💝</div><div class="gift-tile-title">For Her</div><div class="gift-tile-sub">Sets under ₹1,999</div><div class="gift-tile-arrow">→</div></div>
+  <div class="gift-tile gt-gold"><div class="gift-tile-icon">🎀</div><div class="gift-tile-title">Best Sellers</div><div class="gift-tile-sub">Top 10 loved picks</div><div class="gift-tile-arrow">→</div></div>
+  <div class="gift-tile gt-gold"><div class="gift-tile-icon">✨</div><div class="gift-tile-title">Luxe Edit</div><div class="gift-tile-sub">Premium above ₹3k</div><div class="gift-tile-arrow">→</div></div>
+  <div class="gift-tile gt-rose"><div class="gift-tile-icon">🌟</div><div class="gift-tile-title">Under ₹999</div><div class="gift-tile-sub">Festive budget finds</div><div class="gift-tile-arrow">→</div></div>
+</div>
+<div class="gift-grid reveal" id="gift-grid-men" style="display:none;">
+  <div class="gift-tile gt-blue"><div class="gift-tile-icon">⚡</div><div class="gift-tile-title">For Him</div><div class="gift-tile-sub">Sets under ₹1,999</div><div class="gift-tile-arrow">→</div></div>
+  <div class="gift-tile gt-slate"><div class="gift-tile-icon">🏆</div><div class="gift-tile-title">Best Sellers</div><div class="gift-tile-sub">Top picks this week</div><div class="gift-tile-arrow">→</div></div>
+  <div class="gift-tile gt-slate"><div class="gift-tile-icon">💎</div><div class="gift-tile-title">Luxe Edit</div><div class="gift-tile-sub">Premium above ₹3k</div><div class="gift-tile-arrow">→</div></div>
+  <div class="gift-tile gt-blue"><div class="gift-tile-icon">🎯</div><div class="gift-tile-title">Under ₹999</div><div class="gift-tile-sub">Smart budget finds</div><div class="gift-tile-arrow">→</div></div>
+</div>
+
+<!-- TRENDING TODAY -->
+<div class="section reveal">
+  <div class="sec-eyebrow">Right Now</div>
+  <div class="sec-title">Trending <em>Today</em></div>
+</div>
+
+<div class="trend-list reveal" id="trend-women">
+  <div class="trend-row">
+    <div class="trend-rank">01</div>
+    <div class="trend-thumb bg-w1">💃</div>
+    <div class="trend-info"><div class="trend-name">Sequin Mini Dress</div><div class="trend-meta">Party Wear · <span class="trend-hot">🔥 847 bought</span></div></div>
+    <div class="trend-price-col"><div class="trend-price">₹1,599</div><div class="trend-add-mini">ADD →</div></div>
+  </div>
+  <div class="trend-row">
+    <div class="trend-rank">02</div>
+    <div class="trend-thumb bg-w2">👒</div>
+    <div class="trend-info"><div class="trend-name">Wool Bucket Hat</div><div class="trend-meta">Accessories · <span class="trend-hot">🔥 612 bought</span></div></div>
+    <div class="trend-price-col"><div class="trend-price">₹699</div><div class="trend-add-mini">ADD →</div></div>
+  </div>
+  <div class="trend-row">
+    <div class="trend-rank">03</div>
+    <div class="trend-thumb bg-w3">🧸</div>
+    <div class="trend-info"><div class="trend-name">Teddy Fleece Jacket</div><div class="trend-meta">Winterwear · <span class="trend-hot">🔥 528 bought</span></div></div>
+    <div class="trend-price-col"><div class="trend-price">₹1,899</div><div class="trend-add-mini">ADD →</div></div>
+  </div>
+</div>
+
+<div class="trend-list reveal" id="trend-men" style="display:none;">
+  <div class="trend-row">
+    <div class="trend-rank">01</div>
+    <div class="trend-thumb bg-m1">🧥</div>
+    <div class="trend-info"><div class="trend-name">Puffer Jacket XL</div><div class="trend-meta">Winter · <span class="trend-hot">🔥 1.2k bought</span></div></div>
+    <div class="trend-price-col"><div class="trend-price">₹2,199</div><div class="trend-add-mini">ADD →</div></div>
+  </div>
+  <div class="trend-row">
+    <div class="trend-rank">02</div>
+    <div class="trend-thumb bg-m2">👕</div>
+    <div class="trend-info"><div class="trend-name">Graphic Oversized Tee</div><div class="trend-meta">Streetwear · <span class="trend-hot">🔥 934 bought</span></div></div>
+    <div class="trend-price-col"><div class="trend-price">₹699</div><div class="trend-add-mini">ADD →</div></div>
+  </div>
+  <div class="trend-row">
+    <div class="trend-rank">03</div>
+    <div class="trend-thumb bg-m3">👟</div>
+    <div class="trend-info"><div class="trend-name">Low-Top Sneakers</div><div class="trend-meta">Footwear · <span class="trend-hot">🔥 811 bought</span></div></div>
+    <div class="trend-price-col"><div class="trend-price">₹1,899</div><div class="trend-add-mini">ADD →</div></div>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<div class="proof-bar reveal">
+  <div class="proof-avatars">
+    <div class="proof-avatar">S</div>
+    <div class="proof-avatar alt">R</div>
+    <div class="proof-avatar">A</div>
+    <div class="proof-avatar alt">K</div>
+  </div>
+  <div class="proof-text"><strong>2,400+ people</strong> are shopping the Holiday Sale right now. Most items selling out fast.</div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="final-cta reveal">
+  <div class="final-cta-icon">🎄</div>
+  <div class="final-cta-title" id="final-title">Make It a<br><em>Holiday</em> Moment.</div>
+  <div class="final-cta-sub">Free delivery on orders above ₹499. Sale ends in 3 days. No regrets.</div>
+  <button class="btn-final" id="final-btn">Shop All Women's Styles →</button>
+  <button class="btn-final-ghost">Browse Gift Sets</button>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bnav-item active"><div class="bnav-icon">🏠</div><div class="bnav-lbl">Home</div></div>
+  <div class="bnav-item"><div class="bnav-icon">🔍</div><div class="bnav-lbl">Search</div></div>
+  <div class="bnav-item"><div class="bnav-icon">🛍️</div><div class="bnav-lbl">Shop</div></div>
+  <div class="bnav-item"><div class="bnav-icon">🤍</div><div class="bnav-lbl">Saved</div></div>
+  <div class="bnav-item"><div class="bnav-icon">👤</div><div class="bnav-lbl">Profile</div></div>
+</nav>
+
+<script>
+// ── GENDER TOGGLE ──
+function setGender(g) {
+  const body = document.body;
+  body.className = g;
+
+  // Toggle buttons
+  document.getElementById('btn-women').classList.toggle('active', g === 'women');
+  document.getElementById('btn-men').classList.toggle('active', g === 'men');
+
+  // Hero content
+  const isW = g === 'women';
+  document.getElementById('hero-h1-line').textContent = isW ? 'Holiday Season.' : 'Holiday Season.';
+  document.getElementById('hero-sub').textContent = isW
+    ? 'Shop the most festive drops of the year. Curated styles for the woman who owns every room she walks into.'
+    : 'Bold fits. Exclusive drops. Holiday deals engineered for the man who doesn\'t wait for sales — but knows when to move fast.';
+  document.getElementById('hero-icon').textContent = isW ? '👗' : '🧥';
+  document.getElementById('hero-img-label').textContent = isW ? 'Women\'s Collection' : 'Men\'s Collection';
+  document.getElementById('hero-badge').textContent = isW ? 'New In' : 'Drop 01';
+  document.getElementById('hero-newtag').textContent = isW ? '✦ Holiday Edit' : '⚡ New Arrivals';
+  document.getElementById('hero-cta-primary').textContent = isW ? 'Shop the Sale →' : 'Shop the Drop →';
+  document.getElementById('stat-styles').textContent = isW ? '200+' : '300+';
+  document.getElementById('sec-shop-title').innerHTML = isW ? 'Shop <em>Your Style</em>' : 'SHOP YOUR <em>DROP</em>';
+  document.getElementById('mid-title').innerHTML = isW ? 'Gift Like<br><em>You Mean It.</em>' : 'GIFT<br><em>BOLD.</em>';
+  document.getElementById('mid-sub').textContent = isW
+    ? 'Holiday gift sets, exclusive bundles, and free gift wrapping on all orders above ₹999.'
+    : 'Curated gift sets for him. Free gift wrapping on all orders above ₹999. Express delivery in 24hrs.';
+  document.getElementById('mid-btn').textContent = isW ? 'Explore Gift Sets →' : 'Shop Gift Sets →';
+  document.getElementById('mid-emoji').textContent = isW ? '🎁' : '🎁';
+  document.getElementById('final-title').innerHTML = isW ? 'Make It a<br><em>Holiday</em> Moment.' : 'MAKE IT<br><em>HOLIDAY.</em>';
+  document.getElementById('final-btn').textContent = isW ? 'Shop All Women\'s Styles →' : 'Shop All Men\'s Styles →';
+
+  // Show/hide gender-specific content
+  document.getElementById('chip-row-women').style.display = isW ? 'flex' : 'none';
+  document.getElementById('chip-row-men').style.display = isW ? 'none' : 'flex';
+  document.getElementById('product-grid-women').style.display = isW ? 'grid' : 'none';
+  document.getElementById('product-grid-men').style.display = isW ? 'none' : 'grid';
+  document.getElementById('picks-women').style.display = isW ? 'flex' : 'none';
+  document.getElementById('picks-men').style.display = isW ? 'none' : 'flex';
+  document.getElementById('gift-grid-women').style.display = isW ? 'grid' : 'none';
+  document.getElementById('gift-grid-men').style.display = isW ? 'none' : 'grid';
+  document.getElementById('trend-women').style.display = isW ? 'flex' : 'none';
+  document.getElementById('trend-men').style.display = isW ? 'none' : 'flex';
+}
+
+// ── COUNTDOWN ──
+let total = 2*3600 + 47*60 + 33;
+function tick() {
+  if (total <= 0) return;
+  total--;
+  document.getElementById('cd-h').textContent = String(Math.floor(total/3600)).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(Math.floor((total%3600)/60)).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(total%60).padStart(2,'0');
+}
+setInterval(tick, 1000);
+
+// ── WISHLIST TOGGLE ──
+let wishCount = 0;
+function wishToggle(el) {
+  const wished = el.textContent === '❤️';
+  el.textContent = wished ? '🤍' : '❤️';
+  wishCount += wished ? -1 : 1;
+  const badge = document.getElementById('cart-count');
+  badge.textContent = 3 + wishCount;
+}
+
+// ── ADD TO BAG feedback ──
+document.querySelectorAll('.pcard-add, .trend-add-mini').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Added!';
+    btn.style.background = '#22c55e';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+    }, 1200);
+    const badge = document.getElementById('cart-count');
+    badge.textContent = parseInt(badge.textContent) + 1;
+  });
+});
+
+// ── CHIP FILTER ──
+document.querySelectorAll('.chip-row').forEach(row => {
+  row.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      row.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+});
+
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 40);
+    }
+  });
+}, { threshold: 0.08 });
+revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

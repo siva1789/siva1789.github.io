@@ -3,805 +3,864 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Ajiogram — It's Holiday Season Sale</title>
+<title>Ajiogram — It's the Year-End Sale</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 
-/* ── SHARED TOKENS ── */
+/* ── THEME: CURTAIN CALL ── */
+/* Deep velvet midnight + gold foil + rose ember + fresh snow */
 :root {
-  --font-display: 'Cormorant Garamond', serif;
-  --font-body: 'DM Sans', sans-serif;
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 22px;
-  --radius-pill: 100px;
+  --fd: 'Cormorant Garamond',serif;
+  --fb: 'DM Sans',sans-serif;
 
-  /* Women */
-  --w-hero-bg: #1C0B16;
-  --w-hero-mid: #3A1628;
+  /* Women palette */
+  --w-deep:   #120816;
+  --w-velvet: #1E0D20;
   --w-accent: #E8527A;
-  --w-gold: #C9974A;
-  --w-cream: #FDF6EE;
-  --w-card: #FFFFFF;
-  --w-border: #EDE0E8;
-  --w-muted: #8A6070;
-  --w-text: #1C0B16;
+  --w-gold:   #C9974A;
+  --w-gold-lt:#F0C97A;
+  --w-cream:  #FDF8F2;
+  --w-card:   #FFFFFF;
+  --w-border: #EDE0EA;
+  --w-muted:  #8A6070;
+  --w-text:   #120816;
 
-  /* Men */
-  --m-hero-bg: #080B10;
-  --m-hero-mid: #131926;
+  /* Men palette */
+  --m-deep:   #080B12;
+  --m-slate:  #111624;
   --m-accent: #00D4E8;
-  --m-amber: #F5A623;
-  --m-bg: #F0F2F5;
-  --m-card: #FFFFFF;
-  --m-border: #E0E5EC;
-  --m-muted: #6B7A8D;
-  --m-text: #080B10;
+  --m-ember:  #F5A623;
+  --m-snow:   #F2F4F7;
+  --m-card:   #FFFFFF;
+  --m-border: #DDE2EC;
+  --m-muted:  #6B7A90;
+  --m-text:   #080B12;
 
-  /* Active (changes with toggle) */
-  --accent: #E8527A;
-  --hero-bg: #1C0B16;
-  --hero-mid: #3A1628;
-  --page-bg: #FDF6EE;
-  --card-bg: #FFFFFF;
-  --card-border: #EDE0E8;
-  --text-primary: #1C0B16;
-  --text-muted: #8A6070;
-  --text-on-hero: rgba(255,255,255,0.55);
+  /* Active tokens */
+  --deep:    #120816;
+  --velvet:  #1E0D20;
+  --accent:  #E8527A;
+  --gold:    #C9974A;
+  --gold-lt: #F0C97A;
+  --page-bg: #FDF8F2;
+  --card:    #FFFFFF;
+  --border:  #EDE0EA;
+  --muted:   #8A6070;
+  --ink:     #120816;
+
+  --r-xs: 8px; --r-sm: 12px; --r-md: 18px; --r-lg: 24px; --r-xl: 32px; --r-pill: 100px;
 }
 
-html { background: var(--page-bg); transition: background 0.4s; }
+html { background: var(--page-bg); }
 body {
-  font-family: var(--font-body);
-  color: var(--text-primary);
+  font-family: var(--fb);
+  color: var(--ink);
   max-width: 430px;
   margin: 0 auto;
-  overflow-x: hidden;
-  transition: color 0.4s;
+  overflow-x: clip;
+  transition: color 0.45s, background 0.45s;
 }
 
-/* ── STICKY TOP BAR ── */
-.top-bar {
-  position: sticky; top: 0; z-index: 200;
-  background: var(--hero-bg);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 20px;
-  transition: background 0.4s;
-}
-.logo-svg {
-  display: block;
-  height: 32px;
-  width: auto;
-  flex-shrink: 0;
-}
-
-/* Gender Toggle */
-.gender-toggle {
+/* ════════════════════════════════
+   ANNOUNCE STRIP
+════════════════════════════════ */
+.strip {
+  background: var(--gold);
+  overflow: hidden;
+  height: 34px;
   display: flex; align-items: center;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: var(--radius-pill);
-  padding: 3px; gap: 2px;
+  transition: background 0.45s;
 }
-.toggle-btn {
-  font-family: var(--font-body);
-  font-size: 11px; font-weight: 500;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 6px 14px; border-radius: var(--radius-pill);
+.strip-track {
+  display: flex; align-items: center;
+  gap: 28px; white-space: nowrap;
+  animation: marquee 22s linear infinite;
+}
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.strip-text {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--deep);
+}
+.strip-gem { font-size: 8px; color: rgba(0,0,0,0.3); }
+
+/* ════════════════════════════════
+   STICKY NAV
+════════════════════════════════ */
+.nav {
+  position: sticky; top: 0; z-index: 300;
+  background: var(--deep);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.45s;
+}
+.logo-svg { height: 30px; width: auto; flex-shrink: 0; display: block; }
+.gender-pill {
+  display: flex; background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--r-pill); padding: 3px; gap: 2px;
+}
+.gpill {
+  font-family: var(--fb); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: var(--r-pill);
   border: none; background: transparent;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.38);
   cursor: pointer; transition: all 0.25s;
 }
-.toggle-btn.active {
-  background: var(--accent);
-  color: #fff;
-  transition: background 0.4s, color 0.2s;
-}
-
-.top-icons { display: flex; gap: 16px; align-items: center; }
-.top-icon { font-size: 18px; cursor: pointer; position: relative; }
-.cart-badge {
+.gpill.on { background: var(--accent); color: #fff; transition: background 0.45s; }
+.nav-right { display: flex; gap: 14px; align-items: center; }
+.nav-icon { font-size: 18px; cursor: pointer; position: relative; }
+.nbadge {
   position: absolute; top: -4px; right: -5px;
-  width: 14px; height: 14px; border-radius: 50%;
+  width: 15px; height: 15px; border-radius: 50%;
   background: var(--accent); color: #fff;
-  font-size: 8px; font-weight: 600;
+  font-size: 8px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
-  transition: background 0.4s;
+  transition: background 0.45s;
 }
 
-/* ── ANNOUNCE STRIP ── */
-.announce {
-  background: var(--accent);
-  padding: 8px 20px;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: background 0.4s;
-  overflow: hidden; position: relative;
-}
-.announce-track {
-  display: flex; gap: 48px; white-space: nowrap;
-  animation: marquee 18s linear infinite;
-}
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.announce-text {
-  font-size: 11px; font-weight: 500; color: #fff;
-  letter-spacing: 0.1em; text-transform: uppercase;
-}
-.announce-dot { color: rgba(255,255,255,0.5); font-size: 8px; }
-
-/* ── HERO ── */
+/* ════════════════════════════════
+   HERO — THE BIG CURTAIN
+════════════════════════════════ */
 .hero {
   position: relative;
-  background: var(--hero-bg);
-  padding: 28px 20px 24px;
+  display: flex; flex-direction: column;
   overflow: hidden;
-  transition: background 0.4s;
-  min-height: 520px;
-  display: flex; flex-direction: column; justify-content: space-between;
+  background: var(--deep);
+  transition: background 0.45s;
 }
-.hero-glow {
-  position: absolute; pointer-events: none;
-  border-radius: 50%; filter: blur(80px); opacity: 0;
-  transition: opacity 0.6s, background 0.4s;
-}
-.hero-glow-1 { width: 260px; height: 260px; top: -80px; right: -60px; }
-.hero-glow-2 { width: 180px; height: 180px; bottom: 40px; left: -40px; }
-.glow-visible { opacity: 1; }
 
-/* Sparkles (women) */
-.sparkle {
-  position: absolute; border-radius: 50%; pointer-events: none;
-  animation: twinkle 3s ease-in-out infinite;
-  transition: opacity 0.4s;
+/* Deep velvet radial atmosphere */
+.hero-atm {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 80% 0%, rgba(232,82,122,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 10% 80%, rgba(201,151,74,0.12) 0%, transparent 60%);
+  transition: background 0.5s;
 }
-@keyframes twinkle { 0%,100%{opacity:0.15; transform:scale(1);} 50%{opacity:0.9; transform:scale(1.8);} }
-
-/* Grid lines (men) */
+/* Grid lines (men only) */
 .hero-grid {
   position: absolute; inset: 0; pointer-events: none; opacity: 0;
   background-image:
-    linear-gradient(rgba(0,212,232,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,232,0.05) 1px, transparent 1px);
-  background-size: 38px 38px;
+    linear-gradient(rgba(0,212,232,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,232,0.04) 1px, transparent 1px);
+  background-size: 36px 36px;
   transition: opacity 0.5s;
 }
+/* Falling snow */
+.snow-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.flake {
+  position: absolute; top: -12px;
+  border-radius: 50%; background: rgba(255,255,255,0.7);
+  animation: snowfall linear infinite;
+}
+@keyframes snowfall {
+  0%   { transform: translateY(0) translateX(0); opacity: 0.8; }
+  80%  { opacity: 0.6; }
+  100% { transform: translateY(110vh) translateX(30px); opacity: 0; }
+}
+/* Gold sparkle dots */
+.spark {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(240,201,122,0.9), transparent 70%);
+  animation: sparkle 3s ease-in-out infinite;
+}
+@keyframes sparkle { 0%,100%{opacity:0.15;transform:scale(1)} 50%{opacity:1;transform:scale(1.9)} }
 
-.hero-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-.hero-live-pill {
+/* ── HERO INNER LAYOUT ── */
+.hero-inner { position: relative; z-index: 10; display: flex; flex-direction: column; flex: 1; padding: 20px 20px 24px; gap: 0; }
+
+/* Live badge row */
+.hero-toprow { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+.live-badge {
   display: inline-flex; align-items: center; gap: 7px;
   background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
-  border-radius: var(--radius-pill); padding: 7px 14px;
+  border-radius: var(--r-pill); padding: 7px 14px;
 }
-.live-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--accent); transition: background 0.4s;
-  animation: pulse 1.4s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100%{transform:scale(1); opacity:1;} 50%{transform:scale(1.5); opacity:0.6;} }
-.live-text {
-  font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--accent); transition: color 0.4s;
-}
-.hero-days-left {
-  font-size: 11px; color: rgba(255,255,255,0.4);
-  border: 1px solid rgba(255,255,255,0.12);
-  padding: 5px 12px; border-radius: var(--radius-pill);
-  letter-spacing: 0.06em;
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: blink 1.4s ease-in-out infinite; transition: background 0.45s; }
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
+.live-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); transition: color 0.45s; }
+.hero-days {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.38);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 5px 13px; border-radius: var(--r-pill);
 }
 
-/* Headline */
-.hero-headline { margin-bottom: 20px; }
+
+@keyframes revealUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── HEADLINE ── */
+.hero-headline { margin-bottom: 18px; animation: revealUp 0.9s 0.3s cubic-bezier(0.16,1,0.3,1) both; }
 .hero-h1 {
-  font-family: var(--font-display);
-  font-size: 56px; line-height: 0.88;
-  font-weight: 700; color: #fff;
-  letter-spacing: -0.01em;
+  font-family: var(--fd); font-size: 52px; font-weight: 700; line-height: 1.0;
+  color: #fff; letter-spacing: -0.01em;
 }
-.hero-h1 .accent-line {
-  font-style: italic;
-  color: var(--accent); display: block;
-  transition: color 0.4s;
+.hero-h1 .hl {
+  font-style: italic; color: var(--gold);
+  display: block; font-size: 48px;
+  transition: color 0.45s;
 }
 .hero-sub {
-  margin-top: 16px; font-size: 13px; font-weight: 300;
-  color: var(--text-on-hero); line-height: 1.75;
-  max-width: 300px;
+  margin-top: 12px; font-size: 13px; font-weight: 300;
+  color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 310px;
 }
 
-/* Stats row */
-.hero-stats {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 8px; margin-bottom: 24px;
-}
-.stat-box {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: var(--radius-sm);
-  padding: 12px 8px; text-align: center;
-}
-.stat-num {
-  font-family: var(--font-display);
-  font-size: 26px; font-weight: 700; color: #fff; line-height: 1;
-  display: block;
-}
-.stat-num.highlight { color: var(--accent); transition: color 0.4s; }
-.stat-lbl { font-size: 9px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 3px; }
-
-/* Hero image frame */
-.hero-img-frame {
-  position: relative; border-radius: var(--radius-lg);
-  overflow: hidden; height: 200px; margin-bottom: 20px;
+/* ── CAMPAIGN IMAGE FRAME ── */
+.hero-frame {
+  position: relative; border-radius: var(--r-lg);
+  height: 188px; margin-bottom: 18px; overflow: hidden;
   border: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: 8px;
   background: rgba(255,255,255,0.04);
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px;
+  animation: revealUp 0.9s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+  transition: border-color 0.45s;
 }
-.hero-img-frame::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+.hero-frame::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  animation: scan 3s ease-in-out infinite; opacity: 0.5;
-  transition: background 0.4s;
+  animation: linerun 3s ease-in-out infinite; transition: background 0.45s;
 }
-@keyframes scan { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
-.hero-img-icon { font-size: 68px; opacity: 0.65; transition: all 0.4s; }
-.hero-img-label { font-size: 10px; letter-spacing: 0.14em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
-.hero-img-badge {
+@keyframes linerun { 0%,100%{opacity:0.3} 50%{opacity:1} }
+.hero-frame-icon { font-size: 64px; opacity: 0.6; transition: all 0.45s; }
+.hero-frame-sub { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
+.frame-badge {
   position: absolute; top: 12px; right: 12px;
   background: var(--accent); color: #fff;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
-  padding: 4px 12px; border-radius: var(--radius-pill);
-  transition: background 0.4s;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  padding: 4px 12px; border-radius: var(--r-pill);
+  transition: background 0.45s;
 }
-.hero-img-newtag {
+.frame-tag {
   position: absolute; bottom: 12px; left: 12px;
-  border: 1px solid rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.6); font-size: 10px; letter-spacing: 0.1em;
+  border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.55);
+  font-size: 10px; letter-spacing: 0.1em;
   padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
 }
 
-/* Hero CTAs */
-.hero-cta-stack { display: flex; flex-direction: column; gap: 10px; }
-.btn-hero-primary {
-  width: 100%;
-  background: var(--accent); color: #fff;
-  border: none; border-radius: var(--radius-md);
-  padding: 17px; font-family: var(--font-body);
+/* ── HERO STATS STRIP ── */
+.hero-stats {
+  display: flex; gap: 8px; margin-bottom: 18px;
+  animation: revealUp 0.9s 0.4s cubic-bezier(0.16,1,0.3,1) both;
+}
+.hstat {
+  flex: 1; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--r-sm); padding: 12px 8px; text-align: center;
+}
+.hstat-num {
+  font-family: var(--fd); font-size: 28px; font-weight: 700;
+  color: #fff; line-height: 1; display: block;
+}
+.hstat-num.acc { color: var(--accent); transition: color 0.45s; }
+.hstat-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.38); margin-top: 3px; }
+
+/* ── HERO CTAs ── */
+.hero-ctas { display: flex; flex-direction: column; gap: 10px; animation: revealUp 0.9s 0.45s cubic-bezier(0.16,1,0.3,1) both; }
+.btn-primary {
+  width: 100%; background: var(--accent); color: #fff;
+  border: none; border-radius: var(--r-md);
+  padding: 17px; font-family: var(--fb);
   font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
   cursor: pointer; position: relative; overflow: hidden;
-  transition: background 0.4s, transform 0.15s;
+  transition: background 0.45s, transform 0.15s;
 }
-.btn-hero-primary::after {
-  content: ''; position: absolute; top: 0; left: -100%;
-  width: 60px; height: 100%; background: rgba(255,255,255,0.2);
-  transform: skewX(-20deg);
-  animation: shimmer 3s infinite 1.2s;
+.btn-primary::after {
+  content:''; position:absolute; top:0; left:-100%;
+  width:70px; height:100%; background:rgba(255,255,255,0.2);
+  transform:skewX(-20deg); animation:sheen 3.5s infinite 1.5s;
 }
-@keyframes shimmer { 0%{left:-100%;} 40%{left:130%;} 100%{left:130%;} }
-.btn-hero-primary:active { transform: scale(0.98); }
-
-.hero-cta-row-2 { display: flex; gap: 10px; }
-.btn-hero-ghost {
+@keyframes sheen { 0%{left:-100%} 35%{left:130%} 100%{left:130%} }
+.btn-primary:active { transform:scale(0.98); }
+.cta-row2 { display: flex; gap: 10px; }
+.btn-ghost {
   flex: 1; background: transparent;
-  border: 1px solid rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.75); border-radius: var(--radius-md);
-  padding: 13px; font-family: var(--font-body);
-  font-size: 13px; font-weight: 500; cursor: pointer;
-  transition: background 0.2s; text-align: center;
+  border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.7);
+  border-radius: var(--r-md); padding: 13px;
+  font-family: var(--fb); font-size: 13px; font-weight: 500;
+  cursor: pointer; text-align: center; transition: background 0.2s;
 }
-.btn-hero-ghost:active { background: rgba(255,255,255,0.07); }
-.btn-hero-gift {
-  flex: 1; background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: rgba(255,255,255,0.75); border-radius: var(--radius-md);
-  padding: 13px; font-family: var(--font-body);
-  font-size: 13px; font-weight: 500; cursor: pointer; text-align: center;
-  transition: background 0.2s;
-}
+.btn-ghost:active { background: rgba(255,255,255,0.07); }
 
-/* ── URGENCY BAR ── */
-.urgency-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px;
+/* ════════════════════════════════
+   URGENCY COUNTDOWN BAR
+════════════════════════════════ */
+.urgency {
   background: var(--accent);
-  transition: background 0.4s;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  transition: background 0.45s;
 }
-.urgency-left { display: flex; flex-direction: column; gap: 2px; }
-.urgency-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.8); font-weight: 500; }
-.urgency-sub { font-size: 12px; color: rgba(255,255,255,0.65); }
-.countdown { display: flex; align-items: flex-start; gap: 6px; }
+.urg-left .urg-title { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+.urg-left .urg-sub { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+.countdown { display: flex; align-items: flex-start; gap: 5px; }
 .cd-unit { text-align: center; }
-.cd-num {
-  font-family: var(--font-display);
-  font-size: 30px; font-weight: 700; color: #fff;
-  line-height: 1; display: block;
-}
+.cd-num { font-family: var(--fd); font-size: 32px; font-weight: 700; color: #fff; line-height: 1; display: block; }
 .cd-lbl { font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.65); }
-.cd-sep { font-size: 22px; color: rgba(255,255,255,0.4); padding-top: 2px; }
+.cd-sep { font-size: 24px; color: rgba(255,255,255,0.4); padding-top: 2px; }
 
-/* ── TRUST BAR ── */
-.trust-bar {
-  display: flex; background: var(--card-bg);
-  border-bottom: 1px solid var(--card-border);
-  transition: background 0.4s, border-color 0.4s;
+/* ════════════════════════════════
+   TRUST PILLS
+════════════════════════════════ */
+.trust {
+  display: flex; overflow-x: auto; gap: 8px;
+  padding: 16px 20px; scrollbar-width: none;
+  background: var(--card); border-bottom: 1px solid var(--border);
+  transition: background 0.45s, border-color 0.45s;
 }
-.trust-item {
-  flex: 1; padding: 14px 8px; text-align: center;
-  border-right: 1px solid var(--card-border);
-  transition: border-color 0.4s;
+.trust::-webkit-scrollbar { display: none; }
+.trust-pill {
+  flex-shrink: 0; display: flex; align-items: center; gap: 6px;
+  background: var(--page-bg); border: 1px solid var(--border);
+  border-radius: var(--r-pill); padding: 7px 14px;
+  transition: background 0.45s, border-color 0.45s;
 }
-.trust-item:last-child { border-right: none; }
-.trust-icon { font-size: 18px; margin-bottom: 4px; }
-.trust-label { font-size: 9px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; transition: color 0.4s; }
+.trust-icon { font-size: 14px; }
+.trust-lbl { font-size: 11px; font-weight: 500; color: var(--muted); white-space: nowrap; transition: color 0.45s; }
 
-/* ── SECTION HEADER ── */
+/* ════════════════════════════════
+   SECTION HEADERS
+════════════════════════════════ */
 .section { padding: 28px 20px 0; }
-.sec-eyebrow {
-  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--accent); font-weight: 500; margin-bottom: 4px;
-  transition: color 0.4s;
+.eyebrow {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 5px;
+  transition: color 0.45s;
 }
 .sec-title {
-  font-family: var(--font-display);
-  font-size: 28px; font-weight: 600; line-height: 1.1;
-  color: var(--text-primary); transition: color 0.4s;
+  font-family: var(--fd); font-size: 30px; font-weight: 700; line-height: 1.08;
+  color: var(--ink); transition: color 0.45s;
 }
-.sec-title em { font-style: italic; color: var(--accent); transition: color 0.4s; }
+.sec-title em { font-style: italic; color: var(--accent); transition: color 0.45s; }
 
-/* ── CATEGORY CHIPS ── */
-.chip-row {
-  display: flex; gap: 8px; overflow-x: auto;
-  padding: 14px 20px 0; scrollbar-width: none;
-}
-.chip-row::-webkit-scrollbar { display: none; }
+/* ════════════════════════════════
+   CATEGORY CHIPS
+════════════════════════════════ */
+.chips { display: flex; gap: 8px; overflow-x: auto; padding: 14px 20px 0; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
 .chip {
-  flex-shrink: 0; padding: 8px 16px; border-radius: var(--radius-pill);
+  flex-shrink: 0; padding: 8px 17px; border-radius: var(--r-pill);
   font-size: 12px; font-weight: 500; white-space: nowrap;
-  border: 1px solid var(--card-border); color: var(--text-muted);
-  background: var(--card-bg); cursor: pointer;
-  transition: all 0.2s;
+  border: 1px solid var(--border); color: var(--muted); background: var(--card);
+  cursor: pointer; transition: all 0.2s;
 }
-.chip.active {
-  background: var(--text-primary); color: #fff;
-  border-color: var(--text-primary);
-  transition: background 0.4s, color 0.2s, border-color 0.4s;
-}
+.chip.on { background: var(--ink); color: #fff; border-color: var(--ink); transition: background 0.45s, border-color 0.45s; }
 
-/* ── PRODUCT GRID ── */
-.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 20px 0; }
-.pcard {
-  background: var(--card-bg); border-radius: var(--radius-md);
-  border: 1px solid var(--card-border); overflow: hidden;
-  transition: background 0.4s, border-color 0.4s;
-  cursor: pointer;
+/* ════════════════════════════════
+   PRODUCT GRID
+════════════════════════════════ */
+.pgrid {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 14px 20px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
 }
+.pgrid::-webkit-scrollbar { display: none; }
+.pcard {
+  flex-shrink: 0;
+  width: 168px;
+  scroll-snap-align: start;
+  background: var(--card); border-radius: var(--r-md);
+  border: 1px solid var(--border); overflow: hidden;
+  cursor: pointer; transition: background 0.45s, border-color 0.45s, transform 0.15s;
+}
+.pcard:active { transform: scale(0.98); }
 .pcard-img {
-  height: 152px; display: flex; align-items: center;
-  justify-content: center; font-size: 46px;
-  position: relative;
+  height: 152px; display: flex; align-items: center; justify-content: center;
+  font-size: 46px; position: relative;
 }
 .pcard-badge {
-  position: absolute; top: 10px; left: 10px;
+  position: absolute; top: 9px; left: 9px;
   background: var(--accent); color: #fff;
-  font-size: 9px; font-weight: 600;
-  padding: 3px 9px; border-radius: var(--radius-pill);
-  letter-spacing: 0.04em; transition: background 0.4s;
+  font-size: 9px; font-weight: 700; padding: 3px 9px;
+  border-radius: var(--r-pill); letter-spacing: 0.04em;
+  transition: background 0.45s;
+}
+.pcard-new {
+  position: absolute; top: 9px; left: 9px;
+  background: var(--gold); color: var(--deep);
+  font-size: 9px; font-weight: 700; padding: 3px 9px;
+  border-radius: var(--r-pill); letter-spacing: 0.04em;
+  transition: background 0.45s, color 0.45s;
 }
 .pcard-wish {
-  position: absolute; top: 10px; right: 10px;
+  position: absolute; top: 9px; right: 9px;
   width: 28px; height: 28px; border-radius: 50%;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.92);
   display: flex; align-items: center; justify-content: center;
   font-size: 13px; cursor: pointer;
-  transition: transform 0.15s;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.15s;
 }
 .pcard-wish:active { transform: scale(1.3); }
+.pcard-sold { margin-bottom: 8px; }
+.sold-bar-bg { height: 3px; background: rgba(0,0,0,0.08); border-radius: 2px; overflow: hidden; }
+.sold-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: background 0.45s; }
+.sold-lbl { font-size: 9px; color: var(--muted); margin-top: 3px; letter-spacing: 0.04em; transition: color 0.45s; }
 .pcard-body { padding: 11px 12px 14px; }
-.pcard-name { font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; transition: color 0.4s; }
-.pcard-cat { font-size: 10px; color: var(--text-muted); margin-bottom: 8px; transition: color 0.4s; }
-.pcard-prices { display: flex; align-items: center; gap: 6px; }
-.pcard-price { font-size: 14px; font-weight: 700; color: var(--text-primary); transition: color 0.4s; }
-.pcard-old { font-size: 11px; color: var(--text-muted); text-decoration: line-through; opacity: 0.7; transition: color 0.4s; }
-.pcard-add {
-  width: 100%; margin-top: 10px;
-  background: var(--accent); color: #fff;
-  border: none; border-radius: var(--radius-sm);
-  padding: 9px; font-family: var(--font-body);
+.pcard-name { font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 2px; transition: color 0.45s; }
+.pcard-cat { font-size: 10px; color: var(--muted); margin-bottom: 8px; transition: color 0.45s; }
+.pcard-prices { display: flex; align-items: center; gap: 6px; margin-bottom: 9px; }
+.pcard-price { font-size: 15px; font-weight: 700; color: var(--ink); transition: color 0.45s; }
+.pcard-mrp { font-size: 11px; color: var(--muted); text-decoration: line-through; opacity: 0.7; }
+.pcard-save { font-size: 10px; font-weight: 600; color: #22c55e; }
+.btn-bag {
+  width: 100%; background: var(--accent); color: #fff;
+  border: none; border-radius: var(--r-sm);
+  padding: 9px; font-family: var(--fb);
   font-size: 12px; font-weight: 600; cursor: pointer;
-  transition: background 0.4s, transform 0.15s;
+  transition: background 0.45s, transform 0.15s;
 }
-.pcard-add:active { transform: scale(0.97); }
+.btn-bag:active { transform: scale(0.97); }
 
-/* Product image backgrounds — Women */
-.bg-w1 { background: linear-gradient(135deg, #FDEEF3, #F9D4E1); }
-.bg-w2 { background: linear-gradient(135deg, #FDF3E3, #F5E0B8); }
-.bg-w3 { background: linear-gradient(135deg, #EEF5EE, #D4E8D4); }
-.bg-w4 { background: linear-gradient(135deg, #F0EEFF, #DDDAFF); }
-/* Product image backgrounds — Men */
-.bg-m1 { background: linear-gradient(135deg, #0F1B2D, #1B2E4A); }
-.bg-m2 { background: linear-gradient(135deg, #1A1D0F, #2C3018); }
-.bg-m3 { background: linear-gradient(135deg, #141414, #252525); }
-.bg-m4 { background: linear-gradient(135deg, #001A20, #003340); }
+/* Product image bgs */
+.bw1{background:linear-gradient(135deg,#FDEEF3,#F9D4E1)}
+.bw2{background:linear-gradient(135deg,#FDF3E3,#F5E0B8)}
+.bw3{background:linear-gradient(135deg,#EEF5EE,#D4E8D4)}
+.bw4{background:linear-gradient(135deg,#F0EEFF,#DDDAFF)}
+.bm1{background:linear-gradient(135deg,#0F1B2D,#1B2E4A)}
+.bm2{background:linear-gradient(135deg,#1A1D0F,#2C3018)}
+.bm3{background:linear-gradient(135deg,#141414,#252525)}
+.bm4{background:linear-gradient(135deg,#001A20,#003340)}
 
-/* Show/hide per gender */
-.w-only, .m-only { display: none; }
-body.women .w-only { display: flex; }
-body.men .m-only { display: flex; }
-body.women .pcard-img.w-only { display: flex; }
-body.men .pcard-img.m-only { display: flex; }
-.w-product, .m-product { display: none; }
-body.women .w-product { display: block; }
-body.men .m-product { display: block; }
-
-/* ── MID CTA BANNER ── */
-.mid-banner {
+/* ════════════════════════════════
+   FESTIVE FULL-WIDTH BANNER
+════════════════════════════════ */
+.fest-banner {
   margin: 24px 20px 0;
-  border-radius: var(--radius-lg);
-  padding: 26px 22px;
-  position: relative; overflow: hidden;
-  background: var(--hero-bg);
-  transition: background 0.4s;
+  border-radius: var(--r-xl);
+  background: var(--deep);
+  overflow: hidden; position: relative;
+  transition: background 0.45s;
 }
-.mid-banner::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  transition: background 0.4s;
+.fest-banner::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg,transparent,var(--gold),var(--accent),var(--gold),transparent);
+  transition: background 0.45s;
 }
-.mid-banner-glow {
-  position: absolute; width: 180px; height: 180px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
-  top: -60px; right: -40px; pointer-events: none;
-  transition: background 0.4s;
+.fest-inner { padding: 28px 24px 28px; position: relative; z-index: 2; }
+.fest-glow {
+  position: absolute; width: 220px; height: 220px; border-radius: 50%;
+  top: -80px; right: -60px; pointer-events: none;
+  background: radial-gradient(circle, rgba(232,82,122,0.2), transparent 70%);
+  transition: background 0.45s;
 }
-.mid-banner-eyebrow {
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 8px; font-weight: 500;
-  transition: color 0.4s;
+.fest-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; transition: color 0.45s; }
+.fest-title {
+  font-family: var(--fd); font-size: 38px; font-weight: 700; color: #fff; line-height: 1.0; margin-bottom: 10px;
 }
-.mid-banner-title {
-  font-family: var(--font-display);
-  font-size: 32px; font-weight: 700; color: #fff;
-  line-height: 1.05; margin-bottom: 8px;
+.fest-title em { font-style: italic; color: var(--accent); transition: color 0.45s; }
+.fest-sub { font-size: 13px; color: rgba(255,255,255,0.48); line-height: 1.65; margin-bottom: 20px; max-width: 240px; }
+.btn-fest {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--gold); color: var(--deep);
+  font-family: var(--fb); font-size: 12px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 12px 22px; border-radius: var(--r-pill);
+  border: none; cursor: pointer; transition: background 0.45s, transform 0.15s;
 }
-.mid-banner-title em { font-style: italic; color: var(--accent); transition: color 0.4s; }
-.mid-banner-sub { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.65; margin-bottom: 18px; }
-.mid-banner-btn {
-  display: inline-block; background: var(--accent); color: #fff;
-  font-family: var(--font-body); font-size: 12px; font-weight: 600;
-  letter-spacing: 0.08em; padding: 11px 22px;
-  border-radius: var(--radius-pill); border: none; cursor: pointer;
-  transition: background 0.4s, transform 0.15s;
+.btn-fest:active { transform: scale(0.97); }
+.fest-emoji {
+  position: absolute; right: 24px; bottom: 24px; font-size: 56px;
+  animation: floatY 3s ease-in-out infinite; z-index: 2;
 }
-.mid-banner-btn:active { transform: scale(0.97); }
-.mid-banner-emoji {
-  position: absolute; right: 22px; bottom: 22px; font-size: 50px;
-  animation: floatY 3s ease-in-out infinite;
-}
-@keyframes floatY { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+@keyframes floatY { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-10px) rotate(4deg)} }
 
-/* ── EDITORIAL PICKS (horizontal scroll) ── */
+/* ════════════════════════════════
+   HORIZONTAL SCROLL PICKS
+════════════════════════════════ */
 .hscroll { display: flex; gap: 12px; overflow-x: auto; padding: 14px 20px 0; scrollbar-width: none; }
 .hscroll::-webkit-scrollbar { display: none; }
-.pick-card {
-  flex-shrink: 0; width: 148px; border-radius: var(--radius-md);
-  background: var(--card-bg); border: 1px solid var(--card-border);
+.pick {
+  flex-shrink: 0; width: 144px; border-radius: var(--r-md);
+  background: var(--card); border: 1px solid var(--border);
   overflow: hidden; cursor: pointer;
-  transition: background 0.4s, border-color 0.4s;
+  transition: background 0.45s, border-color 0.45s;
 }
-.pick-img {
-  height: 126px; display: flex; align-items: center;
-  justify-content: center; font-size: 40px;
-}
+.pick-img { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 38px; }
 .pick-body { padding: 9px 11px 12px; }
-.pick-name { font-size: 11px; font-weight: 500; color: var(--text-primary); transition: color 0.4s; }
-.pick-price { font-size: 13px; font-weight: 700; color: var(--accent); margin-top: 3px; transition: color 0.4s; }
+.pick-name { font-size: 11px; font-weight: 500; color: var(--ink); transition: color 0.45s; }
+.pick-price { font-size: 13px; font-weight: 700; color: var(--accent); margin-top: 3px; transition: color 0.45s; }
 
-/* ── GIFT GRID ── */
-.gift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px 20px 0; }
-.gift-tile {
-  border-radius: var(--radius-md); padding: 16px;
-  min-height: 118px; position: relative; cursor: pointer;
-  transition: transform 0.15s;
+/* ════════════════════════════════
+   GIFT ZONES — 2x2 TILES
+════════════════════════════════ */
+.gtiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px 20px 0; }
+.gtile {
+  border-radius: var(--r-md); padding: 18px;
+  min-height: 116px; position: relative;
+  cursor: pointer; transition: transform 0.15s;
 }
-.gift-tile:active { transform: scale(0.97); }
-.gift-tile-icon { font-size: 24px; margin-bottom: 7px; }
-.gift-tile-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
-.gift-tile-sub { font-size: 11px; color: var(--text-muted); line-height: 1.45; transition: color 0.4s; }
-.gift-tile-arrow {
+.gtile:active { transform: scale(0.97); }
+.gtile-icon { font-size: 26px; margin-bottom: 8px; }
+.gtile-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 3px; transition: color 0.45s; }
+.gtile-sub { font-size: 11px; color: var(--muted); line-height: 1.45; transition: color 0.45s; }
+.gtile-arrow {
   position: absolute; bottom: 12px; right: 12px;
   width: 24px; height: 24px; border-radius: 50%;
   background: rgba(0,0,0,0.07);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px;
+  display: flex; align-items: center; justify-content: center; font-size: 11px;
 }
-.gt-rose { background: linear-gradient(135deg, #FDEEF3, #F9D4E1); }
-.gt-gold { background: linear-gradient(135deg, #FDF3E3, #F5E0B8); }
-.gt-blue { background: linear-gradient(135deg, #E8F4FF, #C8E4FF); }
+.gt-rose  { background: linear-gradient(135deg, #FDEEF3, #F9D4E1); }
+.gt-gold  { background: linear-gradient(135deg, #FDF3E3, #F5E0B8); }
+.gt-blue  { background: linear-gradient(135deg, #E8F4FF, #C8E4FF); }
 .gt-slate { background: linear-gradient(135deg, #EEF1F5, #DCE2EC); }
 
-/* ── TRENDING ── */
-.trend-list { display: flex; flex-direction: column; gap: 10px; padding: 14px 20px 0; }
-.trend-row {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--card-bg); border: 1px solid var(--card-border);
-  border-radius: var(--radius-md); padding: 12px;
-  cursor: pointer; transition: background 0.4s, border-color 0.4s;
-}
-.trend-rank {
-  font-family: var(--font-display);
-  font-size: 24px; font-weight: 700;
-  color: var(--card-border); min-width: 28px; line-height: 1;
-  transition: color 0.4s;
-}
-.trend-thumb {
-  width: 50px; height: 50px; border-radius: 10px;
-  flex-shrink: 0; display: flex; align-items: center;
-  justify-content: center; font-size: 24px;
-}
-.trend-info { flex: 1; }
-.trend-name { font-size: 13px; font-weight: 500; color: var(--text-primary); transition: color 0.4s; }
-.trend-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; transition: color 0.4s; }
-.trend-hot { color: #F5A623; }
-.trend-price-col { text-align: right; }
-.trend-price { font-size: 14px; font-weight: 700; color: var(--text-primary); transition: color 0.4s; }
-.trend-add-mini {
-  font-size: 10px; font-weight: 600; color: var(--accent);
-  letter-spacing: 0.06em; margin-top: 4px; cursor: pointer;
-  transition: color 0.4s;
-}
-
-/* ── SOCIAL PROOF ── */
-.proof-bar {
+/* ════════════════════════════════
+   YEAR-END COUNTDOWN FEATURE
+════════════════════════════════ */
+.year-countdown {
   margin: 24px 20px 0;
-  background: var(--card-bg); border: 1px solid var(--card-border);
-  border-radius: var(--radius-md); padding: 16px 18px;
-  display: flex; align-items: center; gap: 14px;
-  transition: background 0.4s, border-color 0.4s;
-}
-.proof-avatars { display: flex; }
-.proof-avatar {
-  width: 30px; height: 30px; border-radius: 50%;
-  border: 2px solid var(--card-bg);
-  background: var(--accent); display: flex; align-items: center;
-  justify-content: center; font-size: 12px; margin-left: -8px;
-  transition: background 0.4s, border-color 0.4s;
-}
-.proof-avatar:first-child { margin-left: 0; }
-.proof-avatar.alt { background: var(--text-muted); }
-.proof-text { flex: 1; font-size: 12px; color: var(--text-muted); line-height: 1.5; transition: color 0.4s; }
-.proof-text strong { color: var(--text-primary); font-weight: 600; transition: color 0.4s; }
-
-/* ── FINAL CTA ── */
-.final-cta {
-  margin: 24px 20px 28px;
-  background: var(--hero-bg); border-radius: var(--radius-lg);
-  padding: 28px 22px; text-align: center;
+  border-radius: var(--r-xl);
+  background: var(--deep);
+  padding: 26px 24px;
   position: relative; overflow: hidden;
-  transition: background 0.4s;
+  transition: background 0.45s;
 }
-.final-cta::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  transition: background 0.4s;
+.year-countdown::before {
+  content:''; position:absolute; top:0;left:0;right:0; height:2px;
+  background: linear-gradient(90deg,transparent,var(--gold-lt),transparent);
+  transition: background 0.45s;
 }
-.final-cta-icon { font-size: 34px; margin-bottom: 10px; }
-.final-cta-title {
-  font-family: var(--font-display);
-  font-size: 28px; font-weight: 700; color: #fff;
-  line-height: 1.1; margin-bottom: 8px;
+.yc-label { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; transition: color 0.45s; }
+.yc-title { font-family: var(--fd); font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 18px; }
+.yc-title em { font-style: italic; color: var(--accent); transition: color 0.45s; }
+.yc-units { display: flex; gap: 8px; }
+.yc-unit { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-sm); padding: 14px 8px; text-align: center; }
+.yc-num { font-family: var(--fd); font-size: 36px; font-weight: 700; color: #fff; line-height: 1; display: block; }
+.yc-sub { font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.4); margin-top: 4px; }
+.yc-glow { position: absolute; right: -40px; top: -40px; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle,rgba(201,151,74,0.15),transparent 70%); pointer-events: none; }
+
+/* ════════════════════════════════
+   TRENDING
+════════════════════════════════ */
+.tlist { display: flex; flex-direction: column; gap: 10px; padding: 14px 20px 0; }
+.trow {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 12px;
+  cursor: pointer; transition: background 0.45s, border-color 0.45s, transform 0.15s;
 }
-.final-cta-title em { font-style: italic; color: var(--accent); transition: color 0.4s; }
-.final-cta-sub { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 20px; line-height: 1.6; }
+.trow:active { transform: scale(0.99); }
+.trank { font-family: var(--fd); font-size: 26px; font-weight: 700; color: var(--border); min-width: 30px; line-height: 1; transition: color 0.45s; }
+.tthumb { width: 50px; height: 50px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.tinfo { flex: 1; }
+.tname { font-size: 13px; font-weight: 500; color: var(--ink); transition: color 0.45s; }
+.tmeta { font-size: 11px; color: var(--muted); margin-top: 2px; transition: color 0.45s; }
+.thot { color: #F59E0B; }
+.tprice-col { text-align: right; }
+.tprice { font-size: 14px; font-weight: 700; color: var(--ink); transition: color 0.45s; }
+.tadd { font-size: 10px; font-weight: 600; color: var(--accent); letter-spacing: 0.06em; margin-top: 4px; cursor: pointer; transition: color 0.45s; }
+
+/* ════════════════════════════════
+   SOCIAL PROOF
+════════════════════════════════ */
+.proof {
+  margin: 22px 20px 0;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 16px 18px;
+  display: flex; align-items: center; gap: 14px;
+  transition: background 0.45s, border-color 0.45s;
+}
+.avatars { display: flex; }
+.av {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid var(--card); background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; margin-left: -8px; font-weight: 600; color: #fff;
+  transition: background 0.45s, border-color 0.45s;
+}
+.av:first-child { margin-left: 0; }
+.av.m { background: var(--muted); }
+.proof-copy { flex: 1; font-size: 12px; color: var(--muted); line-height: 1.55; transition: color 0.45s; }
+.proof-copy strong { color: var(--ink); font-weight: 600; transition: color 0.45s; }
+
+/* ════════════════════════════════
+   FINAL CTA
+════════════════════════════════ */
+.final {
+  margin: 24px 20px 32px;
+  background: var(--deep); border-radius: var(--r-xl);
+  padding: 32px 24px; text-align: center;
+  position: relative; overflow: hidden;
+  transition: background 0.45s;
+}
+.final::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg,transparent,var(--gold),var(--accent),var(--gold),transparent);
+  transition: background 0.45s;
+}
+.final-glow {
+  position: absolute; width: 200px; height: 200px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,82,122,0.15), transparent 70%);
+  bottom: -60px; left: -40px; pointer-events: none;
+  transition: background 0.45s;
+}
+.final-icon { font-size: 38px; margin-bottom: 12px; display: block; }
+.final-title {
+  font-family: var(--fd); font-size: 34px; font-weight: 700; color: #fff;
+  line-height: 1.08; margin-bottom: 10px;
+}
+.final-title em { font-style: italic; color: var(--accent); transition: color 0.45s; }
+.final-sub { font-size: 13px; color: rgba(255,255,255,0.42); margin-bottom: 22px; line-height: 1.65; }
+.final-sub .hi { color: var(--gold-lt); font-weight: 600; transition: color 0.45s; }
 .btn-final {
   width: 100%; background: var(--accent); color: #fff;
-  border: none; border-radius: var(--radius-md);
-  padding: 16px; font-family: var(--font-body);
-  font-size: 15px; font-weight: 600; letter-spacing: 0.03em;
-  cursor: pointer; transition: background 0.4s, transform 0.15s;
+  border: none; border-radius: var(--r-md); padding: 17px;
+  font-family: var(--fb); font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
+  cursor: pointer; transition: background 0.45s, transform 0.15s;
+  margin-bottom: 10px;
 }
 .btn-final:active { transform: scale(0.98); }
 .btn-final-ghost {
   width: 100%; background: transparent;
-  border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.6);
-  border-radius: var(--radius-md); padding: 13px;
-  font-family: var(--font-body); font-size: 13px; font-weight: 500;
-  cursor: pointer; margin-top: 10px;
-  transition: background 0.2s;
+  border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.55);
+  border-radius: var(--r-md); padding: 13px;
+  font-family: var(--fb); font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: background 0.2s;
 }
 
-/* ── BOTTOM NAV ── */
-.bottom-nav {
+/* ════════════════════════════════
+   BOTTOM NAV
+════════════════════════════════ */
+.bnav {
   position: sticky; bottom: 0; z-index: 200;
-  background: var(--card-bg); border-top: 1px solid var(--card-border);
+  background: var(--card); border-top: 1px solid var(--border);
   display: flex; padding: 8px 0 18px;
-  transition: background 0.4s, border-color 0.4s;
+  transition: background 0.45s, border-color 0.45s;
 }
-.bnav-item {
+.bni {
   flex: 1; display: flex; flex-direction: column;
-  align-items: center; gap: 3px; cursor: pointer;
-  padding-top: 4px;
+  align-items: center; gap: 3px; cursor: pointer; padding-top: 4px;
 }
-.bnav-icon { font-size: 20px; }
-.bnav-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); transition: color 0.4s; }
-.bnav-item.active .bnav-lbl { color: var(--accent); font-weight: 600; transition: color 0.4s; }
-.bnav-item.active .bnav-icon { filter: none; }
+.bni-icon { font-size: 20px; }
+.bni-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); transition: color 0.45s; }
+.bni.on .bni-lbl { color: var(--accent); font-weight: 600; }
 
-/* ── TRANSITIONS ── */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
-.reveal.visible { opacity: 1; transform: none; }
+/* ════════════════════════════════
+   SHOW / HIDE GENDER CONTENT
+════════════════════════════════ */
+.w-show, .m-show { display: none; }
+body.women .w-show { display: flex; }
+body.men   .m-show { display: flex; }
+.w-grid, .m-grid { display: none; }
+body.women .w-grid { display: flex; }
+body.men   .m-grid { display: flex; }
+.w-block, .m-block { display: none; }
+body.women .w-block { display: block; }
+body.men   .m-block { display: block; }
+.w-hscroll, .m-hscroll { display: none; }
+body.women .w-hscroll { display: flex; }
+body.men   .m-hscroll { display: flex; }
+.w-tiles, .m-tiles { display: none; }
+body.women .w-tiles { display: grid; }
+body.men   .m-tiles { display: grid; }
+.w-tlist, .m-tlist { display: none; }
+body.women .w-tlist { display: flex; }
+body.men   .m-tlist { display: flex; }
 
-/* ── UP TO 60% OFF FLASH ── */
-.hero-offer-flash {
-  position: relative; z-index: 10;
-  display: flex; align-items: center; gap: 12px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-left: 3px solid var(--accent);
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin-bottom: 4px;
-  transition: border-color 0.4s;
-}
-.hero-offer-badge {
-  font-family: var(--font-display);
-  font-size: 26px; font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  transition: color 0.4s;
-  animation: offerPulse 2.5s ease-in-out infinite;
-}
-@keyframes offerPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.75; }
-}
-.hero-offer-sub {
-  font-size: 11px; font-weight: 400;
-  color: rgba(255,255,255,0.5);
-  letter-spacing: 0.04em;
-  line-height: 1.5;
-}
-
-body.men .hero-offer-badge { font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.06em; }
-
-
+/* ════════════════════════════════
+   MEN THEME OVERRIDES
+════════════════════════════════ */
 body.men {
+  --deep:   #080B12;
+  --velvet: #111624;
   --accent: #00D4E8;
-  --hero-bg: #080B10;
-  --hero-mid: #131926;
-  --page-bg: #F0F2F5;
-  --card-bg: #FFFFFF;
-  --card-border: #E0E5EC;
-  --text-primary: #080B10;
-  --text-muted: #6B7A8D;
+  --gold:   #F5A623;
+  --gold-lt:#FBBF6A;
+  --page-bg:#F2F4F7;
+  --card:   #FFFFFF;
+  --border: #DDE2EC;
+  --muted:  #6B7A90;
+  --ink:    #080B12;
 }
-body.men .hero-h1 { font-family: var(--font-body); font-weight: 700; font-size: 52px; letter-spacing: -0.02em; text-transform: uppercase; }
-body.men .sec-title { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; }
-body.men .mid-banner-title { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; }
-body.men .final-cta-title { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; }
-body.men .stat-num { font-family: var(--font-body); }
-body.men .trend-rank { font-family: var(--font-body); }
-body.men .hero-grid { opacity: 1; }
-body.men .sparkle { opacity: 0 !important; }
-body.men .hero-glow-1 { background: rgba(0,212,232,0.15); }
-body.men .hero-glow-2 { background: rgba(245,166,35,0.08); }
-body.women .hero-glow-1 { background: rgba(232,82,122,0.2); }
-body.women .hero-glow-2 { background: rgba(201,151,74,0.12); }
+body.men .hero-h1        { font-family: var(--fb); font-weight: 700; font-size: 54px; letter-spacing: -0.02em; text-transform: uppercase; }
+body.men .hero-h1 .hl   { font-style: normal; font-size: 54px; }
+body.men .sec-title      { font-family: var(--fb); font-weight: 700; text-transform: uppercase; }
+body.men .fest-title     { font-family: var(--fb); font-weight: 700; text-transform: uppercase; }
+body.men .yc-title       { font-family: var(--fb); font-weight: 700; }
+body.men .final-title    { font-family: var(--fb); font-weight: 700; text-transform: uppercase; }
+body.men .trank          { font-family: var(--fb); }
+body.men .hero-grid      { opacity: 1; }
+body.men .spark          { opacity: 0 !important; }
+body.men .hero-atm       { background: radial-gradient(ellipse 80% 50% at 80% 0%, rgba(0,212,232,0.12) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 10% 80%, rgba(245,166,35,0.08) 0%, transparent 60%); }
+body.men .fest-glow      { background: radial-gradient(circle, rgba(0,212,232,0.15), transparent 70%); }
+
+/* ════════════════════════════════
+   SCROLL FADE EDGES — applied to
+   any horizontally scrollable row
+════════════════════════════════ */
+.scroll-wrap {
+  position: relative;
+}
+.scroll-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 48px;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--page-bg));
+  transition: background 0.45s;
+  z-index: 2;
+}
+/* Trust bar fade — sits on white card bg */
+.trust-wrap { background: var(--card); border-bottom: 1px solid var(--border); transition: background 0.45s, border-color 0.45s; }
+.trust-wrap::after { background: linear-gradient(to right, transparent, var(--card)); }
+.trust { border-bottom: none; }
+
+/* ── SCROLL HINT ARROW ── */
+.scroll-hint {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 6px 20px 0;
+  transition: color 0.45s;
+}
+.scroll-hint span { font-size: 14px; animation: nudge 1.8s ease-in-out infinite; }
+@keyframes nudge { 0%,100%{transform:translateX(0)} 50%{transform:translateX(5px)} }
+
+
+/* ── DRAG SCROLL CURSOR ── */
+.pgrid, .hscroll, .chips, .trust {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.pgrid:active, .hscroll:active, .chips:active, .trust:active {
+  cursor: grabbing;
+}
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
 </style>
 </head>
 <body class="women">
 
-<!-- STICKY TOP BAR -->
-<header class="top-bar">
-  <svg class="logo-svg" height="32" viewBox="0 0 220 36" xmlns="http://www.w3.org/2000/svg">
+<!-- ── ANNOUNCE STRIP ── -->
+<div class="strip">
+  <div class="strip-track">
+    <span class="strip-text">🎄 Year-End Shopping Sale</span>
+    <span class="strip-gem">✦</span>
+    <span class="strip-text">Up to 60% Off</span>
+    <span class="strip-gem">✦</span>
+    <span class="strip-text">Free Delivery above ₹499</span>
+    <span class="strip-gem">✦</span>
+    <span class="strip-text">Free Gift Wrapping above ₹999</span>
+    <span class="strip-gem">✦</span>
+    <span class="strip-text">🎄 Year-End Shopping Sale</span>
+    <span class="strip-gem">✦</span>
+    <span class="strip-text">Up to 60% Off</span>
+    <span class="strip-gem">✦</span>
+    <span class="strip-text">Free Delivery above ₹499</span>
+    <span class="strip-gem">✦</span>
+    <span class="strip-text">Free Gift Wrapping above ₹999</span>
+    <span class="strip-gem">✦</span>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<header class="nav">
+  <svg class="logo-svg" height="30" viewBox="0 0 224 34" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="logoRose" x1="0" y1="0" x2="1" y2="0">
+      <linearGradient id="lr" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0%" stop-color="#E8527A"/>
         <stop offset="50%" stop-color="#F484A0"/>
         <stop offset="100%" stop-color="#E8527A"/>
       </linearGradient>
     </defs>
-    <text y="28" font-family="'Cormorant Garamond','Georgia',serif" font-size="32" font-weight="700" letter-spacing="-0.5">
-      <tspan fill="#FFFFFF" font-style="normal">Ajio</tspan><tspan fill="url(#logoRose)" font-style="italic">gram</tspan>
+    <text y="27" font-family="'Cormorant Garamond','Georgia',serif" font-size="30" font-weight="700" letter-spacing="-0.5">
+      <tspan fill="#FFFFFF" font-style="normal">Ajio</tspan><tspan fill="url(#lr)" font-style="italic">gram</tspan>
     </text>
   </svg>
-
-  <div class="gender-toggle">
-    <button class="toggle-btn active" id="btn-women" onclick="setGender('women')">Her</button>
-    <button class="toggle-btn" id="btn-men" onclick="setGender('men')">Him</button>
+  <div class="gender-pill">
+    <button class="gpill on" id="btn-w" onclick="setGender('women')">Her</button>
+    <button class="gpill"    id="btn-m" onclick="setGender('men')">Him</button>
   </div>
-
-  <div class="top-icons">
-    <span class="top-icon">🔍</span>
-    <span class="top-icon" style="position:relative;">🛍️<span class="cart-badge" id="cart-count">3</span></span>
+  <div class="nav-right">
+    <span class="nav-icon">🔍</span>
+    <span class="nav-icon" style="position:relative">🛍️<span class="nbadge" id="cart-n">3</span></span>
   </div>
 </header>
 
-<!-- ANNOUNCE STRIP -->
-<div class="announce">
-  <div class="announce-track">
-    <span class="announce-text">🎄 Holiday Season Sale — Up to 60% Off</span>
-    <span class="announce-dot">✦</span>
-    <span class="announce-text">Free Delivery above ₹499</span>
-    <span class="announce-dot">✦</span>
-    <span class="announce-text">Free Gift Wrapping on orders above ₹999</span>
-    <span class="announce-dot">✦</span>
-    <span class="announce-text">🎄 Holiday Season Sale — Up to 60% Off</span>
-    <span class="announce-dot">✦</span>
-    <span class="announce-text">Free Delivery above ₹499</span>
-    <span class="announce-dot">✦</span>
-    <span class="announce-text">Free Gift Wrapping on orders above ₹999</span>
-    <span class="announce-dot">✦</span>
-  </div>
-</div>
-
-<!-- HERO -->
+<!-- ══════════════════════════════
+     HERO — CURTAIN CALL
+══════════════════════════════ -->
 <section class="hero">
-  <div class="hero-glow hero-glow-1 glow-visible"></div>
-  <div class="hero-glow hero-glow-2 glow-visible"></div>
+  <div class="hero-atm"></div>
   <div class="hero-grid"></div>
+  <div class="snow-layer" id="snow"></div>
 
-  <!-- Sparkles (women only) -->
-  <div class="sparkle" style="width:6px;height:6px;top:10%;left:7%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:0s;"></div>
-  <div class="sparkle" style="width:4px;height:4px;top:20%;left:78%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:0.5s;"></div>
-  <div class="sparkle" style="width:7px;height:7px;top:55%;left:88%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:1s;"></div>
-  <div class="sparkle" style="width:5px;height:5px;top:75%;left:6%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:1.5s;"></div>
-  <div class="sparkle" style="width:4px;height:4px;top:40%;left:42%;background:radial-gradient(circle,rgba(201,151,74,0.8),transparent 70%);animation-delay:2s;"></div>
+  <!-- Gold sparkles -->
+  <div class="spark" style="width:6px;height:6px;top:11%;left:7%;animation-delay:0s"></div>
+  <div class="spark" style="width:4px;height:4px;top:22%;left:80%;animation-delay:0.6s"></div>
+  <div class="spark" style="width:7px;height:7px;top:52%;left:90%;animation-delay:1.1s"></div>
+  <div class="spark" style="width:5px;height:5px;top:72%;left:5%;animation-delay:1.7s"></div>
+  <div class="spark" style="width:4px;height:4px;top:38%;left:44%;animation-delay:2.2s"></div>
+  <div class="spark" style="width:3px;height:3px;top:16%;left:55%;animation-delay:0.9s"></div>
 
-  <div class="hero-top">
-    <div class="hero-live-pill">
-      <div class="live-dot"></div>
-      <span class="live-text">Sale Live Now</span>
+  <div class="hero-inner">
+    <!-- Top row -->
+    <div class="hero-toprow">
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        <span class="live-lbl" id="live-lbl">Year-End Sale — Live</span>
+      </div>
+      <div class="hero-days">3 Days Left</div>
     </div>
-    <div class="hero-days-left" id="hero-days">3 Days Left</div>
-  </div>
 
-  <div class="hero-headline">
-    <h1 class="hero-h1">It's the<br><span class="accent-line" id="hero-h1-line">Holiday Season.</span></h1>
-    <p class="hero-sub" id="hero-sub">Shop the most festive drops of the year. Curated styles for the woman who owns every room she walks into.</p>
-  </div>
 
-  <div class="hero-stats">
-    <div class="stat-box">
-      <span class="stat-num highlight">60%</span>
-      <div class="stat-lbl">Max Off</div>
+    <!-- Headline -->
+    <div class="hero-headline">
+      <h1 class="hero-h1">It's the<span class="hl" id="hero-hl">Year-End Sale.</span></h1>
+      <p class="hero-sub" id="hero-sub">The biggest year-end shopping sale is here. Curated styles for the woman who ends the year in style.</p>
     </div>
-    <div class="stat-box">
-      <span class="stat-num" id="stat-styles">200+</span>
-      <div class="stat-lbl" id="stat-lbl2">Styles</div>
+
+    <!-- Campaign visual placeholder -->
+    <div class="hero-frame">
+      <div class="hero-frame-icon" id="frame-icon">👗</div>
+      <div class="hero-frame-sub" id="frame-sub">Women's Year-End Collection</div>
+      <div class="frame-badge" id="frame-badge">New In</div>
+      <div class="frame-tag" id="frame-tag">✦ Year-End Edit</div>
     </div>
-    <div class="stat-box">
-      <span class="stat-num">3</span>
-      <div class="stat-lbl">Days Left</div>
+
+    <!-- Stats -->
+    <div class="hero-stats">
+      <div class="hstat">
+        <span class="hstat-num acc">60%</span>
+        <div class="hstat-lbl">Max Off</div>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num" id="stat-sty">200+</span>
+        <div class="hstat-lbl">Styles</div>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num">3</span>
+        <div class="hstat-lbl">Days Left</div>
+      </div>
     </div>
-  </div>
 
-  <div class="hero-img-frame">
-    <div class="hero-img-icon" id="hero-icon">👗</div>
-    <div class="hero-img-label" id="hero-img-label">Women's Collection</div>
-    <div class="hero-img-badge" id="hero-badge">New In</div>
-    <div class="hero-img-newtag" id="hero-newtag">✦ Holiday Edit</div>
-  </div>
-
-  <div class="hero-offer-flash">
-    <span class="hero-offer-badge">UP TO 60% OFF</span>
-    <span class="hero-offer-sub">Biggest sale of the year — today only</span>
-  </div>
-
-  <div class="hero-cta-stack">
-    <button class="btn-hero-primary" id="hero-cta-primary">Shop the Sale →</button>
-    <div class="hero-cta-row-2">
-      <button class="btn-hero-ghost">♡ Wishlist</button>
-      <button class="btn-hero-gift">🎁 Gift Sets</button>
+    <!-- CTAs -->
+    <div class="hero-ctas">
+      <button class="btn-primary" id="hero-cta">Shop the Sale — Up to 60% Off →</button>
+      <div class="cta-row2">
+        <button class="btn-ghost">♡ Wishlist</button>
+        <button class="btn-ghost">🎁 Gift Sets</button>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- URGENCY BAR (countdown) -->
-<div class="urgency-bar">
-  <div class="urgency-left">
-    <span class="urgency-label">⏳ Sale Ends In</span>
-    <span class="urgency-sub">Don't miss out — limited stock!</span>
+<!-- ── URGENCY BAR ── -->
+<div class="urgency">
+  <div class="urg-left">
+    <div class="urg-title">⏳ Sale Ends In</div>
+    <div class="urg-sub" id="urg-sub">Year-end prices won't last long!</div>
   </div>
   <div class="countdown">
     <div class="cd-unit"><span class="cd-num" id="cd-h">02</span><span class="cd-lbl">Hrs</span></div>
@@ -812,351 +871,411 @@ body.women .hero-glow-2 { background: rgba(201,151,74,0.12); }
   </div>
 </div>
 
-<!-- TRUST BAR -->
-<div class="trust-bar reveal">
-  <div class="trust-item">
-    <div class="trust-icon">🚚</div>
-    <div class="trust-label">Free Delivery</div>
-  </div>
-  <div class="trust-item">
-    <div class="trust-icon">↩️</div>
-    <div class="trust-label">Easy Returns</div>
-  </div>
-  <div class="trust-item">
-    <div class="trust-icon">🔒</div>
-    <div class="trust-label">Safe Pay</div>
-  </div>
-  <div class="trust-item">
-    <div class="trust-icon">⭐</div>
-    <div class="trust-label">4.8 Rated</div>
-  </div>
+<!-- ── TRUST PILLS ── -->
+<div class="scroll-wrap trust-wrap reveal">
+<div class="trust">
+  <div class="trust-pill"><span class="trust-icon">🚚</span><span class="trust-lbl">Free Delivery ₹499+</span></div>
+  <div class="trust-pill"><span class="trust-icon">🎁</span><span class="trust-lbl">Free Gift Wrap ₹999+</span></div>
+  <div class="trust-pill"><span class="trust-icon">↩️</span><span class="trust-lbl">Easy 30-day Returns</span></div>
+  <div class="trust-pill"><span class="trust-icon">⭐</span><span class="trust-lbl">4.8 Rated App</span></div>
+  <div class="trust-pill"><span class="trust-icon">🔒</span><span class="trust-lbl">100% Secure Pay</span></div>
+</div>
 </div>
 
-<!-- CATEGORY CHIPS -->
+<!-- ── SHOP YOUR STYLE ── -->
 <div class="section reveal">
-  <div class="sec-eyebrow">Browse by</div>
-  <div class="sec-title" id="sec-shop-title">Shop <em>Your Style</em></div>
+  <div class="eyebrow">Browse by</div>
+  <div class="sec-title" id="shop-title">Shop <em>Your Style</em></div>
 </div>
-<div class="chip-row reveal" id="chip-row-women">
-  <div class="chip active">All</div>
+<div class="scroll-wrap reveal">
+<div class="chips w-show" id="chips-w">
+  <div class="chip on">All</div>
   <div class="chip">Party Wear</div>
   <div class="chip">Loungewear</div>
   <div class="chip">Footwear</div>
   <div class="chip">Accessories</div>
   <div class="chip">Ethnic</div>
 </div>
-<div class="chip-row reveal" id="chip-row-men" style="display:none;">
-  <div class="chip active">All</div>
+<div class="chips m-show" id="chips-m">
+  <div class="chip on">All</div>
   <div class="chip">Streetwear</div>
   <div class="chip">Formals</div>
   <div class="chip">Footwear</div>
   <div class="chip">Accessories</div>
   <div class="chip">Winter</div>
 </div>
+</div>
 
-<!-- PRODUCT GRID -->
-<div class="product-grid reveal" id="product-grid-women">
-  <div class="pcard w-product">
-    <div class="pcard-img bg-w1">👗<div class="pcard-badge">40% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+<!-- ── PRODUCT GRID WOMEN ── -->
+<div class="scroll-hint reveal"><span>›</span> Swipe to browse</div>
+<div class="scroll-wrap reveal">
+<div class="pgrid w-grid">
+  <div class="pcard">
+    <div class="pcard-img bw1">👗
+      <div class="pcard-badge">40% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
     <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:72%"></div></div><span class="sold-lbl">72% sold</span></div>
       <div class="pcard-name">Velvet Slip Dress</div>
       <div class="pcard-cat">Party Wear</div>
-      <div class="pcard-prices"><span class="pcard-price">₹1,199</span><span class="pcard-old">₹1,999</span></div>
-      <button class="pcard-add">Add to Bag</button>
+      <div class="pcard-prices"><span class="pcard-price">₹1,199</span><span class="pcard-mrp">₹1,999</span><span class="pcard-save">Save ₹800</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
     </div>
   </div>
-  <div class="pcard w-product">
-    <div class="pcard-img bg-w2">👜<div class="pcard-badge">35% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+  <div class="pcard">
+    <div class="pcard-img bw2">👜
+      <div class="pcard-badge">35% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
     <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:58%"></div></div><span class="sold-lbl">58% sold</span></div>
       <div class="pcard-name">Mini Chain Bag</div>
       <div class="pcard-cat">Accessories</div>
-      <div class="pcard-prices"><span class="pcard-price">₹899</span><span class="pcard-old">₹1,399</span></div>
-      <button class="pcard-add">Add to Bag</button>
+      <div class="pcard-prices"><span class="pcard-price">₹899</span><span class="pcard-mrp">₹1,399</span><span class="pcard-save">Save ₹500</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
     </div>
   </div>
-  <div class="pcard w-product">
-    <div class="pcard-img bg-w3">🧣<div class="pcard-badge">50% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+  <div class="pcard">
+    <div class="pcard-img bw3">🧣
+      <div class="pcard-badge">50% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
     <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:85%"></div></div><span class="sold-lbl">85% sold</span></div>
       <div class="pcard-name">Sage Knit Scarf</div>
       <div class="pcard-cat">Winterwear</div>
-      <div class="pcard-prices"><span class="pcard-price">₹499</span><span class="pcard-old">₹999</span></div>
-      <button class="pcard-add">Add to Bag</button>
+      <div class="pcard-prices"><span class="pcard-price">₹499</span><span class="pcard-mrp">₹999</span><span class="pcard-save">Save ₹500</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
     </div>
   </div>
-  <div class="pcard w-product">
-    <div class="pcard-img bg-w4">💎<div class="pcard-badge">30% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+  <div class="pcard">
+    <div class="pcard-img bw4">💎
+      <div class="pcard-new">New In</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
     <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:34%"></div></div><span class="sold-lbl">34% sold</span></div>
       <div class="pcard-name">Crystal Hoops</div>
       <div class="pcard-cat">Jewellery</div>
-      <div class="pcard-prices"><span class="pcard-price">₹349</span><span class="pcard-old">₹499</span></div>
-      <button class="pcard-add">Add to Bag</button>
+      <div class="pcard-prices"><span class="pcard-price">₹349</span><span class="pcard-mrp">₹499</span><span class="pcard-save">Save ₹150</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
     </div>
   </div>
 </div>
+</div>
 
-<div class="product-grid reveal" id="product-grid-men" style="display:none;">
-  <div class="pcard m-product">
-    <div class="pcard-img bg-m1">🧥<div class="pcard-badge">40% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+<!-- ── PRODUCT GRID MEN ── -->
+<div class="scroll-wrap reveal">
+<div class="pgrid m-grid">
+  <div class="pcard">
+    <div class="pcard-img bm1">🧥
+      <div class="pcard-badge">40% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
     <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:78%"></div></div><span class="sold-lbl">78% sold</span></div>
       <div class="pcard-name">Oversized Bomber</div>
       <div class="pcard-cat">Streetwear</div>
-      <div class="pcard-prices"><span class="pcard-price">₹1,499</span><span class="pcard-old">₹2,499</span></div>
-      <button class="pcard-add">Add to Bag</button>
+      <div class="pcard-prices"><span class="pcard-price">₹1,499</span><span class="pcard-mrp">₹2,499</span><span class="pcard-save">Save ₹1,000</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
     </div>
   </div>
-  <div class="pcard m-product">
-    <div class="pcard-img bg-m2">👖<div class="pcard-badge">35% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+  <div class="pcard">
+    <div class="pcard-img bm2">👖
+      <div class="pcard-badge">35% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
     <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:61%"></div></div><span class="sold-lbl">61% sold</span></div>
       <div class="pcard-name">Camo Cargo Pants</div>
       <div class="pcard-cat">Bottomwear</div>
-      <div class="pcard-prices"><span class="pcard-price">₹999</span><span class="pcard-old">₹1,549</span></div>
-      <button class="pcard-add">Add to Bag</button>
+      <div class="pcard-prices"><span class="pcard-price">₹999</span><span class="pcard-mrp">₹1,549</span><span class="pcard-save">Save ₹550</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
     </div>
   </div>
-  <div class="pcard m-product">
-    <div class="pcard-img bg-m3">🧣<div class="pcard-badge">50% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+  <div class="pcard">
+    <div class="pcard-img bm3">🧣
+      <div class="pcard-badge">50% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
     <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:90%"></div></div><span class="sold-lbl">90% sold</span></div>
       <div class="pcard-name">Chunky Muffler</div>
       <div class="pcard-cat">Accessories</div>
-      <div class="pcard-prices"><span class="pcard-price">₹399</span><span class="pcard-old">₹799</span></div>
-      <button class="pcard-add">Add to Bag</button>
+      <div class="pcard-prices"><span class="pcard-price">₹399</span><span class="pcard-mrp">₹799</span><span class="pcard-save">Save ₹400</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
     </div>
   </div>
-  <div class="pcard m-product">
-    <div class="pcard-img bg-m4">⌚<div class="pcard-badge">30% OFF</div><div class="pcard-wish" onclick="wishToggle(this)">🤍</div></div>
+  <div class="pcard">
+    <div class="pcard-img bm4">⌚
+      <div class="pcard-new">New In</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
     <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:42%"></div></div><span class="sold-lbl">42% sold</span></div>
       <div class="pcard-name">Minimal Watch</div>
       <div class="pcard-cat">Accessories</div>
-      <div class="pcard-prices"><span class="pcard-price">₹1,799</span><span class="pcard-old">₹2,599</span></div>
-      <button class="pcard-add">Add to Bag</button>
+      <div class="pcard-prices"><span class="pcard-price">₹1,799</span><span class="pcard-mrp">₹2,599</span><span class="pcard-save">Save ₹800</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
     </div>
   </div>
 </div>
-
-<!-- MID CTA BANNER -->
-<div class="mid-banner reveal">
-  <div class="mid-banner-glow"></div>
-  <div class="mid-banner-eyebrow">✦ Limited Time</div>
-  <div class="mid-banner-title" id="mid-title">Gift Like<br><em>You Mean It.</em></div>
-  <div class="mid-banner-sub" id="mid-sub">Holiday gift sets, exclusive bundles, and free gift wrapping on all orders above ₹999.</div>
-  <button class="mid-banner-btn" id="mid-btn">Explore Gift Sets →</button>
-  <div class="mid-banner-emoji" id="mid-emoji">🎁</div>
 </div>
 
-<!-- EDITOR'S PICKS -->
+<!-- ── FESTIVE BANNER ── -->
+<div class="fest-banner reveal">
+  <div class="fest-glow"></div>
+  <div class="fest-inner">
+    <div class="fest-eyebrow" id="fest-eye">✦ Limited Time Offer</div>
+    <div class="fest-title" id="fest-title">Gift Like<br><em>You Mean It.</em></div>
+    <div class="fest-sub" id="fest-sub">Year-end gift sets, exclusive bundles & free gift wrapping on all orders above ₹999.</div>
+    <button class="btn-fest" id="fest-btn">Explore Gift Sets →</button>
+    <div class="fest-emoji" id="fest-emoji">🎁</div>
+  </div>
+</div>
+
+<!-- ── EDITOR'S PICKS ── -->
 <div class="section reveal">
-  <div class="sec-eyebrow">Handpicked</div>
+  <div class="eyebrow">Handpicked for you</div>
   <div class="sec-title">Editor's <em>Picks</em></div>
 </div>
-<div class="hscroll reveal" id="picks-women">
-  <div class="pick-card"><div class="pick-img bg-w1">👠</div><div class="pick-body"><div class="pick-name">Block Heel Mule</div><div class="pick-price">₹1,499</div></div></div>
-  <div class="pick-card"><div class="pick-img bg-w2">🧥</div><div class="pick-body"><div class="pick-name">Trench Co-ord</div><div class="pick-price">₹2,199</div></div></div>
-  <div class="pick-card"><div class="pick-img bg-w3">🌿</div><div class="pick-body"><div class="pick-name">Satin Slip Set</div><div class="pick-price">₹1,299</div></div></div>
-  <div class="pick-card"><div class="pick-img bg-w4">💋</div><div class="pick-body"><div class="pick-name">Velvet Pouch</div><div class="pick-price">₹549</div></div></div>
+<div class="scroll-hint reveal"><span>›</span> Swipe to explore</div>
+<div class="scroll-wrap reveal">
+<div class="hscroll w-hscroll">
+  <div class="pick"><div class="pick-img bw1">👠</div><div class="pick-body"><div class="pick-name">Block Heel Mule</div><div class="pick-price">₹1,499</div></div></div>
+  <div class="pick"><div class="pick-img bw2">🧥</div><div class="pick-body"><div class="pick-name">Trench Co-ord</div><div class="pick-price">₹2,199</div></div></div>
+  <div class="pick"><div class="pick-img bw3">🌿</div><div class="pick-body"><div class="pick-name">Satin Slip Set</div><div class="pick-price">₹1,299</div></div></div>
+  <div class="pick"><div class="pick-img bw4">💋</div><div class="pick-body"><div class="pick-name">Velvet Pouch</div><div class="pick-price">₹549</div></div></div>
 </div>
-<div class="hscroll reveal" id="picks-men" style="display:none;">
-  <div class="pick-card"><div class="pick-img bg-m1">👕</div><div class="pick-body"><div class="pick-name">Drop Shoulder Tee</div><div class="pick-price">₹799</div></div></div>
-  <div class="pick-card"><div class="pick-img bg-m2">🎩</div><div class="pick-body"><div class="pick-name">Dad Cap</div><div class="pick-price">₹449</div></div></div>
-  <div class="pick-card"><div class="pick-img bg-m3">🎒</div><div class="pick-body"><div class="pick-name">Minimal Backpack</div><div class="pick-price">₹1,299</div></div></div>
-  <div class="pick-card"><div class="pick-img bg-m4">🕶️</div><div class="pick-body"><div class="pick-name">Retro Shades</div><div class="pick-price">₹599</div></div></div>
+<div class="hscroll m-hscroll">
+  <div class="pick"><div class="pick-img bm1">👕</div><div class="pick-body"><div class="pick-name">Drop Shoulder Tee</div><div class="pick-price">₹799</div></div></div>
+  <div class="pick"><div class="pick-img bm2">🎩</div><div class="pick-body"><div class="pick-name">Dad Cap</div><div class="pick-price">₹449</div></div></div>
+  <div class="pick"><div class="pick-img bm3">🎒</div><div class="pick-body"><div class="pick-name">Minimal Backpack</div><div class="pick-price">₹1,299</div></div></div>
+  <div class="pick"><div class="pick-img bm4">🕶️</div><div class="pick-body"><div class="pick-name">Retro Shades</div><div class="pick-price">₹599</div></div></div>
+</div>
 </div>
 
-<!-- GIFT ZONES -->
+<!-- ── GIFT ZONES ── -->
 <div class="section reveal">
-  <div class="sec-eyebrow">Holiday Edition</div>
+  <div class="eyebrow">Year-End Edition</div>
   <div class="sec-title">Gift <em>Zones</em></div>
 </div>
-<div class="gift-grid reveal" id="gift-grid-women">
-  <div class="gift-tile gt-rose"><div class="gift-tile-icon">💝</div><div class="gift-tile-title">For Her</div><div class="gift-tile-sub">Sets under ₹1,999</div><div class="gift-tile-arrow">→</div></div>
-  <div class="gift-tile gt-gold"><div class="gift-tile-icon">🎀</div><div class="gift-tile-title">Best Sellers</div><div class="gift-tile-sub">Top 10 loved picks</div><div class="gift-tile-arrow">→</div></div>
-  <div class="gift-tile gt-gold"><div class="gift-tile-icon">✨</div><div class="gift-tile-title">Luxe Edit</div><div class="gift-tile-sub">Premium above ₹3k</div><div class="gift-tile-arrow">→</div></div>
-  <div class="gift-tile gt-rose"><div class="gift-tile-icon">🌟</div><div class="gift-tile-title">Under ₹999</div><div class="gift-tile-sub">Festive budget finds</div><div class="gift-tile-arrow">→</div></div>
+<div class="gtiles w-tiles reveal">
+  <div class="gtile gt-rose"><div class="gtile-icon">💝</div><div class="gtile-title">For Her</div><div class="gtile-sub">Sets under ₹1,999</div><div class="gtile-arrow">→</div></div>
+  <div class="gtile gt-gold"><div class="gtile-icon">🎀</div><div class="gtile-title">Best Sellers</div><div class="gtile-sub">Top 10 loved picks</div><div class="gtile-arrow">→</div></div>
+  <div class="gtile gt-gold"><div class="gtile-icon">✨</div><div class="gtile-title">Luxe Edit</div><div class="gtile-sub">Premium above ₹3k</div><div class="gtile-arrow">→</div></div>
+  <div class="gtile gt-rose"><div class="gtile-icon">🌟</div><div class="gtile-title">Under ₹999</div><div class="gtile-sub">Festive budget finds</div><div class="gtile-arrow">→</div></div>
 </div>
-<div class="gift-grid reveal" id="gift-grid-men" style="display:none;">
-  <div class="gift-tile gt-blue"><div class="gift-tile-icon">⚡</div><div class="gift-tile-title">For Him</div><div class="gift-tile-sub">Sets under ₹1,999</div><div class="gift-tile-arrow">→</div></div>
-  <div class="gift-tile gt-slate"><div class="gift-tile-icon">🏆</div><div class="gift-tile-title">Best Sellers</div><div class="gift-tile-sub">Top picks this week</div><div class="gift-tile-arrow">→</div></div>
-  <div class="gift-tile gt-slate"><div class="gift-tile-icon">💎</div><div class="gift-tile-title">Luxe Edit</div><div class="gift-tile-sub">Premium above ₹3k</div><div class="gift-tile-arrow">→</div></div>
-  <div class="gift-tile gt-blue"><div class="gift-tile-icon">🎯</div><div class="gift-tile-title">Under ₹999</div><div class="gift-tile-sub">Smart budget finds</div><div class="gift-tile-arrow">→</div></div>
+<div class="gtiles m-tiles reveal">
+  <div class="gtile gt-blue"><div class="gtile-icon">⚡</div><div class="gtile-title">For Him</div><div class="gtile-sub">Sets under ₹1,999</div><div class="gtile-arrow">→</div></div>
+  <div class="gtile gt-slate"><div class="gtile-icon">🏆</div><div class="gtile-title">Best Sellers</div><div class="gtile-sub">Top picks this week</div><div class="gtile-arrow">→</div></div>
+  <div class="gtile gt-slate"><div class="gtile-icon">💎</div><div class="gtile-title">Luxe Edit</div><div class="gtile-sub">Premium above ₹3k</div><div class="gtile-arrow">→</div></div>
+  <div class="gtile gt-blue"><div class="gtile-icon">🎯</div><div class="gtile-title">Under ₹999</div><div class="gtile-sub">Smart budget finds</div><div class="gtile-arrow">→</div></div>
 </div>
 
-<!-- TRENDING TODAY -->
+<!-- ── YEAR-END COUNTDOWN FEATURE ── -->
+<div class="year-countdown reveal">
+  <div class="yc-glow"></div>
+  <div class="yc-label">⏰ Sale Countdown</div>
+  <div class="yc-title">The year ends.<br><em>The deals don't wait.</em></div>
+  <div class="yc-units">
+    <div class="yc-unit"><span class="yc-num" id="yc-d">03</span><span class="yc-sub">Days</span></div>
+    <div class="yc-unit"><span class="yc-num" id="yc-h">02</span><span class="yc-sub">Hours</span></div>
+    <div class="yc-unit"><span class="yc-num" id="yc-m">47</span><span class="yc-sub">Mins</span></div>
+    <div class="yc-unit"><span class="yc-num" id="yc-s">33</span><span class="yc-sub">Secs</span></div>
+  </div>
+</div>
+
+<!-- ── TRENDING TODAY ── -->
 <div class="section reveal">
-  <div class="sec-eyebrow">Right Now</div>
+  <div class="eyebrow">Right Now</div>
   <div class="sec-title">Trending <em>Today</em></div>
 </div>
-
-<div class="trend-list reveal" id="trend-women">
-  <div class="trend-row">
-    <div class="trend-rank">01</div>
-    <div class="trend-thumb bg-w1">💃</div>
-    <div class="trend-info"><div class="trend-name">Sequin Mini Dress</div><div class="trend-meta">Party Wear · <span class="trend-hot">🔥 847 bought</span></div></div>
-    <div class="trend-price-col"><div class="trend-price">₹1,599</div><div class="trend-add-mini">ADD →</div></div>
+<div class="tlist w-tlist reveal">
+  <div class="trow">
+    <div class="trank">01</div>
+    <div class="tthumb bw1">💃</div>
+    <div class="tinfo"><div class="tname">Sequin Mini Dress</div><div class="tmeta">Party Wear · <span class="thot">🔥 847 sold</span></div></div>
+    <div class="tprice-col"><div class="tprice">₹1,599</div><div class="tadd" onclick="addBag(this)">ADD →</div></div>
   </div>
-  <div class="trend-row">
-    <div class="trend-rank">02</div>
-    <div class="trend-thumb bg-w2">👒</div>
-    <div class="trend-info"><div class="trend-name">Wool Bucket Hat</div><div class="trend-meta">Accessories · <span class="trend-hot">🔥 612 bought</span></div></div>
-    <div class="trend-price-col"><div class="trend-price">₹699</div><div class="trend-add-mini">ADD →</div></div>
+  <div class="trow">
+    <div class="trank">02</div>
+    <div class="tthumb bw2">👒</div>
+    <div class="tinfo"><div class="tname">Wool Bucket Hat</div><div class="tmeta">Accessories · <span class="thot">🔥 612 sold</span></div></div>
+    <div class="tprice-col"><div class="tprice">₹699</div><div class="tadd" onclick="addBag(this)">ADD →</div></div>
   </div>
-  <div class="trend-row">
-    <div class="trend-rank">03</div>
-    <div class="trend-thumb bg-w3">🧸</div>
-    <div class="trend-info"><div class="trend-name">Teddy Fleece Jacket</div><div class="trend-meta">Winterwear · <span class="trend-hot">🔥 528 bought</span></div></div>
-    <div class="trend-price-col"><div class="trend-price">₹1,899</div><div class="trend-add-mini">ADD →</div></div>
+  <div class="trow">
+    <div class="trank">03</div>
+    <div class="tthumb bw3">🧸</div>
+    <div class="tinfo"><div class="tname">Teddy Fleece Jacket</div><div class="tmeta">Winterwear · <span class="thot">🔥 528 sold</span></div></div>
+    <div class="tprice-col"><div class="tprice">₹1,899</div><div class="tadd" onclick="addBag(this)">ADD →</div></div>
+  </div>
+</div>
+<div class="tlist m-tlist reveal">
+  <div class="trow">
+    <div class="trank">01</div>
+    <div class="tthumb bm1">🧥</div>
+    <div class="tinfo"><div class="tname">Puffer Jacket XL</div><div class="tmeta">Winter · <span class="thot">🔥 1.2k sold</span></div></div>
+    <div class="tprice-col"><div class="tprice">₹2,199</div><div class="tadd" onclick="addBag(this)">ADD →</div></div>
+  </div>
+  <div class="trow">
+    <div class="trank">02</div>
+    <div class="tthumb bm2">👕</div>
+    <div class="tinfo"><div class="tname">Graphic Oversized Tee</div><div class="tmeta">Streetwear · <span class="thot">🔥 934 sold</span></div></div>
+    <div class="tprice-col"><div class="tprice">₹699</div><div class="tadd" onclick="addBag(this)">ADD →</div></div>
+  </div>
+  <div class="trow">
+    <div class="trank">03</div>
+    <div class="tthumb bm3">👟</div>
+    <div class="tinfo"><div class="tname">Low-Top Sneakers</div><div class="tmeta">Footwear · <span class="thot">🔥 811 sold</span></div></div>
+    <div class="tprice-col"><div class="tprice">₹1,899</div><div class="tadd" onclick="addBag(this)">ADD →</div></div>
   </div>
 </div>
 
-<div class="trend-list reveal" id="trend-men" style="display:none;">
-  <div class="trend-row">
-    <div class="trend-rank">01</div>
-    <div class="trend-thumb bg-m1">🧥</div>
-    <div class="trend-info"><div class="trend-name">Puffer Jacket XL</div><div class="trend-meta">Winter · <span class="trend-hot">🔥 1.2k bought</span></div></div>
-    <div class="trend-price-col"><div class="trend-price">₹2,199</div><div class="trend-add-mini">ADD →</div></div>
+<!-- ── SOCIAL PROOF ── -->
+<div class="proof reveal">
+  <div class="avatars">
+    <div class="av">S</div><div class="av m">R</div><div class="av">A</div><div class="av m">K</div>
   </div>
-  <div class="trend-row">
-    <div class="trend-rank">02</div>
-    <div class="trend-thumb bg-m2">👕</div>
-    <div class="trend-info"><div class="trend-name">Graphic Oversized Tee</div><div class="trend-meta">Streetwear · <span class="trend-hot">🔥 934 bought</span></div></div>
-    <div class="trend-price-col"><div class="trend-price">₹699</div><div class="trend-add-mini">ADD →</div></div>
-  </div>
-  <div class="trend-row">
-    <div class="trend-rank">03</div>
-    <div class="trend-thumb bg-m3">👟</div>
-    <div class="trend-info"><div class="trend-name">Low-Top Sneakers</div><div class="trend-meta">Footwear · <span class="trend-hot">🔥 811 bought</span></div></div>
-    <div class="trend-price-col"><div class="trend-price">₹1,899</div><div class="trend-add-mini">ADD →</div></div>
-  </div>
+  <div class="proof-copy"><strong>2,400+ people</strong> are shopping the Year-End Sale right now. Stock is running low — grab yours before it's gone.</div>
 </div>
 
-<!-- SOCIAL PROOF -->
-<div class="proof-bar reveal">
-  <div class="proof-avatars">
-    <div class="proof-avatar">S</div>
-    <div class="proof-avatar alt">R</div>
-    <div class="proof-avatar">A</div>
-    <div class="proof-avatar alt">K</div>
-  </div>
-  <div class="proof-text"><strong>2,400+ people</strong> are shopping the Holiday Sale right now. Most items selling out fast.</div>
-</div>
-
-<!-- FINAL CTA -->
-<div class="final-cta reveal">
-  <div class="final-cta-icon">🎄</div>
-  <div class="final-cta-title" id="final-title">Make It a<br><em>Holiday</em> Moment.</div>
-  <div class="final-cta-sub">Free delivery on orders above ₹499. Sale ends in 3 days. No regrets.</div>
+<!-- ── FINAL CTA ── -->
+<div class="final reveal">
+  <div class="final-glow"></div>
+  <span class="final-icon">🎄</span>
+  <div class="final-title" id="final-title">End the Year<br>in <em>Style.</em></div>
+  <div class="final-sub">Free delivery on orders above ₹499.<br><span class="hi">Sale ends in 3 days.</span> No regrets.</div>
   <button class="btn-final" id="final-btn">Shop All Women's Styles →</button>
-  <button class="btn-final-ghost">Browse Gift Sets</button>
+  <button class="btn-final-ghost">Browse Year-End Gift Sets</button>
 </div>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <div class="bnav-item active"><div class="bnav-icon">🏠</div><div class="bnav-lbl">Home</div></div>
-  <div class="bnav-item"><div class="bnav-icon">🔍</div><div class="bnav-lbl">Search</div></div>
-  <div class="bnav-item"><div class="bnav-icon">🛍️</div><div class="bnav-lbl">Shop</div></div>
-  <div class="bnav-item"><div class="bnav-icon">🤍</div><div class="bnav-lbl">Saved</div></div>
-  <div class="bnav-item"><div class="bnav-icon">👤</div><div class="bnav-lbl">Profile</div></div>
+<!-- ── BOTTOM NAV ── -->
+<nav class="bnav">
+  <div class="bni on"><div class="bni-icon">🏠</div><div class="bni-lbl">Home</div></div>
+  <div class="bni"><div class="bni-icon">🔍</div><div class="bni-lbl">Search</div></div>
+  <div class="bni"><div class="bni-icon">🛍️</div><div class="bni-lbl">Shop</div></div>
+  <div class="bni"><div class="bni-icon">🤍</div><div class="bni-lbl">Saved</div></div>
+  <div class="bni"><div class="bni-icon">👤</div><div class="bni-lbl">Profile</div></div>
 </nav>
 
 <script>
-// ── GENDER TOGGLE ──
+/* ── SNOWFALL ── */
+const snow = document.getElementById('snow');
+for (let i = 0; i < 22; i++) {
+  const f = document.createElement('div');
+  f.className = 'flake';
+  const sz = 2 + Math.random() * 4;
+  f.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;animation-duration:${6+Math.random()*9}s;animation-delay:${Math.random()*8}s`;
+  snow.appendChild(f);
+}
+
+/* ── GENDER TOGGLE ── */
 function setGender(g) {
-  const body = document.body;
-  body.className = g;
+  document.body.className = g;
+  document.getElementById('btn-w').classList.toggle('on', g==='women');
+  document.getElementById('btn-m').classList.toggle('on', g==='men');
+  const w = g === 'women';
 
-  // Toggle buttons
-  document.getElementById('btn-women').classList.toggle('active', g === 'women');
-  document.getElementById('btn-men').classList.toggle('active', g === 'men');
-
-  // Hero content
-  const isW = g === 'women';
-  document.getElementById('hero-h1-line').textContent = isW ? 'Holiday Season.' : 'Holiday Season.';
-  document.getElementById('hero-sub').textContent = isW
-    ? 'Shop the most festive drops of the year. Curated styles for the woman who owns every room she walks into.'
-    : 'Bold fits. Exclusive drops. Holiday deals engineered for the man who doesn\'t wait for sales — but knows when to move fast.';
-  document.getElementById('hero-icon').textContent = isW ? '👗' : '🧥';
-  document.getElementById('hero-img-label').textContent = isW ? 'Women\'s Collection' : 'Men\'s Collection';
-  document.getElementById('hero-badge').textContent = isW ? 'New In' : 'Drop 01';
-  document.getElementById('hero-newtag').textContent = isW ? '✦ Holiday Edit' : '⚡ New Arrivals';
-  document.getElementById('hero-cta-primary').textContent = isW ? 'Shop the Sale →' : 'Shop the Drop →';
-  document.getElementById('stat-styles').textContent = isW ? '200+' : '300+';
-  document.getElementById('sec-shop-title').innerHTML = isW ? 'Shop <em>Your Style</em>' : 'SHOP YOUR <em>DROP</em>';
-  document.getElementById('mid-title').innerHTML = isW ? 'Gift Like<br><em>You Mean It.</em>' : 'GIFT<br><em>BOLD.</em>';
-  document.getElementById('mid-sub').textContent = isW
-    ? 'Holiday gift sets, exclusive bundles, and free gift wrapping on all orders above ₹999.'
-    : 'Curated gift sets for him. Free gift wrapping on all orders above ₹999. Express delivery in 24hrs.';
-  document.getElementById('mid-btn').textContent = isW ? 'Explore Gift Sets →' : 'Shop Gift Sets →';
-  document.getElementById('mid-emoji').textContent = isW ? '🎁' : '🎁';
-  document.getElementById('final-title').innerHTML = isW ? 'Make It a<br><em>Holiday</em> Moment.' : 'MAKE IT<br><em>HOLIDAY.</em>';
-  document.getElementById('final-btn').textContent = isW ? 'Shop All Women\'s Styles →' : 'Shop All Men\'s Styles →';
-
-  // Show/hide gender-specific content
-  document.getElementById('chip-row-women').style.display = isW ? 'flex' : 'none';
-  document.getElementById('chip-row-men').style.display = isW ? 'none' : 'flex';
-  document.getElementById('product-grid-women').style.display = isW ? 'grid' : 'none';
-  document.getElementById('product-grid-men').style.display = isW ? 'none' : 'grid';
-  document.getElementById('picks-women').style.display = isW ? 'flex' : 'none';
-  document.getElementById('picks-men').style.display = isW ? 'none' : 'flex';
-  document.getElementById('gift-grid-women').style.display = isW ? 'grid' : 'none';
-  document.getElementById('gift-grid-men').style.display = isW ? 'none' : 'grid';
-  document.getElementById('trend-women').style.display = isW ? 'flex' : 'none';
-  document.getElementById('trend-men').style.display = isW ? 'none' : 'flex';
+  document.getElementById('hero-hl').textContent        = 'Year-End Sale.';
+  document.getElementById('hero-sub').textContent       = w
+    ? 'The biggest year-end shopping sale is here. Curated styles for the woman who ends the year in style.'
+    : 'Bold fits. Exclusive drops. Year-end deals engineered for the man who knows when to move fast.';
+  document.getElementById('live-lbl').textContent       = 'Year-End Sale — Live';
+  document.getElementById('frame-icon').textContent     = w ? '👗' : '🧥';
+  document.getElementById('frame-sub').textContent      = w ? "Women's Year-End Collection" : "Men's Year-End Collection";
+  document.getElementById('frame-badge').textContent    = w ? 'New In' : 'Drop 01';
+  document.getElementById('frame-tag').textContent      = w ? '✦ Year-End Edit' : '⚡ New Arrivals';
+  document.getElementById('stat-sty').textContent       = w ? '200+' : '300+';
+  document.getElementById('shop-title').innerHTML       = w ? 'Shop <em>Your Style</em>' : 'SHOP YOUR <em>DROP</em>';
+  document.getElementById('hero-cta').textContent       = w ? 'Shop the Sale — Up to 60% Off →' : 'Shop the Drop — Up to 60% Off →';
+  document.getElementById('fest-title').innerHTML       = w ? 'Gift Like<br><em>You Mean It.</em>' : 'GIFT<br><em>BOLD.</em>';
+  document.getElementById('fest-sub').textContent       = w
+    ? 'Year-end gift sets, exclusive bundles & free gift wrapping on all orders above ₹999.'
+    : 'Curated gift sets for him. Free wrapping above ₹999. Express delivery in 24hrs.';
+  document.getElementById('fest-btn').textContent       = w ? 'Explore Gift Sets →' : 'Shop Gift Sets →';
+  document.getElementById('fest-emoji').textContent     = '🎁';
+  document.getElementById('final-title').innerHTML      = w ? 'End the Year<br>in <em>Style.</em>' : 'END THE YEAR<br><em>IN STYLE.</em>';
+  document.getElementById('final-btn').textContent      = w ? "Shop All Women's Styles →" : "Shop All Men's Styles →";
 }
 
-// ── COUNTDOWN ──
-let total = 2*3600 + 47*60 + 33;
-function tick() {
-  if (total <= 0) return;
-  total--;
-  document.getElementById('cd-h').textContent = String(Math.floor(total/3600)).padStart(2,'0');
-  document.getElementById('cd-m').textContent = String(Math.floor((total%3600)/60)).padStart(2,'0');
-  document.getElementById('cd-s').textContent = String(total%60).padStart(2,'0');
+/* ── DUAL COUNTDOWN ── */
+let saleTotal = 2*3600 + 47*60 + 33;
+let yearSecs  = 3*86400 + 2*3600 + 47*60 + 33;
+
+function pad(n){ return String(n).padStart(2,'0'); }
+function tickSale() {
+  if(saleTotal>0) saleTotal--;
+  document.getElementById('cd-h').textContent = pad(Math.floor(saleTotal/3600));
+  document.getElementById('cd-m').textContent = pad(Math.floor((saleTotal%3600)/60));
+  document.getElementById('cd-s').textContent = pad(saleTotal%60);
 }
-setInterval(tick, 1000);
+function tickYear() {
+  if(yearSecs>0) yearSecs--;
+  document.getElementById('yc-d').textContent = pad(Math.floor(yearSecs/86400));
+  document.getElementById('yc-h').textContent = pad(Math.floor((yearSecs%86400)/3600));
+  document.getElementById('yc-m').textContent = pad(Math.floor((yearSecs%3600)/60));
+  document.getElementById('yc-s').textContent = pad(yearSecs%60);
+}
+setInterval(tickSale, 1000);
+setInterval(tickYear, 1000);
 
-// ── WISHLIST TOGGLE ──
-let wishCount = 0;
-function wishToggle(el) {
-  const wished = el.textContent === '❤️';
-  el.textContent = wished ? '🤍' : '❤️';
-  wishCount += wished ? -1 : 1;
-  const badge = document.getElementById('cart-count');
-  badge.textContent = 3 + wishCount;
+/* ── WISHLIST ── */
+let wCount = 0;
+function wish(el) {
+  const on = el.textContent === '❤️';
+  el.textContent = on ? '🤍' : '❤️';
+  wCount += on ? -1 : 1;
+  document.getElementById('cart-n').textContent = 3 + wCount;
 }
 
-// ── ADD TO BAG feedback ──
-document.querySelectorAll('.pcard-add, .trend-add-mini').forEach(btn => {
-  btn.addEventListener('click', e => {
-    const orig = btn.textContent;
-    btn.textContent = '✓ Added!';
-    btn.style.background = '#22c55e';
-    setTimeout(() => {
-      btn.textContent = orig;
-      btn.style.background = '';
-    }, 1200);
-    const badge = document.getElementById('cart-count');
-    badge.textContent = parseInt(badge.textContent) + 1;
-  });
-});
+/* ── ADD TO BAG ── */
+function addBag(btn) {
+  const orig = btn.textContent;
+  btn.textContent = '✓ Added!';
+  btn.style.background = '#22c55e';
+  setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 1200);
+  const n = document.getElementById('cart-n');
+  n.textContent = parseInt(n.textContent) + 1;
+}
 
-// ── CHIP FILTER ──
-document.querySelectorAll('.chip-row').forEach(row => {
-  row.querySelectorAll('.chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      row.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
+/* ── CHIP FILTER ── */
+document.querySelectorAll('.chips').forEach(row => {
+  row.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => {
+      row.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
+      c.classList.add('on');
     });
   });
 });
 
-// ── SCROLL REVEAL ──
-const revealEls = document.querySelectorAll('.reveal');
+/* ── SCROLL REVEAL ── */
 const obs = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('visible'), i * 40);
-    }
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── DRAG TO SCROLL (mouse + touch) ── */
+function enableDragScroll(el) {
+  let isDown = false, startX, scrollLeft;
+
+  el.addEventListener('mousedown', e => {
+    isDown = true;
+    el.style.cursor = 'grabbing';
+    startX = e.pageX - el.offsetLeft;
+    scrollLeft = el.scrollLeft;
+    e.preventDefault();
   });
-}, { threshold: 0.08 });
-revealEls.forEach(el => obs.observe(el));
+  el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor = 'grab'; });
+  el.addEventListener('mouseup',    () => { isDown = false; el.style.cursor = 'grab'; });
+  el.addEventListener('mousemove',  e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x    = e.pageX - el.offsetLeft;
+    const walk = (x - startX) * 1.2;
+    el.scrollLeft = scrollLeft - walk;
+  });
+
+  /* touch — already native, but make sure cursor shows on hover */
+  el.style.cursor = 'grab';
+}
+
+document.querySelectorAll(
+  '.pgrid, .hscroll, .chips, .trust'
+).forEach(enableDragScroll);
 </script>
 </body>
 </html>

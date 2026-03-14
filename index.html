@@ -215,7 +215,7 @@ body {
   height: 188px; margin-bottom: 18px; overflow: hidden;
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.04);
-  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column;
   animation: revealUp 0.9s 0.35s cubic-bezier(0.16,1,0.3,1) both;
   transition: border-color 0.45s;
 }
@@ -726,6 +726,74 @@ body.men .fest-glow      { background: radial-gradient(circle, rgba(0,212,232,0.
 @keyframes nudge { 0%,100%{transform:translateX(0)} 50%{transform:translateX(5px)} }
 
 
+/* ── HERO CAROUSEL ── */
+.hero-carousel-wrap {
+  position: relative; margin-bottom: 18px;
+  animation: revealUp 0.9s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+}
+.hero-carousel {
+  display: flex;
+  overflow-x: auto; scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: grab;
+  user-select: none;
+}
+.hero-carousel:active { cursor: grabbing; }
+.hero-carousel::-webkit-scrollbar { display: none; }
+.hero-slide {
+  flex-shrink: 0;
+  width: 100%; height: 188px;
+  scroll-snap-align: start;
+  position: relative;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  border: none;
+}
+.hero-slide::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: linerun 3s ease-in-out infinite; transition: background 0.45s;
+}
+.w-slide { display: none; }
+.m-slide { display: none; }
+body.women .w-slide { display: flex; }
+body.men   .m-slide { display: flex; }
+
+.hslide-img {
+  width: 90px; height: 90px; border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 56px;
+}
+.hslide-label {
+  font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.75); letter-spacing: 0.04em;
+}
+.hslide-price {
+  font-size: 15px; font-weight: 700; color: var(--accent);
+  transition: color 0.45s;
+}
+.hslide-price span {
+  font-size: 11px; font-weight: 400;
+  color: rgba(255,255,255,0.35); text-decoration: line-through; margin-left: 6px;
+}
+
+/* Dot indicators */
+.carousel-dots {
+  display: flex; justify-content: center; gap: 6px;
+  margin-top: 10px;
+}
+.cdot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.2); cursor: pointer;
+  transition: background 0.3s, width 0.3s;
+}
+.cdot.active {
+  width: 18px; border-radius: 3px;
+  background: var(--accent); transition: background 0.45s;
+}
+
 /* ── DRAG SCROLL CURSOR ── */
 .pgrid, .hscroll, .chips, .trust {
   cursor: grab;
@@ -916,8 +984,13 @@ body.men .fest-glow      { background: radial-gradient(circle, rgba(0,212,232,0.
       </svg>
       <span class="nbadge chat-badge" id="chat-badge" style="display:none">!</span>
     </span>
-    <span class="nav-icon">🔍</span>
-    <span class="nav-icon" style="position:relative">🛍️<span class="nbadge" id="cart-n">3</span></span>
+    <span class="nav-icon" style="position:relative">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3a7 7 0 0 0-7 7v4l-1.5 2.5A1 1 0 0 0 4.5 18h15a1 1 0 0 0 .866-1.5L19 14v-4a7 7 0 0 0-7-7Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.75)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M10 18a2 2 0 0 0 4 0" stroke="rgba(255,255,255,0.75)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="nbadge" id="notif-n">2</span>
+    </span>
   </div>
 </header>
 
@@ -999,12 +1072,73 @@ body.men .fest-glow      { background: radial-gradient(circle, rgba(0,212,232,0.
       <p class="hero-sub" id="hero-sub">The biggest year-end shopping sale is here. Curated styles for the woman who ends the year in style.</p>
     </div>
 
-    <!-- Campaign visual placeholder -->
-    <div class="hero-frame">
-      <div class="hero-frame-icon" id="frame-icon">👗</div>
-      <div class="hero-frame-sub" id="frame-sub">Women's Year-End Collection</div>
-      <div class="frame-badge" id="frame-badge">New In</div>
-      <div class="frame-tag" id="frame-tag">✦ Year-End Edit</div>
+    <!-- Campaign carousel -->
+    <div class="hero-carousel-wrap">
+      <div class="hero-carousel" id="hero-carousel">
+
+        <!-- Women slides -->
+        <div class="hero-slide w-slide">
+          <div class="hslide-img bw1">👗</div>
+          <div class="hslide-label">Velvet Slip Dress</div>
+          <div class="hslide-price">₹1,199 <span>₹1,999</span></div>
+          <div class="frame-badge" style="position:absolute;top:12px;right:12px;">New In</div>
+          <div class="frame-tag" style="position:absolute;bottom:12px;left:12px;">✦ Year-End Edit</div>
+        </div>
+        <div class="hero-slide w-slide">
+          <div class="hslide-img bw2">👜</div>
+          <div class="hslide-label">Gold Clasp Clutch</div>
+          <div class="hslide-price">₹1,099 <span>₹1,999</span></div>
+          <div class="frame-badge" style="position:absolute;top:12px;right:12px;background:var(--gold);color:var(--deep);">45% OFF</div>
+          <div class="frame-tag" style="position:absolute;bottom:12px;left:12px;">✦ Holiday Edit</div>
+        </div>
+        <div class="hero-slide w-slide">
+          <div class="hslide-img bw3">🥻</div>
+          <div class="hslide-label">Festive Wrap Dress</div>
+          <div class="hslide-price">₹1,599 <span>₹2,799</span></div>
+          <div class="frame-badge" style="position:absolute;top:12px;right:12px;">50% OFF</div>
+          <div class="frame-tag" style="position:absolute;bottom:12px;left:12px;">✦ Exclusive</div>
+        </div>
+        <div class="hero-slide w-slide">
+          <div class="hslide-img bw4">💎</div>
+          <div class="hslide-label">Crystal Hoops</div>
+          <div class="hslide-price">₹349 <span>₹499</span></div>
+          <div class="frame-badge" style="position:absolute;top:12px;right:12px;background:var(--gold);color:var(--deep);">New In</div>
+          <div class="frame-tag" style="position:absolute;bottom:12px;left:12px;">✦ Jewellery</div>
+        </div>
+
+        <!-- Men slides -->
+        <div class="hero-slide m-slide">
+          <div class="hslide-img bm1">🧥</div>
+          <div class="hslide-label">Oversized Bomber</div>
+          <div class="hslide-price">₹1,499 <span>₹2,499</span></div>
+          <div class="frame-badge" style="position:absolute;top:12px;right:12px;">Drop 01</div>
+          <div class="frame-tag" style="position:absolute;bottom:12px;left:12px;">⚡ New Arrivals</div>
+        </div>
+        <div class="hero-slide m-slide">
+          <div class="hslide-img bm2">🥼</div>
+          <div class="hslide-label">Longline Overcoat</div>
+          <div class="hslide-price">₹2,499 <span>₹4,199</span></div>
+          <div class="frame-badge" style="position:absolute;top:12px;right:12px;background:var(--gold);color:var(--deep);">40% OFF</div>
+          <div class="frame-tag" style="position:absolute;bottom:12px;left:12px;">⚡ Year-End</div>
+        </div>
+        <div class="hero-slide m-slide">
+          <div class="hslide-img bm3">👞</div>
+          <div class="hslide-label">Chelsea Boots</div>
+          <div class="hslide-price">₹1,799 <span>₹2,999</span></div>
+          <div class="frame-badge" style="position:absolute;top:12px;right:12px;">Exclusive</div>
+          <div class="frame-tag" style="position:absolute;bottom:12px;left:12px;">⚡ Footwear</div>
+        </div>
+        <div class="hero-slide m-slide">
+          <div class="hslide-img bm4">⌚</div>
+          <div class="hslide-label">Minimal Watch</div>
+          <div class="hslide-price">₹1,799 <span>₹2,599</span></div>
+          <div class="frame-badge" style="position:absolute;top:12px;right:12px;background:var(--gold);color:var(--deep);">30% OFF</div>
+          <div class="frame-tag" style="position:absolute;bottom:12px;left:12px;">⚡ Accessories</div>
+        </div>
+
+      </div>
+      <!-- Dot indicators -->
+      <div class="carousel-dots" id="carousel-dots"></div>
     </div>
 
     <!-- Stats -->
@@ -1232,16 +1366,132 @@ body.men .fest-glow      { background: radial-gradient(circle, rgba(0,212,232,0.
   <div class="sec-title">Gift <em>Zones</em></div>
 </div>
 <div class="gtiles w-tiles reveal">
-  <div class="gtile gt-rose"><div class="gtile-icon">💝</div><div class="gtile-title">For Her</div><div class="gtile-sub">Sets under ₹1,999</div><div class="gtile-arrow">→</div></div>
+  <div class="gtile gt-rose"><div class="gtile-icon">💝</div><div class="gtile-title">For Him</div><div class="gtile-sub">Sets under ₹1,999</div><div class="gtile-arrow">→</div></div>
   <div class="gtile gt-gold"><div class="gtile-icon">🎀</div><div class="gtile-title">Best Sellers</div><div class="gtile-sub">Top 10 loved picks</div><div class="gtile-arrow">→</div></div>
   <div class="gtile gt-gold"><div class="gtile-icon">✨</div><div class="gtile-title">Luxe Edit</div><div class="gtile-sub">Premium above ₹3k</div><div class="gtile-arrow">→</div></div>
   <div class="gtile gt-rose"><div class="gtile-icon">🌟</div><div class="gtile-title">Under ₹999</div><div class="gtile-sub">Festive budget finds</div><div class="gtile-arrow">→</div></div>
 </div>
 <div class="gtiles m-tiles reveal">
-  <div class="gtile gt-blue"><div class="gtile-icon">⚡</div><div class="gtile-title">For Him</div><div class="gtile-sub">Sets under ₹1,999</div><div class="gtile-arrow">→</div></div>
+  <div class="gtile gt-blue"><div class="gtile-icon">⚡</div><div class="gtile-title">For Her</div><div class="gtile-sub">Sets under ₹1,999</div><div class="gtile-arrow">→</div></div>
   <div class="gtile gt-slate"><div class="gtile-icon">🏆</div><div class="gtile-title">Best Sellers</div><div class="gtile-sub">Top picks this week</div><div class="gtile-arrow">→</div></div>
   <div class="gtile gt-slate"><div class="gtile-icon">💎</div><div class="gtile-title">Luxe Edit</div><div class="gtile-sub">Premium above ₹3k</div><div class="gtile-arrow">→</div></div>
   <div class="gtile gt-blue"><div class="gtile-icon">🎯</div><div class="gtile-title">Under ₹999</div><div class="gtile-sub">Smart budget finds</div><div class="gtile-arrow">→</div></div>
+</div>
+
+
+<!-- ── YEAR-END COLLECTION ── -->
+<div class="section reveal">
+  <div class="eyebrow">✦ Exclusive Drops</div>
+  <div class="sec-title">Year-End <em>Collection</em></div>
+</div>
+<div class="scroll-hint reveal"><span>›</span> Swipe to browse</div>
+
+<!-- Women's Year-End Collection -->
+<div class="scroll-wrap reveal">
+<div class="pgrid w-grid">
+  <div class="pcard">
+    <div class="pcard-img bw1">🥻
+      <div class="pcard-new">Year-End</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:55%"></div></div><span class="sold-lbl">55% sold</span></div>
+      <div class="pcard-name">Festive Wrap Dress</div>
+      <div class="pcard-cat">Year-End Exclusive</div>
+      <div class="pcard-prices"><span class="pcard-price">₹1,599</span><span class="pcard-mrp">₹2,799</span><span class="pcard-save">Save ₹1,200</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard">
+    <div class="pcard-img bw2">👛
+      <div class="pcard-badge">45% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:68%"></div></div><span class="sold-lbl">68% sold</span></div>
+      <div class="pcard-name">Gold Clasp Clutch</div>
+      <div class="pcard-cat">Year-End Exclusive</div>
+      <div class="pcard-prices"><span class="pcard-price">₹1,099</span><span class="pcard-mrp">₹1,999</span><span class="pcard-save">Save ₹900</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard">
+    <div class="pcard-img bw3">🧤
+      <div class="pcard-new">Year-End</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:40%"></div></div><span class="sold-lbl">40% sold</span></div>
+      <div class="pcard-name">Cashmere Gloves</div>
+      <div class="pcard-cat">Year-End Exclusive</div>
+      <div class="pcard-prices"><span class="pcard-price">₹699</span><span class="pcard-mrp">₹1,199</span><span class="pcard-save">Save ₹500</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard">
+    <div class="pcard-img bw4">🩱
+      <div class="pcard-badge">50% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:77%"></div></div><span class="sold-lbl">77% sold</span></div>
+      <div class="pcard-name">Shimmer Bodysuit</div>
+      <div class="pcard-cat">Year-End Exclusive</div>
+      <div class="pcard-prices"><span class="pcard-price">₹899</span><span class="pcard-mrp">₹1,799</span><span class="pcard-save">Save ₹900</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Men's Year-End Collection -->
+<div class="scroll-wrap reveal">
+<div class="pgrid m-grid">
+  <div class="pcard">
+    <div class="pcard-img bm1">🥼
+      <div class="pcard-new">Year-End</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:62%"></div></div><span class="sold-lbl">62% sold</span></div>
+      <div class="pcard-name">Longline Overcoat</div>
+      <div class="pcard-cat">Year-End Exclusive</div>
+      <div class="pcard-prices"><span class="pcard-price">₹2,499</span><span class="pcard-mrp">₹4,199</span><span class="pcard-save">Save ₹1,700</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard">
+    <div class="pcard-img bm2">👞
+      <div class="pcard-badge">40% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:49%"></div></div><span class="sold-lbl">49% sold</span></div>
+      <div class="pcard-name">Chelsea Boots</div>
+      <div class="pcard-cat">Year-End Exclusive</div>
+      <div class="pcard-prices"><span class="pcard-price">₹1,799</span><span class="pcard-mrp">₹2,999</span><span class="pcard-save">Save ₹1,200</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard">
+    <div class="pcard-img bm3">🧢
+      <div class="pcard-new">Year-End</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:83%"></div></div><span class="sold-lbl">83% sold</span></div>
+      <div class="pcard-name">Wool Beanie</div>
+      <div class="pcard-cat">Year-End Exclusive</div>
+      <div class="pcard-prices"><span class="pcard-price">₹499</span><span class="pcard-mrp">₹899</span><span class="pcard-save">Save ₹400</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
+    </div>
+  </div>
+  <div class="pcard">
+    <div class="pcard-img bm4">🧳
+      <div class="pcard-badge">35% OFF</div>
+      <div class="pcard-wish" onclick="wish(this)">🤍</div></div>
+    <div class="pcard-body">
+      <div class="pcard-sold"><div class="sold-bar-bg"><div class="sold-bar-fill" style="width:37%"></div></div><span class="sold-lbl">37% sold</span></div>
+      <div class="pcard-name">Weekender Duffel</div>
+      <div class="pcard-cat">Year-End Exclusive</div>
+      <div class="pcard-prices"><span class="pcard-price">₹1,949</span><span class="pcard-mrp">₹2,999</span><span class="pcard-save">Save ₹1,050</span></div>
+      <button class="btn-bag" onclick="addBag(this)">Add to Bag</button>
+    </div>
+  </div>
+</div>
 </div>
 
 <!-- ── YEAR-END COUNTDOWN FEATURE ── -->
@@ -1325,7 +1575,7 @@ body.men .fest-glow      { background: radial-gradient(circle, rgba(0,212,232,0.
 <nav class="bnav">
   <div class="bni on"><div class="bni-icon">🏠</div><div class="bni-lbl">Home</div></div>
   <div class="bni"><div class="bni-icon">🔍</div><div class="bni-lbl">Search</div></div>
-  <div class="bni"><div class="bni-icon">🛍️</div><div class="bni-lbl">Shop</div></div>
+  <div class="bni"><div class="bni-icon">🛒</div><div class="bni-lbl">Cart</div></div>
   <div class="bni"><div class="bni-icon">🤍</div><div class="bni-lbl">Saved</div></div>
   <div class="bni"><div class="bni-icon">👤</div><div class="bni-lbl">Profile</div></div>
 </nav>
@@ -1353,10 +1603,7 @@ function setGender(g) {
     ? 'The biggest year-end shopping sale is here. Curated styles for the woman who ends the year in style.'
     : 'Bold fits. Exclusive drops. Year-end deals engineered for the man who knows when to move fast.';
   document.getElementById('live-lbl').textContent       = 'Year-End Sale — Live';
-  document.getElementById('frame-icon').textContent     = w ? '👗' : '🧥';
-  document.getElementById('frame-sub').textContent      = w ? "Women's Year-End Collection" : "Men's Year-End Collection";
-  document.getElementById('frame-badge').textContent    = w ? 'New In' : 'Drop 01';
-  document.getElementById('frame-tag').textContent      = w ? '✦ Year-End Edit' : '⚡ New Arrivals';
+  // carousel slides handle gender-specific content
   document.getElementById('stat-sty').textContent       = w ? '200+' : '300+';
   document.getElementById('shop-title').innerHTML       = w ? 'Shop <em>Your Style</em>' : 'SHOP YOUR <em>DROP</em>';
   document.getElementById('hero-cta').textContent       = w ? 'Shop the Sale — Up to 60% Off →' : 'Shop the Drop — Up to 60% Off →';
@@ -1368,6 +1615,7 @@ function setGender(g) {
   document.getElementById('fest-emoji').textContent     = '🎁';
   document.getElementById('final-title').innerHTML      = w ? 'End the Year<br>in <em>Style.</em>' : 'END THE YEAR<br><em>IN STYLE.</em>';
   document.getElementById('final-btn').textContent      = w ? "Shop All Women's Styles →" : "Shop All Men's Styles →";
+  setTimeout(initCarousel, 50);
 }
 
 /* ── DUAL COUNTDOWN ── */
@@ -1397,7 +1645,8 @@ function wish(el) {
   const on = el.textContent === '❤️';
   el.textContent = on ? '🤍' : '❤️';
   wCount += on ? -1 : 1;
-  document.getElementById('cart-n').textContent = 3 + wCount;
+  const nb = document.getElementById('notif-n');
+  if (nb) nb.textContent = 2 + wCount;
 }
 
 /* ── ADD TO BAG ── */
@@ -1406,8 +1655,8 @@ function addBag(btn) {
   btn.textContent = '✓ Added!';
   btn.style.background = '#22c55e';
   setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 1200);
-  const n = document.getElementById('cart-n');
-  n.textContent = parseInt(n.textContent) + 1;
+  const nb = document.getElementById('notif-n');
+  if (nb) nb.textContent = parseInt(nb.textContent) + 1;
 }
 
 /* ── CHIP FILTER ── */
@@ -1520,7 +1769,40 @@ const obs = new IntersectionObserver(entries => {
 }, { threshold: 0.07 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-/* ── DRAG TO SCROLL (mouse + touch) ── */
+/* ── CAROUSEL ── */
+let carouselTimer = null;
+function initCarousel() {
+  const carousel = document.getElementById('hero-carousel');
+  const dotsWrap = document.getElementById('carousel-dots');
+  if (!carousel || !dotsWrap) return;
+  const isWomen = document.body.classList.contains('women');
+  const slides  = Array.from(carousel.querySelectorAll(isWomen ? '.w-slide' : '.m-slide'));
+  if (!slides.length) return;
+  const total = slides.length;
+
+  dotsWrap.innerHTML = '';
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'cdot' + (i === 0 ? ' active' : '');
+    d.onclick = () => carousel.scrollTo({ left: slides[i].offsetLeft, behavior: 'smooth' });
+    dotsWrap.appendChild(d);
+  });
+
+  carousel.addEventListener('scroll', () => {
+    const idx = Math.round(carousel.scrollLeft / carousel.offsetWidth);
+    dotsWrap.querySelectorAll('.cdot').forEach((d,i) => d.classList.toggle('active', i===idx));
+  });
+
+  if (carouselTimer) clearInterval(carouselTimer);
+  let autoIdx = 0;
+  carouselTimer = setInterval(() => {
+    autoIdx = (autoIdx + 1) % total;
+    carousel.scrollTo({ left: slides[autoIdx].offsetLeft, behavior: 'smooth' });
+  }, 3000);
+}
+setTimeout(initCarousel, 200);
+
+
 function enableDragScroll(el) {
   let isDown = false, startX, scrollLeft;
 
@@ -1546,7 +1828,7 @@ function enableDragScroll(el) {
 }
 
 document.querySelectorAll(
-  '.pgrid, .hscroll, .chips, .trust'
+  '.pgrid, .hscroll, .chips, .trust, .hero-collection'
 ).forEach(enableDragScroll);
 </script>
 </body>

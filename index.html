@@ -92,7 +92,7 @@ body {
   position: sticky; top: 0; z-index: 300;
   background: var(--deep);
   display: flex; align-items: center; justify-content: space-between;
-  padding: 13px 20px;
+  padding: 13px 24px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
   transition: background 0.45s;
 }
@@ -111,10 +111,10 @@ body {
   cursor: pointer; transition: all 0.25s;
 }
 .gpill.on { background: var(--accent); color: #fff; transition: background 0.45s; }
-.nav-right { display: flex; gap: 14px; align-items: center; }
-.nav-icon { font-size: 18px; cursor: pointer; position: relative; }
+.nav-right { display: flex; gap: 12px; align-items: center; margin-right: 15px; }
+.nav-icon { font-size: 18px; cursor: pointer; position: relative; flex-shrink: 0; }
 .nbadge {
-  position: absolute; top: -4px; right: -5px;
+  position: absolute; top: -4px; right: 0;
   width: 15px; height: 15px; border-radius: 50%;
   background: var(--accent); color: #fff;
   font-size: 8px; font-weight: 700;

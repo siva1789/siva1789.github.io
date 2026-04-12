@@ -1,523 +1,1038 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Sivaraj Rajendran</title>
+<link rel="icon" type="image/jpeg" href="DP.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-/* WhatsApp Floating Button */
-/* Pulse Animation */
+:root {
+  --white:   #ffffff;
+  --bg:      #f7f6f3;
+  --surface: #ffffff;
+  --border:  #e4e2dc;
+  --teal:    #2e6b6e;
+  --teal-lt: #eaf3f3;
+  --text:    #1a1a1a;
+  --muted:   #666;
+  --light:   #999;
+  --radius:  10px;
+  --max:     1160px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+  box-shadow: 0 1px 12px rgba(0,0,0,0.04);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700; font-size: 1.45rem;
+  color: var(--text); text-decoration: none; letter-spacing: 0.01em;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo img {
+  width: 36px; height: 36px; object-fit: contain; flex-shrink: 0;
+}
+.nav-logo span { color: var(--teal); }
+.nav-links { display: flex; gap: 36px; align-items: center; }
+.nav-links a {
+  color: var(--muted); text-decoration: none;
+  font-size: 0.88rem; font-weight: 500; letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--teal) !important;
+  color: #fff !important;
+  padding: 8px 20px; border-radius: 999px;
+  font-size: 0.85rem !important; font-weight: 600 !important;
+}
+.nav-cta:hover { opacity: 0.88; }
+
+/* ── HERO ── */
+.hero-banner {
+  position: relative; width: 100%; min-height: 540px;
+  background:
+    linear-gradient(to right, rgba(255,255,255,0.96) 45%, rgba(255,255,255,0.25) 100%),
+    url('https://framerusercontent.com/images/KJDeMdrDzcrQSeWvKENmQ2la2Hs.png') center/cover no-repeat;
+  display: flex; align-items: center;
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: var(--max); width: 100%;
+  margin: 0 auto; padding: 88px 48px;
+  display: flex; align-items: center; gap: 80px;
+}
+.hero-copy { flex: 1; max-width: 540px; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 28px; height: 2px; background: var(--teal); border-radius: 2px;
+}
+.hero-copy h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  font-weight: 700; line-height: 1.06; letter-spacing: -0.015em;
+  color: var(--text); margin-bottom: 22px;
+}
+.hero-copy h1 em { font-style: italic; color: var(--teal); }
+.hero-tagline {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem; font-style: italic; font-weight: 500;
+  color: var(--muted); line-height: 1.5; margin-bottom: 12px;
+}
+.hero-sub {
+  font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 34px;
+}
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--teal); color: #fff;
+  font-weight: 600; font-size: 0.88rem;
+  padding: 13px 28px; border-radius: 999px; text-decoration: none;
+  border: 2px solid var(--teal);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.btn-primary:hover { opacity: 0.86; transform: translateY(-2px); }
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--text);
+  font-weight: 600; font-size: 0.88rem;
+  padding: 13px 28px; border-radius: 999px; text-decoration: none;
+  border: 2px solid var(--border);
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+.hero-photo-wrap {
+  flex-shrink: 0; position: relative; width: 260px;
+}
+.hero-photo-wrap img {
+  width: 100%; border-radius: var(--radius);
+  display: block; object-fit: cover; aspect-ratio: 3/4;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.hero-badge-pill {
+  position: absolute; bottom: -18px; left: -18px;
+  background: var(--teal); color: #fff;
+  font-weight: 700; font-size: 0.78rem;
+  padding: 10px 16px; border-radius: 10px;
+  line-height: 1.35; text-align: center;
+  box-shadow: 0 4px 18px rgba(46,107,110,0.32);
+}
+
+/* ── STATS (Summary section — card style like Shivaraj) ── */
+.stats-strip { background: var(--white); border-bottom: 1px solid var(--border); }
+.stats-heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700;
+  text-align: center; letter-spacing: -0.01em;
+  padding: 56px 48px 40px; max-width: var(--max); margin: 0 auto;
+}
+.stats-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 48px 56px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.stat-card {
+  background: var(--bg); border-radius: 16px;
+  padding: 36px 28px 32px;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0;
+  border: 1px solid var(--border);
+}
+.stat-illustration {
+  width: 120px; height: 110px; object-fit: contain; margin-bottom: 20px;
+}
+.stat-illustration-svg {
+  width: 110px; height: 110px; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 3.6rem; font-weight: 700; line-height: 1;
+  color: var(--text); margin-bottom: 10px;
+}
+.stat-label { font-size: 0.9rem; font-weight: 500; color: var(--muted); line-height: 1.5; }
+
+/* ── SHARED ── */
+.section-wrap {
+  max-width: var(--max); margin: 0 auto; padding: 88px 48px;
+}
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 16px;
+}
+.section-eyebrow::before {
+  content: ''; width: 22px; height: 2px; background: var(--teal); border-radius: 2px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 48px;
+}
+
+/* ── DOMAINS — 3-col icon grid like Shivaraj reference ── */
+.domains-bg { background: var(--bg); }
+.domains-headline {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 600;
+  line-height: 1.4; text-align: center; max-width: 680px;
+  margin: 0 auto 56px; color: var(--text);
+}
+.domains-grid-3col {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 48px;
+}
+.domain-cell {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;
+}
+.domain-icon-circle {
+  width: 64px; height: 64px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem;
+  margin-bottom: 4px;
+}
+.domain-title { font-weight: 700; font-size: 1rem; color: var(--text); }
+.domain-desc {
+  font-size: 0.85rem; color: var(--muted); line-height: 1.6;
+  max-width: 220px;
+}
+.domain-desc strong { font-weight: 700; color: var(--text); }
+
+/* ── COMPANIES ── */
+.logos-bg { background: var(--white); }
+.logos-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+.logo-chip {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 28px;
+  font-weight: 600; font-size: 0.9rem; color: var(--muted);
+  transition: border-color 0.2s, color 0.2s;
+}
+.logo-chip:hover { border-color: var(--teal); color: var(--text); }
+
+/* ── PROJECTS ── */
+.projects-bg { background: var(--white); }
+.projects-headline {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 600;
+  line-height: 1.4; text-align: center; max-width: 680px;
+  margin: -16px auto 44px; color: var(--text);
+}
+
+/* 
+  Portfolio grid layout matching reference image 4:
+  Row 1: Mobile Apps (tall left) | Web Portals (middle) | Dashboard (right)
+  Row 2: LMS (left)              | SaaS (wide right)
+  We use CSS grid areas to achieve this.
+*/
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+.project-card {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; text-decoration: none; color: inherit;
+  background: var(--surface); display: flex; flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.project-card:hover { transform: translateY(-5px); box-shadow: 0 18px 48px rgba(0,0,0,0.10); border-color: var(--teal); }
+.project-img-wrap { overflow: hidden; }
+.project-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; transition: transform 0.5s; }
+.project-card:hover .project-img { transform: scale(1.04); }
+.project-body { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.project-cat { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+.project-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem; font-weight: 700; line-height: 1.25; color: var(--text);
+}
+.project-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.65; flex: 1; }
+.project-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.82rem; font-weight: 600; color: var(--teal);
+  margin-top: 6px; transition: gap 0.2s;
+}
+.project-card:hover .project-link { gap: 10px; }
+
+/* Grid placement: 5 cards, 3 cols
+   Card 1 (col 1), Card 2 (col 2), Card 3 (col 3) — row 1
+   Card 4 (col 1), Card 5 spans col 2-3 — row 2  */
+.project-card:nth-child(5) { grid-column: 2 / 4; }
+
+/* ── ABOUT + SKILLS ── */
+.about-bg { background: var(--bg); }
+.about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 72px; align-items: start; margin-bottom: 72px; }
+.about-statement {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.3rem, 2.2vw, 1.9rem); font-weight: 600;
+  line-height: 1.55; color: var(--text);
+}
+.about-statement em { font-style: italic; color: var(--teal); }
+.skills-heading {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 18px;
+}
+.skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-tag {
+  background: var(--white); border: 1px solid var(--border);
+  padding: 5px 14px; border-radius: 999px;
+  font-size: 0.82rem; color: var(--text); font-weight: 500;
+}
+.skill-tag.accent { border-color: var(--teal); color: var(--teal); }
+
+/* ── EXPERIENCE ── */
+.exp-row {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.exp-row:first-child { border-top: 1px solid var(--border); }
+.exp-role { font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 3px; }
+.exp-co { font-size: 0.875rem; color: var(--muted); }
+.exp-date { font-size: 0.78rem; color: var(--light); white-space: nowrap; padding-top: 4px; font-weight: 500; }
+
+/* ── TESTIMONIAL ── */
+.testimonial-bg { background: var(--white); }
+.testimonial-inner { max-width: 860px; margin: 0 auto; }
+.quote-mark {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 7rem; color: var(--teal); opacity: 0.22;
+  line-height: 0.7; margin-bottom: 22px; display: block; font-weight: 700;
+}
+.testimonial-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.15rem, 2vw, 1.55rem); font-weight: 500; font-style: italic;
+  line-height: 1.7; color: var(--text); margin-bottom: 36px;
+}
+.testimonial-author { display: flex; align-items: center; gap: 18px; }
+.t-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--teal-lt); border: 2px solid var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  font-weight: 700; color: var(--teal); flex-shrink: 0;
+}
+.t-name { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+.t-role { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+
+/* ── CONTACT ── */
+.contact-bg { background: var(--bg); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.contact-headline {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  line-height: 1.1; margin-bottom: 14px;
+}
+.contact-headline em { font-style: italic; color: var(--teal); }
+.contact-sub { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+.social-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.social-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1.5px solid var(--border); border-radius: 999px;
+  padding: 8px 18px; font-size: 0.82rem; font-weight: 600;
+  color: var(--text); text-decoration: none; background: var(--white);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.social-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-lt); }
+.contact-info-block { display: flex; flex-direction: column; gap: 22px; margin-top: 36px; }
+.ci-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.ci-val { font-size: 0.95rem; color: var(--text); text-decoration: none; display: block; }
+a.ci-val:hover { color: var(--teal); }
+
+.form-heading { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 22px; }
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.form-group input,
+.form-group textarea {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 8px; padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text);
+  transition: border-color 0.2s; outline: none; resize: vertical;
+}
+.form-group input:focus,
+.form-group textarea:focus { border-color: var(--teal); }
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: var(--light); }
+.form-submit {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--teal); color: #fff;
+  font-weight: 600; font-size: 0.9rem;
+  padding: 14px 32px; border-radius: 999px; border: none;
+  cursor: pointer; transition: opacity 0.2s, transform 0.2s;
+  align-self: flex-start;
+}
+.form-submit:hover { opacity: 0.86; transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--white); border-top: 1px solid var(--border);
+  padding: 28px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-copy { font-size: 0.82rem; color: var(--muted); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--teal); }
+
+/* ── LETS CHAT FLOAT ── */
 .whatsapp-float {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: #25D366;
-  color: #0d0d0d;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  text-decoration: none;
-  box-shadow: 0 0 0 rgba(37, 211, 102, 0.7);
-  animation: pulse 2s infinite;
-  transition: transform 0.2s;
-}
-
-.whatsapp-float:hover {
-  transform: scale(1.1);
-  animation: none; /* stop pulse on hover */
-}
-
-/* Keyframes */
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-  }
-}
-.whatsapp-float:hover {
-  transform: scale(1.1);
-}
-
-/* Popup */
-.whatsapp-popup {
-  position: fixed;
-  bottom: 90px;
-  right: 24px;
-  background: #161616;
-  border: 1px solid #252525;
-  border-radius: 16px;
-  padding: 16px;
-  width: 220px;
-  display: none;
-  z-index: 999;
-}
-.whatsapp-popup .wa-header {
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #c8f04d;
-}
-.whatsapp-popup p {
-  font-size: 0.85rem;
-  color: #888;
-  margin-bottom: 12px;
-}
-.whatsapp-popup a {
-  display: block;
-  text-align: center;
-  background: #25D366;
-  color: #0d0d0d;
-  padding: 8px;
+  position: fixed; bottom: 28px; right: 28px;
+  background: #1a1a1a; color: #fff;
+  height: 48px; padding: 0 22px 0 16px;
   border-radius: 999px;
-  text-decoration: none;
-  font-weight: 600;
+  display: inline-flex; align-items: center; gap: 10px;
+  z-index: 999; text-decoration: none;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.28);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.92rem; font-weight: 600; letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+.whatsapp-float:hover {
+  background: #2e6b6e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+}
+.whatsapp-float .wa-icon {
+  width: 26px; height: 26px; background: #25D366;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+@keyframes wpulse {
+  0%   { box-shadow: 0 4px 24px rgba(0,0,0,0.28); }
+  50%  { box-shadow: 0 4px 32px rgba(46,107,110,0.45); }
+  100% { box-shadow: 0 4px 24px rgba(0,0,0,0.28); }
+}
+.whatsapp-float { animation: wpulse 3s ease-in-out infinite; }
 
-  :root {
-    --bg: #0d0d0d;
-    --surface: #161616;
-    --border: #252525;
-    --accent: #c8f04d;
-    --text: #f0f0f0;
-    --muted: #888;
-    --radius: 16px;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 48px;
-    background: rgba(13,13,13,0.9);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: 'Syne', Georgia, sans-serif;
-    font-weight: 800; font-size: 1.1rem; color: var(--text); text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 32px; }
-  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: grid; grid-template-columns: 1fr 1fr;
-    align-items: center; gap: 48px;
-    padding: 120px 48px 80px;
-    max-width: 1200px; margin: 0 auto;
-  }
-  .hero-left { display: flex; flex-direction: column; gap: 20px; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--surface); border: 1px solid var(--border);
-    padding: 6px 14px; border-radius: 999px; font-size: 0.82rem;
-    color: var(--accent); width: fit-content; text-decoration: none;
-  }
-  .hero-badge::before {
-    content: ''; width: 7px; height: 7px; background: var(--accent);
-    border-radius: 50%; display: inline-block; animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.5)} }
-  .hero h1 {
-    font-family: 'Syne', Georgia, sans-serif;
-    font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 800;
-    line-height: 1.05; letter-spacing: -0.04em;
-  }
-  .hero h1 span { color: var(--accent); }
-  .hero-sub { font-size: 1.05rem; color: var(--muted); font-weight: 300; max-width: 480px; line-height: 1.7; }
-  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .hero-tag {
-    background: var(--surface); border: 1px solid var(--border);
-    padding: 5px 14px; border-radius: 999px; font-size: 0.82rem; color: var(--muted);
-  }
-  .hero-right { display: flex; justify-content: center; align-items: center; }
-  .hero-img-wrap { position: relative; width: 300px; }
-  .hero-img-wrap::before {
-    content: ''; position: absolute; inset: -2px;
-    background: linear-gradient(135deg, var(--accent), transparent 60%);
-    border-radius: calc(var(--radius) + 2px); z-index: 0;
-  }
-  .hero-img-wrap img {
-    position: relative; z-index: 1; width: 100%;
-    border-radius: var(--radius); display: block; object-fit: cover; aspect-ratio: 3/4;
-  }
-  .hero-years {
-    position: absolute; bottom: -16px; right: -16px; z-index: 2;
-    background: var(--accent); color: #0d0d0d;
-    font-family: 'Syne', Georgia, sans-serif; font-weight: 800; font-size: 0.85rem;
-    padding: 12px 16px; border-radius: 12px; line-height: 1.3; text-align: center;
-  }
-
-  /* MARQUEE */
-  .marquee-wrap {
-    overflow: hidden;
-    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    padding: 18px 0; background: var(--surface);
-  }
-  .marquee-track {
-    display: flex; gap: 48px; width: max-content; align-items: center;
-    animation: marquee 24s linear infinite;
-  }
-  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-  .marquee-item {
-    display: flex; align-items: center; gap: 10px;
-    font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 600;
-    letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
-    white-space: nowrap; flex-shrink: 0;
-  }
-  .marquee-item img { width: 26px; height: 26px; object-fit: contain; opacity: 0.7; filter: grayscale(1) brightness(1.5); }
-  .dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
-
-  /* SECTIONS */
-  section { max-width: 1200px; margin: 0 auto; padding: 96px 48px; }
-  .section-label {
-    font-family: 'Syne', Georgia, sans-serif; font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
-  }
-  .section-title {
-    font-family: 'Syne', Georgia, sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800;
-    letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 48px;
-  }
-
-  /* WORK */
-  .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .work-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s;
-    text-decoration: none; color: inherit;
-    display: flex; flex-direction: column;
-  }
-  .work-card:hover { transform: translateY(-4px); border-color: #333; }
-  .work-card-img-wrap { overflow: hidden; }
-  .work-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; transition: transform 0.4s; }
-  .work-card:hover .work-card-img { transform: scale(1.03); }
-  .work-card-body { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  .work-card h3 {
-    font-family: 'Syne', Georgia, sans-serif; font-size: 1rem; font-weight: 700;
-    line-height: 1.3; letter-spacing: -0.02em;
-  }
-  .work-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; flex: 1; }
-  .work-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    color: var(--accent); font-size: 0.82rem; font-weight: 600;
-    text-decoration: none; margin-top: 4px; transition: gap 0.2s;
-  }
-  .work-card:hover .work-link { gap: 10px; }
-  .wide { grid-column: 1 / -1; max-width: 600px; }
-
-  /* DIVIDER */
-  .divider { border-top: 1px solid var(--border); }
-
-  /* ABOUT */
-  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; }
-  .about-statement {
-    font-family: 'Syne', Georgia, sans-serif;
-    font-size: clamp(1.2rem, 2vw, 1.7rem); font-weight: 700;
-    line-height: 1.5; letter-spacing: -0.02em;
-  }
-  .about-statement em { font-style: normal; color: var(--accent); }
-  .skills-label {
-    font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
-  }
-  .skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .skill-tag {
-    background: var(--surface); border: 1px solid var(--border);
-    padding: 5px 14px; border-radius: 999px; font-size: 0.82rem; color: var(--text);
-  }
-
-  /* EXPERIENCE */
-  .exp-item {
-    display: grid; grid-template-columns: 1fr auto;
-    gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border);
-  }
-  .exp-item:first-child { border-top: 1px solid var(--border); }
-  .exp-role { font-family: 'Syne', Georgia, sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-  .exp-company { font-size: 0.875rem; color: var(--muted); }
-  .exp-date { font-size: 0.82rem; color: var(--muted); white-space: nowrap; padding-top: 4px; }
-
-  /* CONTACT */
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-  .contact-big {
-    font-family: 'Syne', Georgia, sans-serif;
-    font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800;
-    letter-spacing: -0.04em; line-height: 1.1;
-  }
-  .contact-big span { color: var(--accent); }
-  .social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-  .social-link {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--surface); border: 1px solid var(--border);
-    color: var(--text); text-decoration: none;
-    padding: 10px 20px; border-radius: 999px;
-    font-size: 0.85rem; font-weight: 600;
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
-  }
-  .social-link:hover { background: var(--accent); border-color: var(--accent); color: #0d0d0d; }
-  .contact-info { display: flex; flex-direction: column; gap: 20px; }
-  .contact-info-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
-  .contact-info-val { font-size: 0.95rem; color: var(--text); text-decoration: none; display: block; }
-  .contact-info-val:hover { color: var(--accent); }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 28px 48px; display: flex; align-items: center; justify-content: space-between;
-    background: var(--surface);
-  }
-  .footer-copy { font-size: 0.82rem; color: var(--muted); }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--text); }
-
-  @media (max-width: 860px) {
-    nav { padding: 16px 24px; }
-    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
-    .hero-right { display: none; }
-    section { padding: 64px 24px; }
-    .work-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
-  }
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .nav-links { gap: 18px; }
+  .hero-inner { flex-direction: column; padding: 60px 24px; gap: 40px; }
+  .hero-photo-wrap { width: 200px; }
+  .stats-inner { grid-template-columns: 1fr 1fr; padding: 0 24px 48px; }
+  .stats-heading { padding: 48px 24px 32px; }
+  .section-wrap { padding: 64px 24px; }
+  .domains-grid-3col { grid-template-columns: repeat(2, 1fr); }
+  .projects-grid { grid-template-columns: 1fr 1fr; }
+  .project-card:nth-child(5) { grid-column: 1 / -1; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 14px; text-align: center; padding: 24px; }
+}
+@media (max-width: 600px) {
+  .nav-cta { display: none; }
+  .stats-inner { grid-template-columns: 1fr; }
+  .domains-grid-3col { grid-template-columns: 1fr 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card:nth-child(5) { grid-column: auto; }
+}
+@media (max-width: 400px) {
+  .domains-grid-3col { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">Sivaraj R.</a>
+  <a class="nav-logo" href="#"><img src="slogo.jpg" alt="Sivaraj Logo"/>Sivaraj <span>R</span></a>
   <div class="nav-links">
     <a href="#work">Work</a>
-<a href="#skills">About</a>
+    <a href="#about">About</a>
     <a href="#experience">Experience</a>
     <a href="#contact">Contact</a>
+    <a class="nav-cta" href="#contact">Get in Touch</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-    <a class="hero-badge" href="https://sivarajrajendran.crevado.com/" target="_blank">Sr. UI/UX Designer</a>
-    <h1>Sivaraj<br/><span>Rajendran</span></h1>
-    <p class="hero-sub">Results-oriented and highly creative UI/UX and Graphic designer — problem solver, design systems expert, with a proven record in B2B, B2C &amp; SaaS Products.</p>
-    <div class="hero-tags">
-      <span class="hero-tag">Problem Solver</span>
-      <span class="hero-tag">Design Systems</span>
-      <span class="hero-tag">B2B · B2C · SaaS</span>
-      <span class="hero-tag">14+ Years</span>
+<div class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">Product Designer</div>
+      <!-- CHANGE 2: Updated headline -->
+      <h1>Designing digital products<br/>with <em>purpose since 2010.</em></h1>
+      <p class="hero-tagline">Driving alignment between Design, Business &amp; User needs.</p>
+      <p class="hero-sub">
+        Results-oriented UI/UX &amp; Graphic Designer with 14+ years of experience across B2B, B2C &amp; SaaS products — from FinTech to HealthTech.
+      </p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#work">View my Work</a>
+        <a class="btn-outline" href="#contact">Get in Touch</a>
+      </div>
     </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-img-wrap">
-      <img src="https://framerusercontent.com/images/MATMqsDZzJKiHYWTVoX1O6jbjc.jpg" alt="Sivaraj Rajendran"/>
-      <div class="hero-years">14+ Yrs<br/>Experience</div>
+    <div class="hero-photo-wrap">
+      <!-- CHANGE 1: Profile photo replaced with DP.jpg -->
+      <img src="DP.jpg" alt="Sivaraj Rajendran"/>
+      <div class="hero-badge-pill">14+ Yrs<br/>Experience</div>
     </div>
   </div>
 </div>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/bkVY6SV34o7rmxP32QvnrKvre8.png" alt=""/>Spline <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/Pxfjp142gBOSoN5QAIirhUygA.png" alt=""/>Figma <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/458h4BWAeoj23Ddhqjrgl9IoI8.png" alt=""/>Framer <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/An8Rr8HkHJXxtwZFzDJ2XPlHQ.png" alt=""/>Adobe <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/X5Hqt8kGztLJYx9l79C0PR7yHJg.png" alt=""/>Illustrator <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/ithSzt79N1Vtp8IbdAsyC2SywRE.png" alt=""/>Webflow <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/hmnnQatWMcbQSoMpr0y5CVZGrpk.png" alt=""/>Notion <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/bkVY6SV34o7rmxP32QvnrKvre8.png" alt=""/>Adobe XD <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/Pxfjp142gBOSoN5QAIirhUygA.png" alt=""/>Figma <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/458h4BWAeoj23Ddhqjrgl9IoI8.png" alt=""/>Photoshop <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/An8Rr8HkHJXxtwZFzDJ2XPlHQ.png" alt=""/>Acrobat DC <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/X5Hqt8kGztLJYx9l79C0PR7yHJg.png" alt=""/>Relume <span class="dot"></span></div>
-    <div class="marquee-item"><img src="https://framerusercontent.com/images/ithSzt79N1Vtp8IbdAsyC2SywRE.png" alt=""/>Premiere Pro <span class="dot"></span></div>
+<!-- STATS / SUMMARY — CHANGE 3: Card layout with 3D illustrations like Shivaraj reference -->
+<div class="stats-strip">
+  <div class="stats-heading">Summary</div>
+  <div class="stats-inner">
+
+    <!-- Card 1: Years of Experience — person working at laptop illustration -->
+    <div class="stat-card">
+      <div class="stat-illustration-svg">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="110">
+          <!-- Body -->
+          <ellipse cx="60" cy="108" rx="38" ry="8" fill="#e0e0e0" opacity="0.5"/>
+          <!-- Chair base -->
+          <rect x="44" y="88" width="32" height="5" rx="2.5" fill="#b0b0b0"/>
+          <rect x="58" y="93" width="4" height="14" rx="2" fill="#b0b0b0"/>
+          <rect x="46" y="104" width="28" height="4" rx="2" fill="#b0b0b0"/>
+          <!-- Torso -->
+          <rect x="49" y="68" width="22" height="22" rx="8" fill="#3a3a3a"/>
+          <!-- Head -->
+          <circle cx="60" cy="56" r="13" fill="#c68642"/>
+          <!-- Hair -->
+          <path d="M47 52 Q49 40 60 39 Q71 40 73 52 Q70 44 60 43 Q50 44 47 52Z" fill="#1a1a1a"/>
+          <!-- Eyes -->
+          <circle cx="55" cy="56" r="2" fill="#1a1a1a"/>
+          <circle cx="65" cy="56" r="2" fill="#1a1a1a"/>
+          <!-- Laptop -->
+          <rect x="38" y="76" width="44" height="28" rx="4" fill="#555"/>
+          <rect x="40" y="78" width="40" height="24" rx="3" fill="#74b9ff"/>
+          <!-- Screen content lines -->
+          <rect x="44" y="82" width="20" height="2" rx="1" fill="rgba(255,255,255,0.7)"/>
+          <rect x="44" y="86" width="14" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+          <rect x="44" y="90" width="18" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+          <!-- Floating objects -->
+          <rect x="22" y="30" width="10" height="10" rx="2" fill="#e17055" transform="rotate(20 27 35)"/>
+          <circle cx="90" cy="28" r="6" fill="#2d3436" opacity="0.7"/>
+          <rect x="80" y="50" width="8" height="8" rx="1" fill="#6c5ce7" transform="rotate(-15 84 54)"/>
+        </svg>
+      </div>
+      <div class="stat-num">14+</div>
+      <div class="stat-label">Years of experience in UX/UI.<br/>Overall experience since 2010.</div>
+    </div>
+
+    <!-- Card 2: Projects Collaboration — mobile/app design illustration -->
+    <div class="stat-card">
+      <div class="stat-illustration-svg">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="110">
+          <!-- Phone -->
+          <rect x="36" y="20" width="48" height="80" rx="8" fill="#f4a261"/>
+          <rect x="39" y="28" width="42" height="60" rx="4" fill="#fff8f0"/>
+          <!-- Screen content — app UI -->
+          <rect x="43" y="32" width="28" height="6" rx="2" fill="#e17055"/>
+          <rect x="43" y="42" width="34" height="3" rx="1.5" fill="#ddd"/>
+          <rect x="43" y="47" width="24" height="3" rx="1.5" fill="#ddd"/>
+          <rect x="43" y="54" width="12" height="12" rx="3" fill="#74b9ff"/>
+          <rect x="58" y="54" width="12" height="12" rx="3" fill="#a29bfe"/>
+          <rect x="43" y="70" width="27" height="3" rx="1.5" fill="#ddd"/>
+          <rect x="43" y="75" width="20" height="3" rx="1.5" fill="#ddd"/>
+          <!-- Heart icon -->
+          <path d="M71 66 Q74 62 78 66 Q82 70 74 76 Q66 70 70 66Z" fill="#ff7675" transform="scale(0.6) translate(50 40)"/>
+          <!-- Floating nodes -->
+          <circle cx="20" cy="45" r="5" fill="#fd79a8"/>
+          <circle cx="100" cy="35" r="4" fill="#55efc4"/>
+          <circle cx="22" cy="70" r="3" fill="#fdcb6e"/>
+          <circle cx="98" cy="65" r="5" fill="#a29bfe"/>
+          <!-- Connecting lines -->
+          <line x1="25" y1="45" x2="36" y2="55" stroke="#fd79a8" stroke-width="1.5" opacity="0.5"/>
+          <line x1="96" y1="38" x2="84" y2="48" stroke="#55efc4" stroke-width="1.5" opacity="0.5"/>
+          <!-- Cancel circle -->
+          <circle cx="24" cy="82" r="7" fill="#ff7675" opacity="0.7"/>
+          <line x1="20" y1="78" x2="28" y2="86" stroke="#fff" stroke-width="2"/>
+          <line x1="28" y1="78" x2="20" y2="86" stroke="#fff" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Projects Collaboration</div>
+    </div>
+
+    <!-- Card 3: Successful Associations — handshake / collaboration illustration -->
+    <div class="stat-card">
+      <div class="stat-illustration-svg">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="110">
+          <!-- Tablet/book -->
+          <rect x="28" y="25" width="64" height="70" rx="6" fill="#dfe6e9"/>
+          <rect x="32" y="29" width="56" height="62" rx="4" fill="#b2bec3"/>
+          <!-- Two hands reaching from sides -->
+          <!-- Left hand (reddish) -->
+          <path d="M10 65 Q14 58 22 60 L38 60 Q42 60 42 65 L42 72 Q42 75 38 75 L22 75 Q14 76 10 72 Z" fill="#e17055"/>
+          <rect x="22" y="52" width="6" height="12" rx="3" fill="#e17055"/>
+          <rect x="29" y="50" width="6" height="14" rx="3" fill="#e17055"/>
+          <rect x="36" y="52" width="5" height="12" rx="3" fill="#e17055"/>
+          <!-- Right hand (blue) -->
+          <path d="M110 65 Q106 58 98 60 L82 60 Q78 60 78 65 L78 72 Q78 75 82 75 L98 75 Q106 76 110 72 Z" fill="#6c5ce7"/>
+          <rect x="92" y="52" width="6" height="12" rx="3" fill="#6c5ce7"/>
+          <rect x="85" y="50" width="6" height="14" rx="3" fill="#6c5ce7"/>
+          <rect x="79" y="52" width="5" height="12" rx="3" fill="#6c5ce7"/>
+          <!-- Meeting point glow -->
+          <circle cx="60" cy="65" r="8" fill="#ffeaa7" opacity="0.8"/>
+          <circle cx="60" cy="65" r="5" fill="#fdcb6e"/>
+          <!-- Floating dots -->
+          <circle cx="30" cy="30" r="3" fill="#74b9ff"/>
+          <circle cx="55" cy="18" r="4" fill="#a29bfe"/>
+          <circle cx="90" cy="28" r="3" fill="#fd79a8"/>
+          <circle cx="100" cy="95" r="4" fill="#55efc4"/>
+        </svg>
+      </div>
+      <div class="stat-num">10+</div>
+      <div class="stat-label">Successful Associations</div>
+    </div>
 
   </div>
 </div>
 
-<!-- WORK -->
-<section id="work">
-  <div class="section-label">Some of my Works</div>
-  <h2 class="section-title">Case Studies</h2>
-  <div class="work-grid">
-    <a class="work-card" href="https://www.behance.net/gallery/221619051/Trippin-Case-Study" target="_blank">
-      <div class="work-card-img-wrap"><img class="work-card-img" src="https://framerusercontent.com/images/KJDeMdrDzcrQSeWvKENmQ2la2Hs.png" alt="Trippin"/></div>
-      <div class="work-card-body">
-        <h3>Trippin – User-Centered Travel App with Social Discovery</h3>
-        <p>A B2C mobile app that helps you discover hidden travel gems, plan trips effortlessly, and connect with like-minded explorers.</p>
-        <span class="work-link">View case study →</span>
+<!-- DOMAINS / SUMMARY — CHANGE 4 & 5: Moved "I've Designed…" to portfolio; domains as 3-col grid -->
+<div class="domains-bg">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Summary</div>
+    <h2 class="domains-headline">
+      I've helped ship software, engage users,<br/>and grow businesses in a Spectrum of domains
+    </h2>
+    <div class="domains-grid-3col">
+
+      <div class="domain-cell">
+        <div class="domain-icon-circle">
+          <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Heart with cross — universal Healthtech icon -->
+            <path d="M26 44S8 33 8 19.5C8 13.7 12.7 9 18.5 9c3.2 0 6.1 1.5 7.5 3.9C27.4 10.5 30.3 9 33.5 9 39.3 9 44 13.7 44 19.5 44 33 26 44 26 44Z" fill="#e74c3c"/>
+            <!-- White cross on heart -->
+            <rect x="23" y="17" width="6" height="14" rx="2" fill="white"/>
+            <rect x="19" y="21" width="14" height="6" rx="2" fill="white"/>
+          </svg>
+        </div>
+        <div class="domain-title">Healthtech</div>
+        <div class="domain-desc"><strong>B2B, B2C apps,</strong> web and native, for diagnostic labs &amp; Helfie.</div>
       </div>
-    </a>
-    <a class="work-card" href="https://www.behance.net/gallery/212929021/Redesign-of-Diagnostic-Lab-Website" target="_blank">
-      <div class="work-card-img-wrap"><img class="work-card-img" src="https://framerusercontent.com/images/wDKjZoF1cqQzSNBKWRfLeKEMqk4.png" alt="Testeasy Lab"/></div>
-      <div class="work-card-body">
-        <h3>Redesign of Testeasy Lab Website</h3>
-        <p>Redesigned the lab's website with a user-first approach, enhancing usability and trust. Post-launch results showed higher engagement and strong growth in online bookings.</p>
-        <span class="work-link">View case study →</span>
+
+      <div class="domain-cell">
+        <div class="domain-icon-circle">🏗️</div>
+        <div class="domain-title">Engineering</div>
+        <div class="domain-desc"><strong>Proprietary enterprise cloud platform</strong> for BIM Data Management and Collaboration in Construction.</div>
       </div>
-    </a>
-    <a class="work-card" href="https://www.behance.net/gallery/205228225/QuizifAI" target="_blank">
-      <div class="work-card-img-wrap"><img class="work-card-img" src="https://framerusercontent.com/images/t9bA0c0ktKDRuOaeLmMvuqcjSf0.png" alt="QuizifAI"/></div>
-      <div class="work-card-body">
-        <h3>QuizifAI: AI-Powered Quiz Generator</h3>
-        <p>Designed a user-friendly B2C platform that transforms PDFs and textbooks into quizzes using AI, with gamified features like leaderboards.</p>
-        <span class="work-link">View case study →</span>
+
+      <div class="domain-cell">
+        <div class="domain-icon-circle">🤖</div>
+        <div class="domain-title">AI</div>
+        <div class="domain-desc"><strong>Enterprise platform</strong> for Financial Document — Search and Synthesis.</div>
       </div>
-    </a>
-    <a class="work-card" href="https://www.behance.net/gallery/43906375/Website-Images-and-mailers" target="_blank">
-      <div class="work-card-img-wrap"><img class="work-card-img" src="https://framerusercontent.com/images/KtenyfZLqE9O7VaFu4OrLnpVQ.webp" alt="Website Graphics"/></div>
-      <div class="work-card-body">
-        <h3>Website Graphics &amp; Promotional Mailers</h3>
-        <p>Designed engaging website banners and promotional mailers aligned with brand guidelines using Adobe Creative Suite.</p>
-        <span class="work-link">View case study →</span>
+
+      <div class="domain-cell">
+        <div class="domain-icon-circle">🎓</div>
+        <div class="domain-title">Education &amp; Training</div>
+        <div class="domain-desc"><strong>Academic Web Portals</strong> for LMS, CMS &amp; Performance evaluation &amp; monitoring.</div>
       </div>
-    </a>
-    <a class="work-card wide" href="https://www.behance.net/gallery/43905913/Social-Media-Post" target="_blank">
-      <div class="work-card-img-wrap"><img class="work-card-img" src="https://framerusercontent.com/images/dPVG6LYznYbzbe3V3c4BpIOXFg.png" alt="Social Media"/></div>
-      <div class="work-card-body">
-        <h3>Social Media Designs</h3>
-        <p>Visually engaging and brand-consistent creatives for Instagram, Facebook, and LinkedIn — static posts, carousels, reels, and story designs.</p>
-        <span class="work-link">View Designs →</span>
+
+      <div class="domain-cell">
+        <div class="domain-icon-circle">🏠</div>
+        <div class="domain-title">Real Estate</div>
+        <div class="domain-desc"><strong>Classifieds platform with workflow monitoring</strong> to connect agents Sell and Purchase properties for their customers.</div>
       </div>
-    </a>
+
+      <div class="domain-cell">
+        <div class="domain-icon-circle">👥</div>
+        <div class="domain-title">Human Resource</div>
+        <div class="domain-desc"><strong>Global employee onboarding portal</strong> for a HR team of SQUARE.</div>
+      </div>
+
+    </div>
+    <p style="margin-top:52px; font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-style:italic; color:var(--muted); max-width:700px; line-height:1.6; text-align:center; margin-left:auto; margin-right:auto;">
+      And this variety has helped me develop a keen sense for understanding and creating within complex ecosystems.
+    </p>
   </div>
-</section>
+</div>
+
+<!-- COMPANIES -->
+<div class="logos-bg">
+  <div class="section-wrap" style="padding-top:60px; padding-bottom:60px;">
+    <div class="section-eyebrow">Clients &amp; Employers</div>
+    <h2 class="section-title" style="margin-bottom:28px;">Designed for the Best Companies</h2>
+    <div class="logos-grid">
+      <div class="logo-chip">PayPal</div>
+      <div class="logo-chip">Hexaware Technologies</div>
+      <div class="logo-chip">Narm Tech</div>
+      <div class="logo-chip">Ad2Pro Media Solutions</div>
+      <div class="logo-chip">UMM Studios</div>
+      <div class="logo-chip">Testeasy Lab</div>
+      <div class="logo-chip">QuizifAI</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS — CHANGE 4 & 6: "I've Designed…" heading + 3-col grid layout -->
+<div class="projects-bg" id="work">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Portfolio</div>
+    <h2 class="section-title" style="text-align:center; margin-bottom:16px;">I've Designed various types of products</h2>
+    <p class="projects-headline">
+      Case Studies &amp; Selected Works
+    </p>
+    <div class="projects-grid">
+
+      <!-- Card 1: Mobile Apps -->
+      <a class="project-card" href="https://www.behance.net/gallery/221619051/Trippin-Case-Study" target="_blank">
+        <div class="project-img-wrap">
+          <img class="project-img" src="https://framerusercontent.com/images/KJDeMdrDzcrQSeWvKENmQ2la2Hs.png" alt="Trippin"/>
+        </div>
+        <div class="project-body">
+          <div class="project-cat">Mobile Apps · B2C · Travel</div>
+          <div class="project-title">Trippin – User-Centered Travel App with Social Discovery</div>
+          <p class="project-desc">A B2C mobile app that helps you discover hidden travel gems, plan trips effortlessly, and connect with like-minded explorers.</p>
+          <span class="project-link">View Case Study →</span>
+        </div>
+      </a>
+
+      <!-- Card 2: Web Portals -->
+      <a class="project-card" href="https://www.behance.net/gallery/212929021/Redesign-of-Diagnostic-Lab-Website" target="_blank">
+        <div class="project-img-wrap">
+          <img class="project-img" src="https://framerusercontent.com/images/wDKjZoF1cqQzSNBKWRfLeKEMqk4.png" alt="Testeasy Lab"/>
+        </div>
+        <div class="project-body">
+          <div class="project-cat">Web Portals · Healthtech · Redesign</div>
+          <div class="project-title">Redesign of Testeasy Lab Website</div>
+          <p class="project-desc">Redesigned the lab's website with a user-first approach, enhancing usability and trust. Post-launch results showed higher engagement and strong growth in online bookings.</p>
+          <span class="project-link">View Case Study →</span>
+        </div>
+      </a>
+
+      <!-- Card 3: Dashboard -->
+      <a class="project-card" href="https://www.behance.net/gallery/205228225/QuizifAI" target="_blank">
+        <div class="project-img-wrap">
+          <img class="project-img" src="https://framerusercontent.com/images/t9bA0c0ktKDRuOaeLmMvuqcjSf0.png" alt="QuizifAI"/>
+        </div>
+        <div class="project-body">
+          <div class="project-cat">AI · EdTech · Dashboard</div>
+          <div class="project-title">QuizifAI: AI-Powered Quiz Generator</div>
+          <p class="project-desc">Designed a user-friendly B2C platform that transforms PDFs and textbooks into quizzes using AI, with gamified features like leaderboards.</p>
+          <span class="project-link">View Case Study →</span>
+        </div>
+      </a>
+
+      <!-- Card 4: LMS -->
+      <a class="project-card" href="https://www.behance.net/gallery/43906375/Website-Images-and-mailers" target="_blank">
+        <div class="project-img-wrap">
+          <img class="project-img" src="https://framerusercontent.com/images/KtenyfZLqE9O7VaFu4OrLnpVQ.webp" alt="Website Graphics"/>
+        </div>
+        <div class="project-body">
+          <div class="project-cat">Branding · Creative · Digital</div>
+          <div class="project-title">Website Graphics &amp; Promotional Mailers</div>
+          <p class="project-desc">Designed engaging website banners and promotional mailers aligned with brand guidelines using Adobe Creative Suite.</p>
+          <span class="project-link">View Case Study →</span>
+        </div>
+      </a>
+
+      <!-- Card 5: SaaS — spans 2 cols -->
+      <a class="project-card" href="https://www.behance.net/gallery/43905913/Social-Media-Post" target="_blank">
+        <div class="project-img-wrap">
+          <img class="project-img" src="https://framerusercontent.com/images/dPVG6LYznYbzbe3V3c4BpIOXFg.png" alt="Social Media"/>
+        </div>
+        <div class="project-body">
+          <div class="project-cat">SaaS · Social Media · Motion</div>
+          <div class="project-title">Social Media Designs</div>
+          <p class="project-desc">Visually engaging and brand-consistent creatives for Instagram, Facebook, and LinkedIn — static posts, carousels, reels, and story designs.</p>
+          <span class="project-link">View Designs →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
 
 <!-- ABOUT + SKILLS -->
-<section id="skills" class="divider">
-  <div class="about-grid">
-    <div>
-      <div class="section-label">About</div>
-      <p class="about-statement">
-
-<em>Lead UX Designer & Creative Strategist</em> with 14+ years of experience in SaaS and AI-driven products. <br>
-<em>Expert in end-to-end UX</em> (research to delivery), design systems, and scalable, conversion-focused experiences across <em>FinTech, HealthTech, LegalTech, and EdTech.</em>
-<br> Experienced in leading teams, managing stakeholders, and driving business impact through <em>design and AI tools.</em>
-
-         </p>
-    </div>
-    <div>
-      <p class="skills-label">Skills</p>
-      <div class="skills-tags">
-       
-      
-
- <span class="skill-tag">UX Strategy</span> 
- <span class="skill-tag">Product Design</span>
- <span class="skill-tag">UX Research</span>
- <span class="skill-tag">UIDesign</span>
- <span class="skill-tag">Design Systems</span>
- <span class="skill-tag">Interaction Design</span>
- <span class="skill-tag">Usability Testing</span>
- <span class="skill-tag">Prototyping</span>
- <span class="skill-tag">Design Sprint</span>
- <span class="skill-tag">AI-Assisted Design</span>
- <span class="skill-tag">Generative Design</span>
- <span class="skill-tag">No-Code</span>
- <span class="skill-tag">Creative Direction</span>
- <span class="skill-tag">Design Strategy</span>
- <span class="skill-tag">Stakeholder Management</span>
-  <span class="skill-tag">Workshops</span>
- <span class="skill-tag">Leadership</span>
- <span class="skill-tag">Mentoring</span>
-
-        <span class="skill-tag" style="color:var(--accent)">+ More</span>
-      </div>
-    </div>
-  </div>
-
-  <div id="experience" style="margin-top:80px">
-    <div class="section-label">Career</div>
-    <h2 class="section-title">Experience</h2>
-    <div>
-      <div class="exp-item">
-        <div><div class="exp-role">Senior UX Designer</div><div class="exp-company">Narm Tech · Bangalore, KA</div></div>
-        <div class="exp-date">Sep 2022 – Jun 2025</div>
-      </div>
-      <div class="exp-item">
-        <div><div class="exp-role">Senior Creative Specialist</div><div class="exp-company">PayPal Inc · Chennai, TN</div></div>
-        <div class="exp-date">Apr 2018 – Aug 2022</div>
-      </div>
-      <div class="exp-item">
-        <div><div class="exp-role">Deputy Manager – Creative Design</div><div class="exp-company">Hexaware Technologies · Chennai, TN</div></div>
-        <div class="exp-date">Jun 2015 – Apr 2018</div>
-      </div>
-      <div class="exp-item">
-        <div><div class="exp-role">Graphic Designer</div><div class="exp-company">Ad2Pro Media Solutions · Chennai, TN</div></div>
-        <div class="exp-date">Nov 2013 – Jun 2015</div>
-      </div>
-      <div class="exp-item">
-        <div><div class="exp-role">Junior Graphic Designer</div><div class="exp-company">UMM Studios (Ad Agency) · Chennai, TN</div></div>
-        <div class="exp-date">Aug 2010 – Oct 2013</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="divider">
-  <div class="section-label">Get in Touch</div>
-  <div class="contact-grid">
-    <div>
-      <h2 class="contact-big">Let's work<br/><span>together.</span></h2>
-      <div class="social-links">
-        <a class="social-link" href="https://www.linkedin.com/in/sivaraj89/" target="_blank">LinkedIn ↗</a>
-        <a class="social-link" href="mailto:sivarajrajendran89@gmail.com?subject=Let's%20Work%20Together&body=Hi%20Sivaraj,">Mail ↗</a>
-        <a class="social-link" href="https://behance.net/sivaraj89" target="_blank">Behance ↗</a>
-<a class="social-link" href="https://sivaraj.framer.website/" target="_blank">Farmer ↗</a>
-      </div>
-    </div>
-    <div class="contact-info">
+<div class="about-bg" id="about">
+  <div class="section-wrap">
+    <div class="section-eyebrow">About Me</div>
+    <div class="about-grid">
       <div>
-        <div class="contact-info-label">Mobile</div>
-        <a class="contact-info-val" href="tel:+919840465309">+91 98404 65309</a>
+        <p class="about-statement">
+          <em>Lead UX Designer &amp; Creative Strategist</em> with 14+ years of experience in SaaS and AI-driven products.
+          <em>Expert in end-to-end UX</em> — from research to delivery — design systems, and scalable, conversion-focused experiences across
+          <em>FinTech, HealthTech, LegalTech, and EdTech.</em>
+          Experienced in leading teams, managing stakeholders, and driving business impact through <em>design and AI tools.</em>
+        </p>
       </div>
       <div>
-        <div class="contact-info-label">Email</div>
-<a class="contact-info-val" href="mailto:sivarajrajendran89@gmail.com">
-  sivarajrajendran89@gmail.com
-</a>
+        <p class="skills-heading">Skills</p>
+        <div class="skills-tags">
+          <span class="skill-tag">UX Strategy</span>
+          <span class="skill-tag">Product Design</span>
+          <span class="skill-tag">UX Research</span>
+          <span class="skill-tag">UI Design</span>
+          <span class="skill-tag">Design Systems</span>
+          <span class="skill-tag">Interaction Design</span>
+          <span class="skill-tag">Usability Testing</span>
+          <span class="skill-tag">Prototyping</span>
+          <span class="skill-tag">Design Sprint</span>
+          <span class="skill-tag">AI-Assisted Design</span>
+          <span class="skill-tag">Generative Design</span>
+          <span class="skill-tag">No-Code</span>
+          <span class="skill-tag">Creative Direction</span>
+          <span class="skill-tag">Design Strategy</span>
+          <span class="skill-tag">Stakeholder Management</span>
+          <span class="skill-tag">Workshops</span>
+          <span class="skill-tag">Leadership</span>
+          <span class="skill-tag">Mentoring</span>
+          <span class="skill-tag accent">+ More</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <div id="experience">
+      <div class="section-eyebrow">Career</div>
+      <h2 class="section-title">Experience</h2>
+      <div>
+        <div class="exp-row">
+          <div>
+            <div class="exp-role">Senior UX Designer</div>
+            <div class="exp-co">Narm Tech · Bangalore, KA</div>
+          </div>
+          <div class="exp-date">Sep 2022 – Jun 2025</div>
+        </div>
+        <div class="exp-row">
+          <div>
+            <div class="exp-role">Senior Creative Specialist</div>
+            <div class="exp-co">PayPal Inc · Chennai, TN</div>
+          </div>
+          <div class="exp-date">Apr 2018 – Aug 2022</div>
+        </div>
+        <div class="exp-row">
+          <div>
+            <div class="exp-role">Deputy Manager – Creative Design</div>
+            <div class="exp-co">Hexaware Technologies · Chennai, TN</div>
+          </div>
+          <div class="exp-date">Jun 2015 – Apr 2018</div>
+        </div>
+        <div class="exp-row">
+          <div>
+            <div class="exp-role">Graphic Designer</div>
+            <div class="exp-co">Ad2Pro Media Solutions · Chennai, TN</div>
+          </div>
+          <div class="exp-date">Nov 2013 – Jun 2015</div>
+        </div>
+        <div class="exp-row">
+          <div>
+            <div class="exp-role">Junior Graphic Designer</div>
+            <div class="exp-co">UMM Studios (Ad Agency) · Chennai, TN</div>
+          </div>
+          <div class="exp-date">Aug 2010 – Oct 2013</div>
+        </div>
       </div>
     </div>
   </div>
-</section>
-<!-- WhatsApp Floating Button -->
-<a href="https://wa.me/919840465309" class="whatsapp-float" target="_blank">
-  <img src="https://img.icons8.com/ios-filled/50/ffffff/whatsapp.png" width="24" alt="WhatsApp">
-</a>
+</div>
 
-<!-- WhatsApp Popup -->
-<div class="whatsapp-popup" id="waPopup">
-  <div class="wa-header">Chat with me 👋</div>
-  <p>Hi! Let’s discuss your project.</p>
-  <a href="https://wa.me/919840465309?text=Hi%20Sivaraj" target="_blank">
-    Start Chat
+<!-- TESTIMONIAL — CHANGE 7: Updated to PayPal -->
+<div class="testimonial-bg">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Testimonials</div>
+    <h2 class="section-title">What My Associates Think of Me</h2>
+    <div class="testimonial-inner">
+      <span class="quote-mark">"</span>
+      <p class="testimonial-text">
+        Sivaraj has an excellent eye for detail and the drive to understand business needs in order to create a better user experience.
+        His eagerness to understand the flow and his intuitive designs helped us create a fantastic, one-of-a-kind product.
+        His adaptive nature towards different customers' needs and his focus for development are his greatest strengths —
+        which makes him a great asset to any team.
+      </p>
+      <div class="testimonial-author">
+        <div class="t-avatar">B</div>
+        <div>
+          <div class="t-name">Bharath D.</div>
+          <!-- CHANGE 7: Updated to PayPal -->
+          <div class="t-role">Sr. Business Analyst · PAYPAL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT — CHANGE 8: Updated email -->
+<div class="contact-bg" id="contact">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Get in Touch</div>
+    <div class="contact-grid">
+      <div>
+        <h2 class="contact-headline">Interested to<br/>work <em>with me?</em></h2>
+        <p class="contact-sub">Let's connect if you have a great job opportunity or a project to collaborate on.</p>
+        <div class="social-row">
+          <a class="social-btn" href="https://www.linkedin.com/in/sivaraj89/" target="_blank">LinkedIn ↗</a>
+          <a class="social-btn" href="/cdn-cgi/l/email-protection#6a19031c0b180b00180b000f040e180b0452532a0d070b030644090507">Mail ↗</a>
+          <a class="social-btn" href="https://behance.net/sivaraj89" target="_blank">Behance ↗</a>
+          <a class="social-btn" href="https://sivaraj.framer.website/" target="_blank">Framer ↗</a>
+        </div>
+        <div class="contact-info-block">
+          <div>
+            <div class="ci-label">Mobile</div>
+            <a class="ci-val" href="tel:+919840465309">+91 98404 65309</a>
+          </div>
+          <div>
+            <div class="ci-label">Email</div>
+            <!-- CHANGE 8: Updated email -->
+            <a class="ci-val" href="mailto:sivarajrajendran89@gmail.com">sivarajrajendran89@gmail.com</span></a>
+
+          </div>
+          <div>
+            <div class="ci-label">Location</div>
+            <span class="ci-val">Bengaluru, Karnataka</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="form-heading">Request Detailed Case Studies</p>
+        <form class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Your first name" required/>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Your last name"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com" required/>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea rows="5" placeholder="Tell me about your project or opportunity…" required></textarea>
+          </div>
+          <button class="form-submit" type="submit" id="submitBtn">Send Request →</button>
+          <p id="form-thanks" style="display:none; color:var(--teal); font-weight:600; font-size:0.9rem; margin-top:8px;">Thanks! Opening your email client to send the message.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER — CHANGE 9: 2026 -->
+<footer>
+  <!-- CHANGE 9: Updated to 2026 -->
+  <span class="footer-copy">© 2026 by Sivaraj Rajendran · Bengaluru, Karnataka</span>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+    <a href="https://www.linkedin.com/in/sivaraj89/" target="_blank">LinkedIn</a>
+    <a href="mailto:sivarajrajendran89@gmail.com">sivarajrajendran89@gmail.com</a>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT + POPUP -->
+<style>
+.wa-popup {
+  position: fixed; bottom: 90px; right: 24px; z-index: 1000;
+  background: #fff; border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  width: 260px; padding: 18px 18px 14px;
+  display: none; flex-direction: column; gap: 10px;
+  border: 1px solid #e4e2dc;
+  animation: popIn 0.2s ease;
+}
+.wa-popup.open { display: flex; }
+@keyframes popIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.wa-popup-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 4px;
+}
+.wa-popup-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #25D366; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.wa-popup-name { font-weight: 700; font-size: 0.9rem; color: #1a1a1a; }
+.wa-popup-status { font-size: 0.75rem; color: #25D366; }
+.wa-popup-bubble {
+  background: #f0fdf4; border-radius: 12px 12px 12px 4px;
+  padding: 10px 14px; font-size: 0.85rem; color: #333; line-height: 1.5;
+}
+.wa-popup-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: #25D366; color: #fff; border-radius: 999px;
+  padding: 10px; font-weight: 600; font-size: 0.85rem;
+  text-decoration: none; transition: opacity 0.2s;
+}
+.wa-popup-btn:hover { opacity: 0.88; }
+.wa-popup-close {
+  position: absolute; top: 10px; right: 12px;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.1rem; color: #999; line-height: 1;
+}
+</style>
+
+<div class="wa-popup" id="waPopup">
+  <button class="wa-popup-close" onclick="document.getElementById('waPopup').classList.remove('open')">✕</button>
+  <div class="wa-popup-header">
+    <div class="wa-popup-avatar">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.847L.057 23.492a.5.5 0 00.614.636l5.796-1.52A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.5-5.24-1.375l-.376-.217-3.9 1.023 1.04-3.793-.237-.389A9.944 9.944 0 012 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
+    </div>
+    <div>
+      <div class="wa-popup-name">Sivaraj Rajendran</div>
+      <div class="wa-popup-status">● Online</div>
+    </div>
+  </div>
+  <div class="wa-popup-bubble">👋 Hi there! Let's connect and discuss your project or opportunity.</div>
+  <a class="wa-popup-btn" href="https://wa.me/919840465309?text=Hi%20Sivaraj%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect!" target="_blank">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.847L.057 23.492a.5.5 00.614.636l5.796-1.52A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.5-5.24-1.375l-.376-.217-3.9 1.023 1.04-3.793-.237-.389A9.944 9.944 0 012 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
+    Start Chat on WhatsApp
   </a>
 </div>
 
+<a href="https://wa.me/919840465309?text=Hi%20Sivaraj%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect!" class="whatsapp-float" id="waBtn" target="_blank" title="Chat on WhatsApp">
+  <span class="wa-icon">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.847L.057 23.492a.5.5 0 00.614.636l5.796-1.52A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.5-5.24-1.375l-.376-.217-3.9 1.023 1.04-3.793-.237-.389A9.944 9.944 0 012 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
+  </span>
+  Let's Chat!
+</a>
 
-<footer>
-  <span class="footer-copy">© Sivaraj Rajendran 2026</span>
-  <div class="footer-links">
-    <a href="https://www.linkedin.com/in/siva
+<script>
+// WhatsApp popup toggle (via popup bubble, not the pill button)
+const waPopup = document.getElementById('waPopup');
+// Auto-show popup after 5 seconds
+setTimeout(() => { if(waPopup) waPopup.classList.add('open'); }, 5000);
+
+// Contact form — sends via mailto to sivarajrajendran89@gmail.com
+document.querySelector('.contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const inputs = this.querySelectorAll('input, textarea');
+  const firstName = inputs[0].value.trim();
+  const lastName  = inputs[1].value.trim();
+  const email     = inputs[2].value.trim();
+  const message   = inputs[3].value.trim();
+  const subject   = encodeURIComponent('Portfolio Enquiry from ' + firstName + ' ' + lastName);
+  const body      = encodeURIComponent(
+    'Name: ' + firstName + ' ' + lastName + '\n' +
+    'Email: ' + email + '\n\n' +
+    'Message:\n' + message
+  );
+  window.location.href = 'mailto:sivarajrajendran89@gmail.com?subject=' + subject + '&body=' + body;
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('form-thanks').style.display = 'block';
+});
+</script>
+</body>
+</html>

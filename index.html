@@ -894,7 +894,7 @@ footer {
           <div>
             <div class="ci-label">Email</div>
             <!-- CHANGE 8: Updated email -->
-             <a class="ci-val" href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</span></a>
+            <a class="ci-val" href="/cdn-cgi/l/email-protection#bfccd6c9decdded5cdded5dad1dbcdded18786ffd8d2ded6d391dcd0d2"><span class="__cf_email__" data-cfemail="f2819b8493809398809398979c9680939ccacbb2959f939b9edc919d9f">[email&#160;protected]</span></span></a>
 
           </div>
           <div>
@@ -904,12 +904,8 @@ footer {
         </div>
       </div>
       <div>
-         <p class="form-heading">Get in touch</p>
-        <form class="contact-form" action="https://formsubmit.co/sivarajr.design@gmail.com" method="POST">
-          <!-- FormSubmit.co configuration -->
-          <input type="hidden" name="_subject" value="Request from Portfolio"/>
-          <input type="hidden" name="_captcha" value="false"/>
-          <input type="hidden" name="_template" value="table"/>
+        <p class="form-heading">Request Detailed Case Studies</p>
+        <form class="contact-form" action="#" method="POST" onsubmit="return false;">
 
           <div class="form-row">
             <div class="form-group">
@@ -941,9 +937,9 @@ footer {
   <!-- CHANGE 9: Updated to 2026 -->
   <span class="footer-copy">© 2026 by Sivaraj Rajendran · Bengaluru, Karnataka</span>
   <div class="footer-links">
-    <a href="https://www.instagram.com/karpagam_sivaraj/" target="_blank">Instagram</a>
+    <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     <a href="https://www.linkedin.com/in/sivaraj89/" target="_blank">LinkedIn</a>
-    <a href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#e4978d928596858e96858e818a8096858adcdda48389858d88ca878b89"><span class="__cf_email__" data-cfemail="02716b7463706368706368676c6670636c3a3b42656f636b6e2c616d6f">[email&#160;protected]</span></a>
   </div>
 </footer>
 
@@ -1093,24 +1089,37 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeThankyou();
 });
 
-// Contact form — AJAX submit to FormSubmit.co, show popup on success
+// Contact form — AJAX submit, popup shown immediately, no page redirect ever
 document.querySelector('.contact-form').addEventListener('submit', function(e) {
   e.preventDefault();
+  e.stopPropagation();
   const form = this;
-  const data = new FormData(form);
+  const btn = form.querySelector('#submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  const firstName = form.querySelector('[name="first_name"]').value.trim();
+  const lastName  = form.querySelector('[name="last_name"]').value.trim();
+  const email     = form.querySelector('[name="email"]').value.trim();
+  const message   = form.querySelector('[name="message"]').value.trim();
+
   fetch('https://formsubmit.co/ajax/sivarajr.design@gmail.com', {
     method: 'POST',
-    headers: { 'Accept': 'application/json' },
-    body: data
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      message: message,
+      _subject: 'Case Study Request from Portfolio'
+    })
   })
-  .then(res => res.json())
-  .then(() => {
+  .finally(() => {
     form.reset();
-    document.getElementById('thankyouOverlay').classList.add('open');
-  })
-  .catch(() => {
-    // Show popup even if there's a network hiccup
-    form.reset();
+    btn.disabled = false;
+    btn.textContent = 'Send Request →';
     document.getElementById('thankyouOverlay').classList.add('open');
   });
+
+  return false;
 });

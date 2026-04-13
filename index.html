@@ -1095,7 +1095,7 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeThankyou();
 });
 
-// Contact form — AJAX submit, popup shown immediately, no page redirect ever
+// Contact form — EmailJS submit, popup on same page
 document.querySelector('.contact-form').addEventListener('submit', function(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -1109,17 +1109,26 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
   const email     = form.querySelector('[name="email"]').value.trim();
   const message   = form.querySelector('[name="message"]').value.trim();
 
-  emailjs.send('service_mdx5x9k', 'template_3b2mkq6', {
-    from_name:  firstName + ' ' + lastName,
-    from_email: email,
-    message:    message,
-    to_email:   'sivarajr.design@gmail.com'
-  })
-  .finally(() => {
+  function showPopup() {
     form.reset();
     btn.disabled = false;
     btn.textContent = 'Send Request →';
     document.getElementById('thankyouOverlay').classList.add('open');
+  }
+
+  emailjs.send('service_mdx5x9k', 'template_3b2mkq6', {
+    from_name:  firstName + ' ' + lastName,
+    reply_to:   email,
+    from_email: email,
+    to_name:    'Sivaraj',
+    message:    message
+  })
+  .then(function(response) {
+    console.log('EmailJS SUCCESS', response.status, response.text);
+    showPopup();
+  }, function(error) {
+    console.error('EmailJS FAILED', JSON.stringify(error));
+    showPopup(); // still show popup so user isn't stuck
   });
 
   return false;

@@ -6,7 +6,7 @@
 <title>Sivaraj Rajendran</title>
 <link rel="icon" type="image/jpeg" href="slogo.jpg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1078,9 +1078,6 @@ footer {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-  // Init EmailJS
-  emailjs.init({ publicKey: '8JUd_RUMZD-pdjIPU' });
-
   // WhatsApp popup — auto-show after 5 seconds
   const waPopup = document.getElementById('waPopup');
   setTimeout(() => { if (waPopup) waPopup.classList.add('open'); }, 5000);
@@ -1098,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape') closeThankyou();
   });
 
-  // Contact form — EmailJS submit, popup stays on same page
+  // Contact form — FormSubmit AJAX, popup stays on same page
   document.querySelector('.contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -1108,10 +1105,7 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.disabled    = true;
     btn.textContent = 'Sending…';
 
-    const firstName = form.querySelector('[name="first_name"]').value.trim();
-    const lastName  = form.querySelector('[name="last_name"]').value.trim();
-    const email     = form.querySelector('[name="email"]').value.trim();
-    const message   = form.querySelector('[name="message"]').value.trim();
+    const data = new FormData(form);
 
     function showPopup() {
       form.reset();
@@ -1120,17 +1114,18 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('thankyouOverlay').classList.add('open');
     }
 
-    emailjs.send('service_mdx5x9k', 'template_3b2mkq6', {
-      title:   'Case Study Request',
-      name:    firstName + ' ' + lastName,
-      email:   email,
-      message: message
+    fetch('https://formsubmit.co/ajax/sivarajr.design@gmail.com', {
+      method:  'POST',
+      headers: { 'Accept': 'application/json' },
+      body:    data
     })
-    .then(function(response) {
-      console.log('EmailJS SUCCESS', response.status, response.text);
+    .then(function(res) { return res.json(); })
+    .then(function(res) {
+      console.log('FormSubmit SUCCESS', res);
       showPopup();
-    }, function(error) {
-      console.error('EmailJS FAILED', JSON.stringify(error));
+    })
+    .catch(function(err) {
+      console.error('FormSubmit ERROR', err);
       showPopup();
     });
 

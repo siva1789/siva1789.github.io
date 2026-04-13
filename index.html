@@ -892,9 +892,12 @@ footer {
             <a class="ci-val" href="tel:+919840465309">+91 98404 65309</a>
           </div>
           <div>
+
+
             <div class="ci-label">Email</div>
             <!-- CHANGE 8: Updated email -->
             <a class="ci-val" href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</span></a>
+
 
           </div>
           <div>
@@ -904,28 +907,32 @@ footer {
         </div>
       </div>
       <div>
-        <p class="form-heading">Request Detailed Case Studies</p>
-        <form class="contact-form">
+        <p class="form-heading">Get in touch</p>
+        <form class="contact-form" action="https://formsubmit.co/sivarajr.design@gmail.com" method="POST">
+          <!-- FormSubmit.co configuration -->
+          <input type="hidden" name="_subject" value="Case Study Request from Portfolio"/>
+          <input type="hidden" name="_captcha" value="false"/>
+          <input type="hidden" name="_template" value="table"/>
+          <input type="hidden" name="_next" value="https://sivaraj.framer.website/"/>
           <div class="form-row">
             <div class="form-group">
               <label>First Name</label>
-              <input type="text" placeholder="Your first name" required/>
+              <input type="text" name="first_name" placeholder="Your first name" required/>
             </div>
             <div class="form-group">
               <label>Last Name</label>
-              <input type="text" placeholder="Your last name"/>
+              <input type="text" name="last_name" placeholder="Your last name"/>
             </div>
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="email" placeholder="your@email.com" required/>
+            <input type="email" name="email" placeholder="your@email.com" required/>
           </div>
           <div class="form-group">
             <label>Message</label>
-            <textarea rows="5" placeholder="Tell me about your project or opportunity…" required></textarea>
+            <textarea rows="5" name="message" placeholder="Tell me about your project or opportunity…" required></textarea>
           </div>
           <button class="form-submit" type="submit" id="submitBtn">Send Request →</button>
-          <p id="form-thanks" style="display:none; color:var(--teal); font-weight:600; font-size:0.9rem; margin-top:8px;">Thanks! Opening your email client to send the message.</p>
         </form>
       </div>
     </div>
@@ -937,9 +944,9 @@ footer {
   <!-- CHANGE 9: Updated to 2026 -->
   <span class="footer-copy">© 2026 by Sivaraj Rajendran · Bengaluru, Karnataka</span>
   <div class="footer-links">
-    <a href="https://www.instagram.com/karpagam_sivaraj/" target="_blank">Instagram</a>
+    <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     <a href="https://www.linkedin.com/in/sivaraj89/" target="_blank">LinkedIn</a>
-    <a href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#e4978d928596858e96858e818a8096858adcdda48389858d88ca878b89"><span class="__cf_email__" data-cfemail="02716b7463706368706368676c6670636c3a3b42656f636b6e2c616d6f">[email&#160;protected]</span></a>
   </div>
 </footer>
 
@@ -1009,30 +1016,10 @@ footer {
   Let's Chat!
 </a>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // WhatsApp popup toggle (via popup bubble, not the pill button)
 const waPopup = document.getElementById('waPopup');
 // Auto-show popup after 5 seconds
 setTimeout(() => { if(waPopup) waPopup.classList.add('open'); }, 5000);
 
-// Contact form — sends via mailto to sivarajr.design@gmail.com
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const inputs = this.querySelectorAll('input, textarea');
-  const firstName = inputs[0].value.trim();
-  const lastName  = inputs[1].value.trim();
-  const email     = inputs[2].value.trim();
-  const message   = inputs[3].value.trim();
-  const subject   = encodeURIComponent('Portfolio Enquiry from ' + firstName + ' ' + lastName);
-  const body      = encodeURIComponent(
-    'Name: ' + firstName + ' ' + lastName + '\n' +
-    'Email: ' + email + '\n\n' +
-    'Message:\n' + message
-  );
-  window.location.href = 'mailto:sivarajr.design@gmail.com?subject=' + subject + '&body=' + body;
-  document.getElementById('submitBtn').style.display = 'none';
-  document.getElementById('form-thanks').style.display = 'block';
-});
-</script>
-</body>
-</html>
+// Form is handled by FormSubmit.co — no JS needed

@@ -6,6 +6,12 @@
 <title>Sivaraj Rajendran</title>
 <link rel="icon" type="image/jpeg" href="slogo.jpg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init({ publicKey: '8JUd_RUMZD-pdjIPU' });
+  })();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1103,16 +1109,11 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
   const email     = form.querySelector('[name="email"]').value.trim();
   const message   = form.querySelector('[name="message"]').value.trim();
 
-  fetch('https://formsubmit.co/ajax/sivarajr.design@gmail.com', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      message: message,
-      _subject: 'Case Study Request from Portfolio'
-    })
+  emailjs.send('service_mdx5x9k', 'template_3b2mkq6', {
+    from_name:  firstName + ' ' + lastName,
+    from_email: email,
+    message:    message,
+    to_email:   'sivarajr.design@gmail.com'
   })
   .finally(() => {
     form.reset();

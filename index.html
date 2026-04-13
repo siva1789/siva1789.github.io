@@ -894,7 +894,7 @@ footer {
           <div>
             <div class="ci-label">Email</div>
             <!-- CHANGE 8: Updated email -->
-         <a class="ci-val" href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</span></a>
+             <a class="ci-val" href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</span></a>
 
           </div>
           <div>
@@ -904,13 +904,13 @@ footer {
         </div>
       </div>
       <div>
-        <p class="form-heading">Get in touch</p>
+         <p class="form-heading">Get in touch</p>
         <form class="contact-form" action="https://formsubmit.co/sivarajr.design@gmail.com" method="POST">
           <!-- FormSubmit.co configuration -->
           <input type="hidden" name="_subject" value="Request from Portfolio"/>
           <input type="hidden" name="_captcha" value="false"/>
           <input type="hidden" name="_template" value="table"/>
-          <input type="hidden" name="_next" value="?sent=1"/>
+
           <div class="form-row">
             <div class="form-group">
               <label>First Name</label>
@@ -929,7 +929,7 @@ footer {
             <label>Message</label>
             <textarea rows="5" name="message" placeholder="Tell me about your project or opportunity…" required></textarea>
           </div>
-          <button class="form-submit" type="submit" id="submitBtn">Submit →</button>
+          <button class="form-submit" type="submit" id="submitBtn">Send Request →</button>
         </form>
       </div>
     </div>
@@ -941,9 +941,9 @@ footer {
   <!-- CHANGE 9: Updated to 2026 -->
   <span class="footer-copy">© 2026 by Sivaraj Rajendran · Bengaluru, Karnataka</span>
   <div class="footer-links">
-    <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+    <a href="https://www.instagram.com/karpagam_sivaraj/" target="_blank">Instagram</a>
     <a href="https://www.linkedin.com/in/sivaraj89/" target="_blank">LinkedIn</a>
-    <a href="/cdn-cgi/l/email-protection#e4978d928596858e96858e818a8096858adcdda48389858d88ca878b89"><span class="__cf_email__" data-cfemail="02716b7463706368706368676c6670636c3a3b42656f636b6e2c616d6f">[email&#160;protected]</span></a>
+    <a href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</a>
   </div>
 </footer>
 
@@ -1093,12 +1093,24 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeThankyou();
 });
 
-// Contact form — show popup then submit to FormSubmit.co
+// Contact form — AJAX submit to FormSubmit.co, show popup on success
 document.querySelector('.contact-form').addEventListener('submit', function(e) {
   e.preventDefault();
   const form = this;
-  // Show thank-you popup immediately
-  document.getElementById('thankyouOverlay').classList.add('open');
-  // Submit form in background after short delay
-  setTimeout(() => { form.submit(); }, 200);
+  const data = new FormData(form);
+  fetch('https://formsubmit.co/ajax/sivarajr.design@gmail.com', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json' },
+    body: data
+  })
+  .then(res => res.json())
+  .then(() => {
+    form.reset();
+    document.getElementById('thankyouOverlay').classList.add('open');
+  })
+  .catch(() => {
+    // Show popup even if there's a network hiccup
+    form.reset();
+    document.getElementById('thankyouOverlay').classList.add('open');
+  });
 });

@@ -900,7 +900,7 @@ footer {
           <div>
             <div class="ci-label">Email</div>
             <!-- CHANGE 8: Updated email -->
-            <a class="ci-val" href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</span></a>
+            <a class="ci-val" href="/cdn-cgi/l/email-protection#bfccd6c9decdded5cdded5dad1dbcdded18786ffd8d2ded6d391dcd0d2"><span class="__cf_email__" data-cfemail="f2819b8493809398809398979c9680939ccacbb2959f939b9edc919d9f">[email&#160;protected]</span></span></a>
 
           </div>
           <div>
@@ -945,7 +945,7 @@ footer {
   <div class="footer-links">
     <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     <a href="https://www.linkedin.com/in/sivaraj89/" target="_blank">LinkedIn</a>
-   <a href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#e4978d928596858e96858e818a8096858adcdda48389858d88ca878b89"><span class="__cf_email__" data-cfemail="02716b7463706368706368676c6670636c3a3b42656f636b6e2c616d6f">[email&#160;protected]</span></a>
   </div>
 </footer>
 
@@ -1117,11 +1117,10 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
   }
 
   emailjs.send('service_mdx5x9k', 'template_3b2mkq6', {
-    from_name:  firstName + ' ' + lastName,
-    reply_to:   email,
-    from_email: email,
-    to_name:    'Sivaraj',
-    message:    message
+    title:   'Case Study Request',
+    name:    firstName + ' ' + lastName,
+    email:   email,
+    message: message
   })
   .then(function(response) {
     console.log('EmailJS SUCCESS', response.status, response.text);

@@ -6,12 +6,7 @@
 <title>Sivaraj Rajendran</title>
 <link rel="icon" type="image/jpeg" href="slogo.jpg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  (function(){
-    emailjs.init({ publicKey: '8JUd_RUMZD-pdjIPU' });
-  })();
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1078,59 +1073,70 @@ footer {
   Let's Chat!
 </a>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// WhatsApp popup toggle (via popup bubble, not the pill button)
-const waPopup = document.getElementById('waPopup');
-// Auto-show popup after 5 seconds
-setTimeout(() => { if(waPopup) waPopup.classList.add('open'); }, 5000);
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
-// Thank-you popup
-function closeThankyou() {
-  document.getElementById('thankyouOverlay').classList.remove('open');
-}
-document.getElementById('thankyouOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeThankyou();
-});
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeThankyou();
-});
+<script>
+document.addEventListener('DOMContentLoaded', function() {
 
-// Contact form — EmailJS submit, popup on same page
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  const form = this;
-  const btn = form.querySelector('#submitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Sending…';
+  // Init EmailJS
+  emailjs.init({ publicKey: '8JUd_RUMZD-pdjIPU' });
 
-  const firstName = form.querySelector('[name="first_name"]').value.trim();
-  const lastName  = form.querySelector('[name="last_name"]').value.trim();
-  const email     = form.querySelector('[name="email"]').value.trim();
-  const message   = form.querySelector('[name="message"]').value.trim();
+  // WhatsApp popup — auto-show after 5 seconds
+  const waPopup = document.getElementById('waPopup');
+  setTimeout(() => { if (waPopup) waPopup.classList.add('open'); }, 5000);
 
-  function showPopup() {
-    form.reset();
-    btn.disabled = false;
-    btn.textContent = 'Send Request →';
-    document.getElementById('thankyouOverlay').classList.add('open');
+  // Thank-you popup helpers
+  function closeThankyou() {
+    document.getElementById('thankyouOverlay').classList.remove('open');
   }
+  window.closeThankyou = closeThankyou;
 
-  emailjs.send('service_mdx5x9k', 'template_3b2mkq6', {
-    title:   'Case Study Request',
-    name:    firstName + ' ' + lastName,
-    email:   email,
-    message: message
-  })
-  .then(function(response) {
-    console.log('EmailJS SUCCESS', response.status, response.text);
-    showPopup();
-  }, function(error) {
-    console.error('EmailJS FAILED', JSON.stringify(error));
-    showPopup(); // still show popup so user isn't stuck
+  document.getElementById('thankyouOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeThankyou();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeThankyou();
   });
 
-  return false;
+  // Contact form — EmailJS submit, popup stays on same page
+  document.querySelector('.contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const form = this;
+    const btn  = form.querySelector('#submitBtn');
+    btn.disabled    = true;
+    btn.textContent = 'Sending…';
+
+    const firstName = form.querySelector('[name="first_name"]').value.trim();
+    const lastName  = form.querySelector('[name="last_name"]').value.trim();
+    const email     = form.querySelector('[name="email"]').value.trim();
+    const message   = form.querySelector('[name="message"]').value.trim();
+
+    function showPopup() {
+      form.reset();
+      btn.disabled    = false;
+      btn.textContent = 'Send Request →';
+      document.getElementById('thankyouOverlay').classList.add('open');
+    }
+
+    emailjs.send('service_mdx5x9k', 'template_3b2mkq6', {
+      title:   'Case Study Request',
+      name:    firstName + ' ' + lastName,
+      email:   email,
+      message: message
+    })
+    .then(function(response) {
+      console.log('EmailJS SUCCESS', response.status, response.text);
+      showPopup();
+    }, function(error) {
+      console.error('EmailJS FAILED', JSON.stringify(error));
+      showPopup();
+    });
+
+    return false;
+  });
+
 });
 </script>
 </body>

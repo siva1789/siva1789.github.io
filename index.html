@@ -892,12 +892,9 @@ footer {
             <a class="ci-val" href="tel:+919840465309">+91 98404 65309</a>
           </div>
           <div>
-
-
             <div class="ci-label">Email</div>
             <!-- CHANGE 8: Updated email -->
-            <a class="ci-val" href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</span></a>
-
+         <a class="ci-val" href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</span></a>
 
           </div>
           <div>
@@ -913,7 +910,7 @@ footer {
           <input type="hidden" name="_subject" value="Case Study Request from Portfolio"/>
           <input type="hidden" name="_captcha" value="false"/>
           <input type="hidden" name="_template" value="table"/>
-          <input type="hidden" name="_next" value="https://sivaraj.framer.website/"/>
+          <input type="hidden" name="_next" value="?sent=1"/>
           <div class="form-row">
             <div class="form-group">
               <label>First Name</label>
@@ -949,6 +946,69 @@ footer {
     <a href="/cdn-cgi/l/email-protection#e4978d928596858e96858e818a8096858adcdda48389858d88ca878b89"><span class="__cf_email__" data-cfemail="02716b7463706368706368676c6670636c3a3b42656f636b6e2c616d6f">[email&#160;protected]</span></a>
   </div>
 </footer>
+
+<!-- THANK YOU POPUP -->
+<style>
+.thankyou-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  backdrop-filter: blur(3px);
+}
+.thankyou-overlay.open {
+  opacity: 1; visibility: visible;
+}
+.thankyou-modal {
+  background: #fff; border-radius: 20px;
+  padding: 48px 44px 40px;
+  max-width: 420px; width: 90%;
+  text-align: center;
+  box-shadow: 0 24px 72px rgba(0,0,0,0.18);
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+}
+.thankyou-overlay.open .thankyou-modal {
+  transform: translateY(0) scale(1);
+}
+.thankyou-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: #eaf3f3; display: flex; align-items: center;
+  justify-content: center; margin: 0 auto 22px;
+}
+.thankyou-icon svg { width: 30px; height: 30px; }
+.thankyou-modal h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.7rem; font-weight: 700; color: #1a1a1a;
+  line-height: 1.2; margin-bottom: 12px;
+}
+.thankyou-modal p {
+  font-size: 0.95rem; color: #666; line-height: 1.7; margin-bottom: 28px;
+}
+.thankyou-close-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #2e6b6e; color: #fff;
+  font-weight: 600; font-size: 0.88rem;
+  padding: 12px 28px; border-radius: 999px; border: none;
+  cursor: pointer; transition: opacity 0.2s, transform 0.2s;
+}
+.thankyou-close-btn:hover { opacity: 0.86; transform: translateY(-2px); }
+</style>
+
+<div class="thankyou-overlay" id="thankyouOverlay">
+  <div class="thankyou-modal" role="dialog" aria-modal="true" aria-labelledby="thankyouTitle">
+    <div class="thankyou-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2e6b6e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <h3 id="thankyouTitle">Message Sent!</h3>
+    <p>Thanks for reaching me,<br/>will get back to you soon.</p>
+    <button class="thankyou-close-btn" onclick="closeThankyou()">Done ✓</button>
+  </div>
+</div>
 
 <!-- WHATSAPP FLOAT + POPUP -->
 <style>
@@ -1022,4 +1082,23 @@ const waPopup = document.getElementById('waPopup');
 // Auto-show popup after 5 seconds
 setTimeout(() => { if(waPopup) waPopup.classList.add('open'); }, 5000);
 
-// Form is handled by FormSubmit.co — no JS needed
+// Thank-you popup
+function closeThankyou() {
+  document.getElementById('thankyouOverlay').classList.remove('open');
+}
+document.getElementById('thankyouOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeThankyou();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeThankyou();
+});
+
+// Contact form — show popup then submit to FormSubmit.co
+document.querySelector('.contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  // Show thank-you popup immediately
+  document.getElementById('thankyouOverlay').classList.add('open');
+  // Submit form in background after short delay
+  setTimeout(() => { form.submit(); }, 800);
+});

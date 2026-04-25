@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -129,11 +134,19 @@ nav {
 .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
 .hero-photo-wrap {
   flex-shrink: 0; position: relative; width: 260px;
+  overflow: hidden;
+  border-radius: var(--radius);
 }
 .hero-photo-wrap img {
   width: 100%; border-radius: var(--radius);
   display: block; object-fit: cover; aspect-ratio: 3/4;
   box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+  filter: brightness(1);
+}
+.hero-photo-wrap:hover img {
+  transform: scale(1.08) rotate(2deg);
+  filter: brightness(1.1);
 }
 .hero-badge-pill {
   position: absolute; bottom: -18px; left: -18px;
@@ -144,37 +157,133 @@ nav {
   box-shadow: 0 4px 18px rgba(46,107,110,0.32);
 }
 
-/* ── STATS (Summary section — card style like Shivaraj) ── */
-.stats-strip { background: var(--white); border-bottom: 1px solid var(--border); }
+/* ── STATS (Summary section — UPDATED SPECTRUM STYLE) ── */
+.stats-strip { 
+  background: var(--white); 
+  border-bottom: 1px solid var(--border); 
+  display: block;
+  min-height: 600px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.stats-strip:hover {
+  background: linear-gradient(135deg, rgba(46,107,110,0.02) 0%, rgba(46,107,110,0.01) 100%);
+  box-shadow: inset 0 0 30px rgba(46,107,110,0.05);
+}
 .stats-heading {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700;
-  text-align: center; letter-spacing: -0.01em;
-  padding: 56px 48px 40px; max-width: var(--max); margin: 0 auto;
+  font-size: clamp(1.8rem, 3vw, 2.4rem); 
+  font-weight: 700;
+  text-align: center; 
+  letter-spacing: -0.01em;
+  padding: 56px 48px 40px; 
+  max-width: var(--max); 
+  margin: 0 auto;
+  color: var(--text);
 }
+
+/* NEW SPECTRUM-STYLE GRID */
 .stats-inner {
-  max-width: var(--max); margin: 0 auto; padding: 0 48px 56px;
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  max-width: var(--max); 
+  margin: 0 auto; 
+  padding: 0 48px 56px;
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  width: 100%;
+  background: transparent;
+  min-height: 480px;
 }
+
 .stat-card {
-  background: var(--bg); border-radius: 16px;
-  padding: 36px 28px 32px;
-  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0;
-  border: 1px solid var(--border);
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 48px 36px;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  text-align: center; 
+  gap: 12px;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  position: relative;
+  min-height: 400px;
+  width: 100%;
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  justify-content: center;
+  filter: brightness(1);
 }
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(46,107,110,0.03) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+}
+
+.stat-card:hover {
+  transform: scale(1.08) rotate(2deg) translateY(-8px);
+  border-color: var(--teal);
+  box-shadow: 0 24px 56px rgba(46,107,110,0.15);
+  filter: brightness(1.1);
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
 .stat-illustration {
   width: 120px; height: 110px; object-fit: contain; margin-bottom: 20px;
 }
+
 .stat-illustration-svg {
-  width: 110px; height: 110px; margin-bottom: 20px;
-  display: flex; align-items: center; justify-content: center;
+  width: 110px; 
+  height: 110px; 
+  margin-bottom: 20px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
 }
+
 .stat-num {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 3.6rem; font-weight: 700; line-height: 1;
-  color: var(--text); margin-bottom: 10px;
+  font-size: 3.2rem; 
+  font-weight: 700; 
+  line-height: 1;
+  color: var(--teal); 
+  margin-bottom: 12px;
+  transition: color 0.3s;
 }
-.stat-label { font-size: 0.9rem; font-weight: 500; color: var(--muted); line-height: 1.5; }
+
+.stat-card:hover .stat-num {
+  color: var(--teal);
+}
+
+.stat-label { 
+  font-size: 0.9rem; 
+  font-weight: 500; 
+  color: var(--muted); 
+  line-height: 1.6;
+  transition: color 0.3s;
+  max-width: 220px;
+  word-wrap: break-word;
+}
+
+.stat-card:hover .stat-label {
+  color: var(--text);
+}
 
 /* ── SHARED ── */
 .section-wrap {
@@ -194,6 +303,29 @@ nav {
   line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 48px;
 }
 
+/* ── SECTION BACKGROUNDS WITH HOVER ── */
+.stats-strip {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.stats-strip:hover {
+  background: linear-gradient(135deg, rgba(46,107,110,0.02) 0%, rgba(46,107,110,0.01) 100%);
+  box-shadow: inset 0 0 30px rgba(46,107,110,0.05);
+}
+
+.domains-bg {
+  transition: background-color 0.3s ease;
+}
+.domains-bg:hover {
+  background: linear-gradient(135deg, var(--bg) 0%, rgba(46,107,110,0.03) 100%);
+}
+
+.about-bg {
+  transition: background-color 0.3s ease;
+}
+.about-bg:hover {
+  background: linear-gradient(135deg, var(--bg) 0%, rgba(46,107,110,0.02) 100%);
+}
+
 /* ── DOMAINS — 3-col icon grid like Shivaraj reference ── */
 .domains-bg { background: var(--bg); }
 .domains-headline {
@@ -207,17 +339,40 @@ nav {
 }
 .domain-cell {
   display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  padding: 20px;
+  border-radius: 12px;
+}
+.domain-cell:hover {
+  transform: translateY(-8px);
+  background: rgba(46,107,110,0.05);
+  box-shadow: 0 12px 32px rgba(46,107,110,0.1);
 }
 .domain-icon-circle {
   width: 64px; height: 64px;
   display: flex; align-items: center; justify-content: center;
   font-size: 2.2rem;
   margin-bottom: 4px;
+  transition: transform 0.3s ease;
 }
-.domain-title { font-weight: 700; font-size: 1rem; color: var(--text); }
+.domain-cell:hover .domain-icon-circle {
+  transform: scale(1.15) rotate(5deg);
+}
+.domain-title { 
+  font-weight: 700; font-size: 1rem; color: var(--text);
+  transition: color 0.3s ease;
+}
+.domain-cell:hover .domain-title {
+  color: var(--teal);
+}
 .domain-desc {
   font-size: 0.85rem; color: var(--muted); line-height: 1.6;
   max-width: 220px;
+  transition: color 0.3s ease;
+}
+.domain-cell:hover .domain-desc {
+  color: var(--text);
 }
 .domain-desc strong { font-weight: 700; color: var(--text); }
 
@@ -241,28 +396,38 @@ nav {
   margin: -16px auto 44px; color: var(--text);
 }
 
-/* 
-  Portfolio grid layout matching reference image 4:
-  Row 1: Mobile Apps (tall left) | Web Portals (middle) | Dashboard (right)
-  Row 2: LMS (left)              | SaaS (wide right)
-  We use CSS grid areas to achieve this.
-*/
+/* Portfolio grid layout */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto auto;
   gap: 20px;
+  perspective: 1000px;
 }
 .project-card {
   border: 1px solid var(--border); border-radius: var(--radius);
   overflow: hidden; text-decoration: none; color: inherit;
   background: var(--surface); display: flex; flex-direction: column;
   transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  perspective: 1000px;
 }
 .project-card:hover { transform: translateY(-5px); box-shadow: 0 18px 48px rgba(0,0,0,0.10); border-color: var(--teal); }
-.project-img-wrap { overflow: hidden; }
-.project-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; transition: transform 0.5s; }
-.project-card:hover .project-img { transform: scale(1.04); }
+.project-img-wrap { 
+  overflow: hidden;
+  position: relative;
+}
+.project-img { 
+  width: 100%; 
+  aspect-ratio: 16/9; 
+  object-fit: cover; 
+  display: block; 
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+  filter: brightness(1);
+}
+.project-card:hover .project-img { 
+  transform: scale(1.08) rotate(2deg);
+  filter: brightness(1.1);
+}
 .project-body { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
 .project-cat { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
 .project-title {
@@ -277,9 +442,7 @@ nav {
 }
 .project-card:hover .project-link { gap: 10px; }
 
-/* Grid placement: 5 cards, 3 cols
-   Card 1 (col 1), Card 2 (col 2), Card 3 (col 3) — row 1
-   Card 4 (col 1), Card 5 spans col 2-3 — row 2  */
+/* Grid placement: 5 cards, 3 cols */
 .project-card:nth-child(5) { grid-column: 2 / 4; }
 
 /* ── ABOUT + SKILLS ── */
@@ -300,18 +463,66 @@ nav {
   background: var(--white); border: 1px solid var(--border);
   padding: 5px 14px; border-radius: 999px;
   font-size: 0.82rem; color: var(--text); font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+}
+.skill-tag:hover {
+  background: var(--teal-lt);
+  border-color: var(--teal);
+  color: var(--teal);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(46,107,110,0.15);
 }
 .skill-tag.accent { border-color: var(--teal); color: var(--teal); }
+.skill-tag.accent:hover { 
+  background: var(--teal);
+  color: #fff;
+}
 
 /* ── EXPERIENCE ── */
 .exp-row {
   display: grid; grid-template-columns: 1fr auto;
   gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--border);
   align-items: start;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  animation: slideInLeft 0.6s ease-out forwards;
+  opacity: 1;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.exp-row:hover {
+  background: rgba(46,107,110,0.02);
+  padding: 26px 16px;
+  margin: 0 -16px;
+  border-radius: 8px;
+  border-left: 3px solid var(--teal);
+  padding-left: 13px;
 }
 .exp-row:first-child { border-top: 1px solid var(--border); }
-.exp-role { font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 3px; }
-.exp-co { font-size: 0.875rem; color: var(--muted); }
+.exp-role { 
+  font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 3px;
+  transition: color 0.3s ease;
+}
+.exp-row:hover .exp-role {
+  color: var(--teal);
+}
+.exp-co { font-size: 0.875rem; color: var(--muted); 
+  transition: color 0.3s ease;
+}
+.exp-row:hover .exp-co {
+  color: var(--text);
+}
 .exp-date { font-size: 0.78rem; color: var(--light); white-space: nowrap; padding-top: 4px; font-weight: 500; }
 
 /* ── TESTIMONIAL ── */
@@ -399,7 +610,7 @@ footer {
 .footer-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: var(--teal); }
 
-/* ── LETS CHAT FLOAT ── */
+/* ── WHATSAPP FLOAT ── */
 .whatsapp-float {
   position: fixed; bottom: 28px; right: 28px;
   background: #1a1a1a; color: #fff;
@@ -430,13 +641,37 @@ footer {
 }
 .whatsapp-float { animation: wpulse 3s ease-in-out infinite; }
 
+/* ── CURSOR ── */
+.cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(46, 107, 110, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease-out;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
   nav { padding: 0 24px; }
   .nav-links { gap: 18px; }
   .hero-inner { flex-direction: column; padding: 60px 24px; gap: 40px; }
   .hero-photo-wrap { width: 200px; }
-  .stats-inner { grid-template-columns: 1fr 1fr; padding: 0 24px 48px; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); padding: 0 24px 48px; }
   .stats-heading { padding: 48px 24px 32px; }
   .section-wrap { padding: 64px 24px; }
   .domains-grid-3col { grid-template-columns: repeat(2, 1fr); }
@@ -447,13 +682,16 @@ footer {
   .form-row { grid-template-columns: 1fr; }
   footer { flex-direction: column; gap: 14px; text-align: center; padding: 24px; }
 }
+
 @media (max-width: 600px) {
   .nav-cta { display: none; }
   .stats-inner { grid-template-columns: 1fr; }
   .domains-grid-3col { grid-template-columns: 1fr 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
   .project-card:nth-child(5) { grid-column: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
 }
+
 @media (max-width: 400px) {
   .domains-grid-3col { grid-template-columns: 1fr; }
 }
@@ -478,7 +716,6 @@ footer {
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="hero-eyebrow">Product Designer</div>
-      <!-- CHANGE 2: Updated headline -->
       <h1>Designing digital products<br/>with <em>purpose since 2010.</em></h1>
       <p class="hero-tagline">Driving alignment between Design, Business &amp; User needs.</p>
       <p class="hero-sub">
@@ -490,45 +727,35 @@ footer {
       </div>
     </div>
     <div class="hero-photo-wrap">
-      <!-- CHANGE 1: Profile photo replaced with DP.jpg -->
       <img src="DP-1.png" alt="Sivaraj Rajendran"/>
-      <div class="hero-badge-pill">14+ Yrs<br/>Experience</div>
+   
     </div>
   </div>
 </div>
 
-<!-- STATS / SUMMARY — CHANGE 3: Card layout with 3D illustrations like Shivaraj reference -->
+<!-- STATS / SUMMARY — UPDATED WITH SPECTRUM STYLE -->
 <div class="stats-strip">
   <div class="stats-heading">Summary</div>
   <div class="stats-inner">
 
-    <!-- Card 1: Years of Experience — person working at laptop illustration -->
+    <!-- Card 1: Years of Experience -->
     <div class="stat-card">
       <div class="stat-illustration-svg">
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="110">
-          <!-- Body -->
           <ellipse cx="60" cy="108" rx="38" ry="8" fill="#e0e0e0" opacity="0.5"/>
-          <!-- Chair base -->
           <rect x="44" y="88" width="32" height="5" rx="2.5" fill="#b0b0b0"/>
           <rect x="58" y="93" width="4" height="14" rx="2" fill="#b0b0b0"/>
           <rect x="46" y="104" width="28" height="4" rx="2" fill="#b0b0b0"/>
-          <!-- Torso -->
           <rect x="49" y="68" width="22" height="22" rx="8" fill="#3a3a3a"/>
-          <!-- Head -->
           <circle cx="60" cy="56" r="13" fill="#c68642"/>
-          <!-- Hair -->
           <path d="M47 52 Q49 40 60 39 Q71 40 73 52 Q70 44 60 43 Q50 44 47 52Z" fill="#1a1a1a"/>
-          <!-- Eyes -->
           <circle cx="55" cy="56" r="2" fill="#1a1a1a"/>
           <circle cx="65" cy="56" r="2" fill="#1a1a1a"/>
-          <!-- Laptop -->
           <rect x="38" y="76" width="44" height="28" rx="4" fill="#555"/>
           <rect x="40" y="78" width="40" height="24" rx="3" fill="#74b9ff"/>
-          <!-- Screen content lines -->
           <rect x="44" y="82" width="20" height="2" rx="1" fill="rgba(255,255,255,0.7)"/>
           <rect x="44" y="86" width="14" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
           <rect x="44" y="90" width="18" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
-          <!-- Floating objects -->
           <rect x="22" y="30" width="10" height="10" rx="2" fill="#e17055" transform="rotate(20 27 35)"/>
           <circle cx="90" cy="28" r="6" fill="#2d3436" opacity="0.7"/>
           <rect x="80" y="50" width="8" height="8" rx="1" fill="#6c5ce7" transform="rotate(-15 84 54)"/>
@@ -538,14 +765,12 @@ footer {
       <div class="stat-label">Years of experience in UX/UI.<br/>Overall experience since 2010.</div>
     </div>
 
-    <!-- Card 2: Projects Collaboration — mobile/app design illustration -->
+    <!-- Card 2: Projects Collaboration -->
     <div class="stat-card">
       <div class="stat-illustration-svg">
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="110">
-          <!-- Phone -->
           <rect x="36" y="20" width="48" height="80" rx="8" fill="#f4a261"/>
           <rect x="39" y="28" width="42" height="60" rx="4" fill="#fff8f0"/>
-          <!-- Screen content — app UI -->
           <rect x="43" y="32" width="28" height="6" rx="2" fill="#e17055"/>
           <rect x="43" y="42" width="34" height="3" rx="1.5" fill="#ddd"/>
           <rect x="43" y="47" width="24" height="3" rx="1.5" fill="#ddd"/>
@@ -553,17 +778,13 @@ footer {
           <rect x="58" y="54" width="12" height="12" rx="3" fill="#a29bfe"/>
           <rect x="43" y="70" width="27" height="3" rx="1.5" fill="#ddd"/>
           <rect x="43" y="75" width="20" height="3" rx="1.5" fill="#ddd"/>
-          <!-- Heart icon -->
           <path d="M71 66 Q74 62 78 66 Q82 70 74 76 Q66 70 70 66Z" fill="#ff7675" transform="scale(0.6) translate(50 40)"/>
-          <!-- Floating nodes -->
           <circle cx="20" cy="45" r="5" fill="#fd79a8"/>
           <circle cx="100" cy="35" r="4" fill="#55efc4"/>
           <circle cx="22" cy="70" r="3" fill="#fdcb6e"/>
           <circle cx="98" cy="65" r="5" fill="#a29bfe"/>
-          <!-- Connecting lines -->
           <line x1="25" y1="45" x2="36" y2="55" stroke="#fd79a8" stroke-width="1.5" opacity="0.5"/>
           <line x1="96" y1="38" x2="84" y2="48" stroke="#55efc4" stroke-width="1.5" opacity="0.5"/>
-          <!-- Cancel circle -->
           <circle cx="24" cy="82" r="7" fill="#ff7675" opacity="0.7"/>
           <line x1="20" y1="78" x2="28" y2="86" stroke="#fff" stroke-width="2"/>
           <line x1="28" y1="78" x2="20" y2="86" stroke="#fff" stroke-width="2"/>
@@ -573,28 +794,22 @@ footer {
       <div class="stat-label">Projects Collaboration</div>
     </div>
 
-    <!-- Card 3: Successful Associations — handshake / collaboration illustration -->
+    <!-- Card 3: Successful Associations -->
     <div class="stat-card">
       <div class="stat-illustration-svg">
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="110">
-          <!-- Tablet/book -->
           <rect x="28" y="25" width="64" height="70" rx="6" fill="#dfe6e9"/>
           <rect x="32" y="29" width="56" height="62" rx="4" fill="#b2bec3"/>
-          <!-- Two hands reaching from sides -->
-          <!-- Left hand (reddish) -->
           <path d="M10 65 Q14 58 22 60 L38 60 Q42 60 42 65 L42 72 Q42 75 38 75 L22 75 Q14 76 10 72 Z" fill="#e17055"/>
           <rect x="22" y="52" width="6" height="12" rx="3" fill="#e17055"/>
           <rect x="29" y="50" width="6" height="14" rx="3" fill="#e17055"/>
           <rect x="36" y="52" width="5" height="12" rx="3" fill="#e17055"/>
-          <!-- Right hand (blue) -->
           <path d="M110 65 Q106 58 98 60 L82 60 Q78 60 78 65 L78 72 Q78 75 82 75 L98 75 Q106 76 110 72 Z" fill="#6c5ce7"/>
           <rect x="92" y="52" width="6" height="12" rx="3" fill="#6c5ce7"/>
           <rect x="85" y="50" width="6" height="14" rx="3" fill="#6c5ce7"/>
           <rect x="79" y="52" width="5" height="12" rx="3" fill="#6c5ce7"/>
-          <!-- Meeting point glow -->
           <circle cx="60" cy="65" r="8" fill="#ffeaa7" opacity="0.8"/>
           <circle cx="60" cy="65" r="5" fill="#fdcb6e"/>
-          <!-- Floating dots -->
           <circle cx="30" cy="30" r="3" fill="#74b9ff"/>
           <circle cx="55" cy="18" r="4" fill="#a29bfe"/>
           <circle cx="90" cy="28" r="3" fill="#fd79a8"/>
@@ -608,7 +823,7 @@ footer {
   </div>
 </div>
 
-<!-- DOMAINS / SUMMARY — CHANGE 4 & 5: Moved "I've Designed…" to portfolio; domains as 3-col grid -->
+<!-- DOMAINS / SUMMARY -->
 <div class="domains-bg">
   <div class="section-wrap">
     <div class="section-eyebrow">Summary</div>
@@ -620,9 +835,7 @@ footer {
       <div class="domain-cell">
         <div class="domain-icon-circle">
           <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Heart with cross — universal Healthtech icon -->
             <path d="M26 44S8 33 8 19.5C8 13.7 12.7 9 18.5 9c3.2 0 6.1 1.5 7.5 3.9C27.4 10.5 30.3 9 33.5 9 39.3 9 44 13.7 44 19.5 44 33 26 44 26 44Z" fill="#e74c3c"/>
-            <!-- White cross on heart -->
             <rect x="23" y="17" width="6" height="14" rx="2" fill="white"/>
             <rect x="19" y="21" width="14" height="6" rx="2" fill="white"/>
           </svg>
@@ -663,7 +876,7 @@ footer {
 
     </div>
     <p style="margin-top:52px; font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-style:italic; color:var(--muted); max-width:700px; line-height:1.6; text-align:center; margin-left:auto; margin-right:auto;">
-      And this variety has helped me develop a keen sense for understanding and creating within complex ecosystems.
+      And this variety has helped me develop a keen sense <br> for understanding and creating within complex ecosystems.
     </p>
   </div>
 </div>
@@ -685,7 +898,7 @@ footer {
   </div>
 </div>
 
-<!-- PROJECTS — CHANGE 4 & 6: "I've Designed…" heading + 3-col grid layout -->
+<!-- PROJECTS -->
 <div class="projects-bg" id="work">
   <div class="section-wrap">
     <div class="section-eyebrow">Portfolio</div>
@@ -848,7 +1061,7 @@ footer {
   </div>
 </div>
 
-<!-- TESTIMONIAL — CHANGE 7: Updated to PayPal -->
+<!-- TESTIMONIAL -->
 <div class="testimonial-bg">
   <div class="section-wrap">
     <div class="section-eyebrow">Testimonials</div>
@@ -865,7 +1078,6 @@ footer {
         <div class="t-avatar">B</div>
         <div>
           <div class="t-name">Bharath D.</div>
-          <!-- CHANGE 7: Updated to PayPal -->
           <div class="t-role">Sr. Business Analyst · PAYPAL</div>
         </div>
       </div>
@@ -873,7 +1085,7 @@ footer {
   </div>
 </div>
 
-<!-- CONTACT — CHANGE 8: Updated email -->
+<!-- CONTACT -->
 <div class="contact-bg" id="contact">
   <div class="section-wrap">
     <div class="section-eyebrow">Get in Touch</div>
@@ -894,9 +1106,7 @@ footer {
           </div>
           <div>
             <div class="ci-label">Email</div>
-            <!-- CHANGE 8: Updated email -->
             <a class="ci-val" href="mailto:sivarajr.design@gmail.com">sivarajr.design@gmail.com</a>
-
           </div>
           <div>
             <div class="ci-label">Location</div>
@@ -905,7 +1115,7 @@ footer {
         </div>
       </div>
       <div>
-        <p class="form-heading">Get in touch</p>
+        <p class="form-heading">Request Detailed Case Studies</p>
         <form class="contact-form" action="#" method="POST" onsubmit="return false;">
 
           <div class="form-row">
@@ -926,17 +1136,16 @@ footer {
             <label>Message</label>
             <textarea rows="5" name="message" placeholder="Tell me about your project or opportunity…" required></textarea>
           </div>
-          <button class="form-submit" type="submit" id="submitBtn">Submit →</button>
+          <button class="form-submit" type="submit" id="submitBtn">Send Request →</button>
         </form>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FOOTER — CHANGE 9: 2026 -->
+<!-- FOOTER -->
 <footer>
-  <!-- CHANGE 9: Updated to 2026 -->
- <span class="footer-copy">© 2026 by Sivaraj Rajendran · Bengaluru, Karnataka</span>
+  <span class="footer-copy">© 2026 by Sivaraj Rajendran · Bengaluru, Karnataka</span>
   <div class="footer-links">
     <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     <a href="https://www.linkedin.com/in/sivaraj89/" target="_blank">LinkedIn</a>
@@ -1052,7 +1261,7 @@ footer {
   <button class="wa-popup-close" onclick="document.getElementById('waPopup').classList.remove('open')">✕</button>
   <div class="wa-popup-header">
     <div class="wa-popup-avatar">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.847L.057 23.492a.5.5 0 00.614.636l5.796-1.52A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.5-5.24-1.375l-.376-.217-3.9 1.023 1.04-3.793-.237-.389A9.944 9.944 0 012 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.847L.057 23.492a.5.5 0 0 0 .614.636l5.796-1.52A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.5-5.24-1.375l-.376-.217-3.9 1.023 1.04-3.793-.237-.389A9.944 9.944 0 0 1 2 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
     </div>
     <div>
       <div class="wa-popup-name">Sivaraj Rajendran</div>
@@ -1061,7 +1270,7 @@ footer {
   </div>
   <div class="wa-popup-bubble">👋 Hi there! Let's connect.</div>
   <a class="wa-popup-btn" href="https://wa.me/919840465309?text=Hi%20Sivaraj%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect!" target="_blank">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.847L.057 23.492a.5.5 00.614.636l5.796-1.52A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.5-5.24-1.375l-.376-.217-3.9 1.023 1.04-3.793-.237-.389A9.944 9.944 0 012 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.847L.057 23.492a.5.5 0 0 0 .614.636l5.796-1.52A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.5-5.24-1.375l-.376-.217-3.9 1.023 1.04-3.793-.237-.389A9.944 9.944 0 0 1 2 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
     Start Chat on WhatsApp
   </a>
 </div>
@@ -1073,10 +1282,101 @@ footer {
   Let's Chat!
 </a>
 
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+  // ── GSAP ANIMATIONS ──
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* HERO ENTRY */
+  gsap.from(".hero-copy h1", {y: 60, opacity: 0, duration: 1});
+
+  /* SECTION REVEAL */
+  gsap.utils.toArray("section").forEach(sec => {
+    gsap.from(sec, {
+      scrollTrigger: {trigger: sec, start: "top 85%"},
+      y: 80, opacity: 0, duration: 1
+    });
+  });
+
+  /* HERO PARALLAX */
+  gsap.to(".hero-copy", {
+    yPercent: 20,
+    scrollTrigger: {
+      trigger: ".hero-banner",
+      start: "top top",
+      end: "bottom top",
+      scrub: true
+    }
+  });
+
+  /* STAT CARDS - SIMPLIFIED */
+  gsap.from(".stat-card", {
+    opacity: 1, 
+    duration: 0
+  });
+
+  /* PROJECT CARDS 3D TILT */
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      const cx = r.width / 2;
+      const cy = r.height / 2;
+
+      card.style.transform = `
+        rotateX(${(y - cy) / 20}deg)
+        rotateY(${(cx - x) / 20}deg)
+      `;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // ── CUSTOM CURSOR ──
+  const dot = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  let isMobile = window.innerWidth <= 600;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    if (!isMobile) {
+      dot.style.left = mx + 'px';
+      dot.style.top = my + 'px';
+    }
+  });
+
+  function loop() {
+    if (!isMobile) {
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  /* MAGNET EFFECT */
+  document.querySelectorAll('.stat-card, .project-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      if (!isMobile) ring.style.transform = 'translate(-50%, -50%) scale(1.6)';
+    });
+    el.addEventListener('mouseleave', () => {
+      if (!isMobile) ring.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+  });
 
   // WhatsApp popup — auto-show after 5 seconds
   const waPopup = document.getElementById('waPopup');
@@ -1095,29 +1395,29 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape') closeThankyou();
   });
 
-  // Contact form — FormSubmit AJAX, popup stays on same page
+  // Contact form — FormSubmit AJAX
   document.querySelector('.contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
     e.stopPropagation();
 
     const form = this;
-    const btn  = form.querySelector('#submitBtn');
-    btn.disabled    = true;
+    const btn = form.querySelector('#submitBtn');
+    btn.disabled = true;
     btn.textContent = 'Sending…';
 
     const data = new FormData(form);
 
     function showPopup() {
       form.reset();
-      btn.disabled    = false;
+      btn.disabled = false;
       btn.textContent = 'Send Request →';
       document.getElementById('thankyouOverlay').classList.add('open');
     }
 
     fetch('https://formsubmit.co/ajax/sivarajr.design@gmail.com', {
-      method:  'POST',
+      method: 'POST',
       headers: { 'Accept': 'application/json' },
-      body:    data
+      body: data
     })
     .then(function(res) { return res.json(); })
     .then(function(res) {

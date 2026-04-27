@@ -525,29 +525,113 @@ nav {
 }
 .exp-date { font-size: 0.78rem; color: var(--light); white-space: nowrap; padding-top: 4px; font-weight: 500; }
 
-/* ── TESTIMONIAL ── */
-.testimonial-bg { background: var(--white); }
-.testimonial-inner { max-width: 860px; margin: 0 auto; }
-.quote-mark {
+/* ── AWARDS ── */
+.awards-heading {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 7rem; color: var(--teal); opacity: 0.22;
-  line-height: 0.7; margin-bottom: 22px; display: block; font-weight: 700;
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 700;
+  line-height: 1.1; letter-spacing: -0.01em;
+  margin-top: 56px; margin-bottom: 28px;
 }
-.testimonial-text {
+.award-row {
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 16px 20px; padding: 22px 0; border-bottom: 1px solid var(--border);
+  align-items: start;
+  transition: all 0.3s ease;
+  cursor: default;
+  animation: slideInLeft 0.6s ease-out forwards;
+  opacity: 1;
+}
+.award-row:first-child { border-top: 1px solid var(--border); }
+.award-row:hover {
+  background: rgba(46,107,110,0.02);
+  padding: 22px 16px;
+  margin: 0 -16px;
+  border-radius: 8px;
+  border-left: 3px solid var(--teal);
+  padding-left: 13px;
+}
+.award-icon {
+  font-size: 1.25rem; padding-top: 2px; flex-shrink: 0;
+}
+.award-title {
+  font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 3px;
+  transition: color 0.3s ease;
+}
+.award-row:hover .award-title { color: var(--teal); }
+.award-org {
+  font-size: 0.875rem; color: var(--muted);
+  transition: color 0.3s ease;
+}
+.award-row:hover .award-org { color: var(--text); }
+.award-desc {
+  font-size: 0.82rem; color: var(--light); margin-top: 4px; line-height: 1.55;
+}
+.award-date { font-size: 0.78rem; color: var(--light); white-space: nowrap; padding-top: 4px; font-weight: 500; }
+
+/* ── LINKEDIN RECOMMENDATIONS ── */
+.testimonial-bg { background: var(--bg); }
+.rec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 8px;
+}
+.rec-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.rec-card:hover {
+  border-color: var(--teal);
+  box-shadow: 0 16px 48px rgba(46,107,110,0.10);
+  transform: translateY(-4px);
+}
+.rec-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rec-quote-icon {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.15rem, 2vw, 1.55rem); font-weight: 500; font-style: italic;
-  line-height: 1.7; color: var(--text); margin-bottom: 36px;
+  font-size: 4.5rem;
+  color: var(--teal);
+  opacity: 0.2;
+  line-height: 0.75;
+  font-weight: 700;
+  flex-shrink: 0;
 }
-.testimonial-author { display: flex; align-items: center; gap: 18px; }
+.rec-li-icon { flex-shrink: 0; opacity: 0.5; }
+.rec-text {
+  font-size: 0.93rem;
+  color: var(--text);
+  line-height: 1.8;
+  flex: 1;
+}
+.rec-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
 .t-avatar {
-  width: 52px; height: 52px; border-radius: 50%;
+  width: 44px; height: 44px; border-radius: 50%;
   background: var(--teal-lt); border: 2px solid var(--teal);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
   font-weight: 700; color: var(--teal); flex-shrink: 0;
 }
-.t-name { font-weight: 700; font-size: 0.95rem; color: var(--text); }
-.t-role { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+.t-name { font-weight: 700; font-size: 0.92rem; color: var(--text); }
+.t-role { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+@media (max-width: 760px) { .rec-grid { grid-template-columns: 1fr; } }
 
 /* ── CONTACT ── */
 .contact-bg { background: var(--bg); }
@@ -1057,30 +1141,119 @@ footer {
           <div class="exp-date">Aug 2010 – Oct 2013</div>
         </div>
       </div>
+
+      <!-- Awards -->
+      <h3 class="awards-heading">Awards &amp; Recognition</h3>
+      <div>
+        <div class="award-row">
+          <div class="award-icon">🏆</div>
+          <div>
+            <div class="award-title">Hero Award</div>
+            <div class="award-org">PayPal Inc.</div>
+            <div class="award-desc">Recognised for outstanding contribution during the pandemic-period delivery.</div>
+          </div>
+          <div class="award-date">Jun 2021</div>
+        </div>
+        <div class="award-row">
+          <div class="award-icon">⭐</div>
+          <div>
+            <div class="award-title">Spot Award</div>
+            <div class="award-org">PayPal Inc.</div>
+            <div class="award-desc">For creative leadership on a high-visibility internal campaign.</div>
+          </div>
+          <div class="award-date">Dec 2019</div>
+        </div>
+        <div class="award-row">
+          <div class="award-icon">🏅</div>
+          <div>
+            <div class="award-title">ACE Award Q4</div>
+            <div class="award-org">Hexaware Technologies</div>
+            <div class="award-desc">Delivered complex creative projects ahead of schedule.</div>
+          </div>
+          <div class="award-date">Nov 2016</div>
+        </div>
+        <div class="award-row">
+          <div class="award-icon">🎖️</div>
+          <div>
+            <div class="award-title">Best Performance of the Year</div>
+            <div class="award-org">Hexaware Technologies</div>
+            <div class="award-desc">Client praised creative quality, leading to extended engagement.</div>
+          </div>
+          <div class="award-date">2015</div>
+        </div>
+        <div class="award-row">
+          <div class="award-icon">⚡</div>
+          <div>
+            <div class="award-title">Bolt Awards <span style="font-weight:400; color:var(--light);">(×2)</span></div>
+            <div class="award-org">Ad2Pro Media Solutions</div>
+            <div class="award-desc">Recognised for rapid, error-free creative turnaround.</div>
+          </div>
+          <div class="award-date">Jun – Jul 2014</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- TESTIMONIAL -->
+<!-- LINKEDIN RECOMMENDATIONS -->
 <div class="testimonial-bg">
   <div class="section-wrap">
-    <div class="section-eyebrow">Testimonials</div>
+    <div class="section-eyebrow">LinkedIn Recommendations</div>
     <h2 class="section-title">What My Associates Think of Me</h2>
-    <div class="testimonial-inner">
-      <span class="quote-mark">"</span>
-      <p class="testimonial-text">
-        Sivaraj has an excellent eye for detail and the drive to understand business needs in order to create a better user experience.
-        His eagerness to understand the flow and his intuitive designs helped us create a fantastic, one-of-a-kind product.
-        His adaptive nature towards different customers' needs and his focus for development are his greatest strengths —
-        which makes him a great asset to any team.
-      </p>
-      <div class="testimonial-author">
-        <div class="t-avatar">B</div>
-        <div>
-          <div class="t-name">Bharath D.</div>
-          <div class="t-role">Sr. Business Analyst · PAYPAL</div>
+
+    <div class="rec-grid">
+
+      <!-- Card 1 -->
+      <div class="rec-card">
+        <div class="rec-card-top">
+          <span class="rec-quote-icon">"</span>
+          <svg class="rec-li-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+            <path d="M7.5 9.5H5V19H7.5V9.5Z" fill="white"/>
+            <circle cx="6.25" cy="6.75" r="1.5" fill="white"/>
+            <path d="M19 13.5C19 11.5 17.8 9.25 15.5 9.25C14.2 9.25 13.2 9.9 12.75 10.75V9.5H10.25V19H12.75V14C12.75 12.75 13.5 11.75 14.75 11.75C16 11.75 16.5 12.75 16.5 14V19H19V13.5Z" fill="white"/>
+          </svg>
+        </div>
+        <p class="rec-text">
+          Sivaraj has an excellent eye for detail and the drive to understand business needs in order to create a better user experience.
+          His eagerness to understand the flow and his intuitive designs helped us create a fantastic, one-of-a-kind product.
+          His adaptive nature towards different customers' needs and his focus for development are his greatest strengths —
+          which makes him a great asset to any team.
+        </p>
+        <div class="rec-author">
+          <div class="t-avatar">B</div>
+          <div>
+            <div class="t-name">Bharath D.</div>
+            <div class="t-role">Sr. Business Analyst · PayPal</div>
+          </div>
         </div>
       </div>
+
+      <!-- Card 2 -->
+      <div class="rec-card">
+        <div class="rec-card-top">
+          <span class="rec-quote-icon">"</span>
+          <svg class="rec-li-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+            <path d="M7.5 9.5H5V19H7.5V9.5Z" fill="white"/>
+            <circle cx="6.25" cy="6.75" r="1.5" fill="white"/>
+            <path d="M19 13.5C19 11.5 17.8 9.25 15.5 9.25C14.2 9.25 13.2 9.9 12.75 10.75V9.5H10.25V19H12.75V14C12.75 12.75 13.5 11.75 14.75 11.75C16 11.75 16.5 12.75 16.5 14V19H19V13.5Z" fill="white"/>
+          </svg>
+        </div>
+        <p class="rec-text">
+          Sivaraj is a highly passionate and dedicated UX professional with a strong focus on delivering meaningful user experiences.
+          He is committed, dependable, and always eager to learn and explore new ideas, especially in AI and product design.
+          A great team player with excellent collaboration skills. Wishing him continued success in his journey.
+        </p>
+        <div class="rec-author">
+          <div class="t-avatar">V</div>
+          <div>
+            <div class="t-name">Venkat</div>
+            <div class="t-role">Hexaware Technologies</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

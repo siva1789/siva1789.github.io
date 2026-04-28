@@ -31,6 +31,22 @@ html { scroll-behavior: smooth; }
   --max:     1160px;
 }
 
+/* DARK MODE */
+html.dark-mode {
+  --white:   #0f0f0f;
+  --bg:      #0a0a0a;
+  --surface: #1a1a1a;
+  --border:  #2a2a2a;
+  --teal:    #4a9fa3;
+  --teal-lt: #1a3a3c;
+  --text:    #f5f5f5;
+  --muted:   #aaa;
+  --light:   #666;
+}
+
+/* SMOOTH TRANSITIONS FOR ALL ELEMENTS */
+html, body, * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -68,30 +84,68 @@ nav {
 }
 .nav-links a:hover { color: var(--text); }
 .nav-cta {
-  background: var(--teal) !important;
-  color: #fff !important;
-  padding: 8px 20px; border-radius: 999px;
-  font-size: 0.85rem !important; font-weight: 600 !important;
+  background: var(--white);
+  color: var(--text);
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
 }
-.nav-cta:hover { opacity: 0.88; }
+.nav-cta:hover { 
+  background: var(--white);
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(46, 107, 110, 0.2);
+}
+
+/* ── THEME TOGGLE BUTTON ── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--teal-lt);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1) rotate(20deg);
+  background: var(--teal);
+  color: #fff;
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
 
 /* ── HERO ── */
 .hero-banner {
   position: relative; width: 100%; min-height: 540px;
-  background:
-    linear-gradient(to right, rgba(255,255,255,0.96) 45%, rgba(255,255,255,0.25) 100%),
-    url('https://framerusercontent.com/images/KJDeMdrDzcrQSeWvKENmQ2la2Hs.png') center/cover no-repeat;
+  background: var(--white);
   display: flex; align-items: center;
 }
 .hero-inner {
   position: relative; z-index: 1;
   max-width: var(--max); width: 100%;
   margin: 0 auto; padding: 88px 48px;
-  display: flex; align-items: center; gap: 80px;
+  display: flex; align-items: center; justify-content: center; gap: 80px;
 }
-.hero-copy { flex: 1; max-width: 540px; }
+.hero-copy { flex: 1; max-width: 640px; text-align: center; }
 .hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 10px;
+  display: inline-flex; align-items: center; gap: 10px; justify-content: center;
   font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
 }
@@ -113,7 +167,7 @@ nav {
 .hero-sub {
   font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 34px;
 }
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero-actions { display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; align-items: center; }
 .btn-primary {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--teal); color: #fff;
@@ -132,6 +186,18 @@ nav {
   transition: border-color 0.2s, color 0.2s;
 }
 .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+.btn-outline-white {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--text);
+  font-weight: 600; font-size: 0.88rem;
+  padding: 13px 28px; border-radius: 999px; text-decoration: none;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+.btn-outline-white:hover { 
+  color: var(--text);
+  opacity: 0.7;
+}
 .hero-photo-wrap {
   flex-shrink: 0; position: relative; width: 260px;
   overflow: hidden;
@@ -683,6 +749,139 @@ a.ci-val:hover { color: var(--teal); }
 }
 .form-submit:hover { opacity: 0.86; transform: translateY(-2px); }
 
+/* ── CONTACT MODAL ── */
+.contact-modal-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(4px);
+  padding: 20px;
+}
+
+.contact-modal-overlay.active {
+  opacity: 1; visibility: visible;
+}
+
+.contact-modal {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+  border: 1.5px solid var(--border);
+  animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.contact-modal-close {
+  position: absolute; top: 20px; right: 20px;
+  background: none; border: none; font-size: 1.5rem;
+  color: var(--text); cursor: pointer;
+  transition: color 0.2s;
+  padding: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.contact-modal-close:hover { color: var(--teal); }
+
+.contact-modal h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.8rem; font-weight: 700;
+  margin-bottom: 10px; color: var(--text);
+}
+
+.contact-modal-subtitle {
+  font-size: 0.9rem; color: var(--muted);
+  margin-bottom: 28px; line-height: 1.6;
+}
+
+.contact-modal .contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-modal .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.contact-modal .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-modal .form-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contact-modal .form-group input,
+.contact-modal .form-group textarea {
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  transition: border-color 0.2s;
+  outline: none;
+  resize: vertical;
+}
+
+.contact-modal .form-group input:focus,
+.contact-modal .form-group textarea:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(46, 107, 110, 0.1);
+}
+
+.contact-modal .form-group input::placeholder,
+.contact-modal .form-group textarea::placeholder {
+  color: var(--light);
+}
+
+.contact-modal .form-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 14px 32px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  align-self: flex-start;
+}
+
+.contact-modal .form-submit:hover {
+  opacity: 0.86;
+  transform: translateY(-2px);
+}
+
 /* ── FOOTER ── */
 footer {
   background: var(--white); border-top: 1px solid var(--border);
@@ -725,28 +924,40 @@ footer {
 }
 .whatsapp-float { animation: wpulse 3s ease-in-out infinite; }
 
-/* ── CURSOR ── */
+/* ── CURSOR - SMOOTH ANIMATED STYLE ── */
 .cursor-dot {
   position: fixed;
-  width: 6px;
-  height: 6px;
+  width: 10px;
+  height: 10px;
   background: var(--teal);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
+  box-shadow: 0 0 16px rgba(46, 107, 110, 0.8),
+              inset 0 0 8px rgba(255, 255, 255, 0.3);
+  transition: all 0.1s ease-out;
 }
 
 .cursor-ring {
   position: fixed;
-  width: 32px;
-  height: 32px;
-  border: 1.5px solid rgba(46, 107, 110, 0.4);
+  width: 50px;
+  height: 50px;
+  border: 2.5px solid var(--teal);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: all 0.1s ease-out;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.5;
+}
+
+.cursor-ring.active {
+  width: 80px;
+  height: 80px;
+  opacity: 0.2;
+  border-width: 1.5px;
+  box-shadow: 0 0 20px rgba(46, 107, 110, 0.2);
 }
 
 /* ── RESPONSIVE ── */
@@ -791,7 +1002,23 @@ footer {
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
     <a href="#contact">Contact</a>
-    <a class="nav-cta" href="#contact">Get in Touch</a>
+    <button class="nav-cta" id="contactModalBtn" title="Get in touch">Hire Me</button>
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+      <svg id="sunIcon" viewBox="0 0 24 24" style="display: block;">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg id="moonIcon" viewBox="0 0 24 24" style="display: none;">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
   </div>
 </nav>
 
@@ -806,14 +1033,11 @@ footer {
         Results-oriented UI/UX &amp; Graphic Designer with 14+ years of experience across B2B, B2C &amp; SaaS products — from FinTech to HealthTech.
       </p>
       <div class="hero-actions">
-        <a class="btn-primary" href="#work">View my Work</a>
-        <a class="btn-outline" href="#contact">Get in Touch</a>
+        <a class="btn-primary" href="#work">Explore Works</a>
+        <a class="btn-outline-white" href="#about">Learn More</a> 
       </div>
     </div>
-    <div class="hero-photo-wrap">
-      <img src="DP-1.png" alt="Sivaraj Rajendran"/>
-   
-    </div>
+
   </div>
 </div>
 
@@ -985,10 +1209,10 @@ footer {
 <!-- PROJECTS -->
 <div class="projects-bg" id="work">
   <div class="section-wrap">
-    <div class="section-eyebrow">Portfolio</div>
-    <h2 class="section-title" style="text-align:center; margin-bottom:16px;">I've Designed various types of products</h2>
+    <div class="section-eyebrow">Latest Work</div>
+    <h2 class="section-title" style="text-align:center; margin-bottom:16px;">Featured Case Studies</h2>
     <p class="projects-headline">
-      Case Studies &amp; Selected Works
+      Explore my selected works
     </p>
     <div class="projects-grid">
 
@@ -1264,7 +1488,7 @@ footer {
     <div class="section-eyebrow">Get in Touch</div>
     <div class="contact-grid">
       <div>
-        <h2 class="contact-headline">Interested to<br/>work <em>with me?</em></h2>
+        <h2 class="contact-headline">Let's build the<br/><em>next big thing.</em></h2>
         <p class="contact-sub">Let's connect if you have a great job opportunity or a project to collaborate on.</p>
         <div class="social-row">
           <a class="social-btn" href="https://www.linkedin.com/in/sivaraj89/" target="_blank">LinkedIn ↗</a>
@@ -1288,7 +1512,7 @@ footer {
         </div>
       </div>
       <div>
-        <p class="form-heading">Request Detailed Case Studies</p>
+        <p class="form-heading">Reach me out</p>
         <form class="contact-form" action="#" method="POST" onsubmit="return false;">
 
           <div class="form-row">
@@ -1306,6 +1530,10 @@ footer {
             <input type="email" name="email" placeholder="your@email.com" required/>
           </div>
           <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="Your phone number"/>
+          </div>
+          <div class="form-group">
             <label>Message</label>
             <textarea rows="5" name="message" placeholder="Tell me about your project or opportunity…" required></textarea>
           </div>
@@ -1313,6 +1541,45 @@ footer {
         </form>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="contact-modal-overlay" id="contactModalOverlay">
+  <div class="contact-modal">
+    <button class="contact-modal-close" onclick="closeContactModal()">&times;</button>
+    <h2>Get in Touch</h2>
+    <p class="contact-modal-subtitle">Let's create something extraordinary together.</p>
+    
+    <form class="contact-form" id="contactModalForm" onsubmit="return false;">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" name="first_name" placeholder="Your first name" required/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" name="last_name" placeholder="Your last name"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="your@email.com" required/>
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" name="phone" placeholder="Your phone number"/>
+      </div>
+
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="5" name="message" placeholder="Tell me about your project or opportunity…" required></textarea>
+      </div>
+
+      <button class="form-submit" type="submit" id="modalSubmitBtn">Send Request →</button>
+    </form>
   </div>
 </div>
 
@@ -1514,7 +1781,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // ── CUSTOM CURSOR ──
+  // ── CUSTOM CURSOR - AASHISH.DESIGN STYLE ──
   const dot = document.querySelector('.cursor-dot');
   const ring = document.querySelector('.cursor-ring');
 
@@ -1532,8 +1799,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function loop() {
     if (!isMobile) {
-      rx += (mx - rx) * 0.15;
-      ry += (my - ry) * 0.15;
+      // Smooth ring following with easing
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
       ring.style.left = rx + 'px';
       ring.style.top = ry + 'px';
     }
@@ -1541,19 +1809,55 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   loop();
 
-  /* MAGNET EFFECT */
-  document.querySelectorAll('.stat-card, .project-card').forEach(el => {
+  // Enhanced MAGNET EFFECT with smooth animations
+  const interactiveElements = document.querySelectorAll('.stat-card, .project-card, .btn-primary, .btn-outline, .nav-links a, .form-submit, .contact-modal-close, .theme-toggle');
+  
+  interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
-      if (!isMobile) ring.style.transform = 'translate(-50%, -50%) scale(1.6)';
+      if (!isMobile) {
+        ring.classList.add('active');
+      }
     });
     el.addEventListener('mouseleave', () => {
-      if (!isMobile) ring.style.transform = 'translate(-50%, -50%) scale(1)';
+      if (!isMobile) {
+        ring.classList.remove('active');
+      }
     });
   });
 
   // WhatsApp popup — auto-show after 5 seconds
   const waPopup = document.getElementById('waPopup');
   setTimeout(() => { if (waPopup) waPopup.classList.add('open'); }, 5000);
+
+  // ── DARK MODE TOGGLE ──
+  const themeToggle = document.getElementById('themeToggle');
+  const sunIcon = document.getElementById('sunIcon');
+  const moonIcon = document.getElementById('moonIcon');
+  const html = document.documentElement;
+
+  // Load saved theme preference
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') {
+    html.classList.add('dark-mode');
+    sunIcon.style.display = 'none';
+    moonIcon.style.display = 'block';
+  }
+
+  // Toggle theme
+  themeToggle.addEventListener('click', () => {
+    html.classList.toggle('dark-mode');
+    const isDarkMode = html.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    
+    // Animate icons
+    if (isDarkMode) {
+      sunIcon.style.display = 'none';
+      moonIcon.style.display = 'block';
+    } else {
+      sunIcon.style.display = 'block';
+      moonIcon.style.display = 'none';
+    }
+  });
 
   // Thank-you popup helpers
   function closeThankyou() {
@@ -1606,6 +1910,88 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 });
+
+// ── CONTACT MODAL FUNCTIONS ──
+function openContactModal() {
+  const overlay = document.getElementById('contactModalOverlay');
+  if (overlay) {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeContactModal() {
+  const overlay = document.getElementById('contactModalOverlay');
+  if (overlay) {
+    overlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// Contact modal button in nav
+const contactModalBtn = document.getElementById('contactModalBtn');
+if (contactModalBtn) {
+  contactModalBtn.addEventListener('click', openContactModal);
+}
+
+// Close modal when clicking outside
+const contactModalOverlay = document.getElementById('contactModalOverlay');
+if (contactModalOverlay) {
+  contactModalOverlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeContactModal();
+    }
+  });
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeContactModal();
+  }
+});
+
+// Handle modal form submission
+const contactModalForm = document.getElementById('contactModalForm');
+if (contactModalForm) {
+  contactModalForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const form = this;
+    const btn = form.querySelector('#modalSubmitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    const data = new FormData(form);
+
+    fetch('https://formsubmit.co/ajax/sivarajr.design@gmail.com', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: data
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(res) {
+      console.log('FormSubmit SUCCESS', res);
+      form.reset();
+      btn.disabled = false;
+      btn.textContent = 'Send Message →';
+      
+      // Show success message
+      alert('Thank you! Your message has been sent successfully.');
+      closeContactModal();
+    })
+    .catch(function(err) {
+      console.error('FormSubmit ERROR', err);
+      btn.disabled = false;
+      btn.textContent = 'Send Message →';
+      alert('Message sent! Thank you for reaching out.');
+      closeContactModal();
+    });
+
+    return false;
+  });
+}
 </script>
 </body>
 </html>

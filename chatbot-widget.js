@@ -290,66 +290,127 @@
     });
 
     async function sendMessage() {
-      const message = input.value.trim();
+  const message = input.value.trim();
 
-      if (!message) return;
+  if (!message) return;
 
-      addMessage(message, "user");
-      input.value = "";
+  addMessage(message, "user");
+  input.value = "";
 
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: message
-          })
-        });
+  input.disabled = true;
+  sendButton.disabled = true;
 
-        if (!response.ok) {
-          throw new Error("API request failed");
-        }
+  const typingMessage = addMessage("Thinking…", "bot");
 
-        const data = await response.json();
+  try {
+    const controller = new AbortController();
 
-        const reply =
-          data.reply ||
-          data.message ||
-          data.response ||
-          "Sorry, I couldn't get a response.";
+    const timeout = setTimeout(() => {
+      controller.abort();
+    }, 30000);
 
-        addMessage(reply, "bot");
+    const response = await fetch(API_URL, {
+      method: "POST",
 
-      } catch (error) {
-        console.error("Chatbot error:", error);
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
 
-        addMessage(
-          "Sorry, I'm having trouble connecting right now. Please try again.",
-          "bot"
-        );
-      }
+      body: JSON.stringify({
+        message: message,
+
+        messages: [
+          {
+            role: "user",
+            content: message
+          }
+        ],
+
+        prompt: message
+      }),
+
+      signal: controller.signal
+    });
+
+    clearTimeout(timeout);
+
+    const raw = await response.text();
+
+    let data = {};
+
+    try {
+      data = raw ? JSON.parse(raw) : {};
+    } catch {
+      data = {
+        raw: raw
+      };
     }
 
-    function addMessage(text, type) {
-      const messages =
-        wrapper.querySelector(".sivaraj-chatbot-messages");
+    console.log("Chatbot API response:", data);
 
-      const message = document.createElement("div");
+    if (!response.ok) {
+      const serverMessage =
+        data?.error ||
+        data?.message ||
+        data?.raw ||
+        `API returned HTTP ${response.status}`;
 
-      message.className =
-        "sivaraj-chatbot-message " +
-        (type === "user"
-          ? "sivaraj-chatbot-user"
-          : "sivaraj-chatbot-bot");
-
-      message.textContent = text;
-
-      messages.appendChild(message);
-
-      messages.scrollTop = messages.scrollHeight;
+      throw new Error(serverMessage);
     }
+
+    const reply =
+      data?.reply ||
+      data?.response ||
+      data?.answer ||
+      data?.text ||
+      data?.content ||
+      data?.output?.text ||
+      data?.choices?.[0]?.message?.content ||
+      data?.choices?.[0]?.text ||
+      (typeof data === "string" ? data : null);
+
+    if (!reply) {
+      throw new Error(
+        "The API responded, but no reply text was found."
+      );
+    }
+
+    typingMessage.remove();
+
+    addMessage(String(reply), "bot");
+
+  } catch (error) {
+
+    console.error("Sivaraj chatbot error:", error);
+
+    typingMessage.remove();
+
+    let errorMessage =
+      "I couldn't connect to the chatbot right now.";
+
+    if (error.name === "AbortError") {
+
+      errorMessage =
+        "The chatbot took too long to respond. Please try again.";
+
+    } else if (error.message) {
+
+      errorMessage =
+        "Chatbot connection error: " + error.message;
+    }
+
+    addMessage(errorMessage, "bot");
+
+  } finally {
+
+    input.disabled = false;
+    sendButton.disabled = false;
+    input.focus();
+  }
+}
+
+    
 
     sendButton.addEventListener("click", sendMessage);
 

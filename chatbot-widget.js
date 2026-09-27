@@ -17,20 +17,44 @@
   // ---------- Styles (reads the page's own CSS variables) ----------
   const css = `
     .scw-launcher {
-      position: fixed; bottom: 28px; right: 28px;
-      background: var(--teal); color: #fff;
-      height: 52px; width: 52px; border: none; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 999;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.28);
-      transform: translateY(12px); opacity: 0;
-      animation: scw-rise 0.5s ease-out 0.4s forwards;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
+    position: fixed !important;
+    right: 28px !important;
+    bottom: 28px !important;
+
+    width: 62px !important;
+    height: 62px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    background: #2e6b6e !important;
+    color: #ffffff !important;
+
+    border: none !important;
+    border-radius: 50% !important;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
+
+    cursor: pointer !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    z-index: 2147483647 !important;
+
+    transform: none !important;
+}
     .scw-launcher:hover { transform: scale(1.06); background: var(--teal); box-shadow: 0 8px 28px rgba(46,107,110,0.4); }
     .scw-launcher:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
     @keyframes scw-rise { to { transform: translateY(0); opacity: 1; } }
-    .scw-launcher svg { width: 24px; height: 24px; }
+    .scw-launcher svg {
+    width: 28px !important;
+    height: 28px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
 
     .scw-panel {
       position: fixed; bottom: 92px; right: 28px;
@@ -44,7 +68,7 @@
       z-index: 999;
       font-family: 'DM Sans', system-ui, sans-serif;
       transform-origin: bottom right;
-      transform: scale(0.96) translateY(8px); opacity: 0; pointer-events: none;
+      transform: scale(0.96) translateY(8px); opacity: 1; pointer-events: none;
       transition: transform 0.18s ease, opacity 0.18s ease;
     }
     .scw-panel.scw-open { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
